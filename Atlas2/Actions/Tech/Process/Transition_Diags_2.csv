@@ -1,0 +1,7 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Tech/EnterEnv>enterEnv,"{subsubtestname=""Send-Enter_Diag_CMD""}",,,,,,,,'re-enter diags capture :-) characters'
+,"+{dutPlugin=""Kis_dut""}",,,,,,,,
+,"+{channelPlugin=""Kis_channelPlugin""}",,,,,,,,
+,"+{Commands=""diags""}",,,,,,,,
+,"+{Timeout=""60""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,

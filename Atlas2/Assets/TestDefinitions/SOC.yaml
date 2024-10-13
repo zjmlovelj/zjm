@@ -1,0 +1,357 @@
+-   technology: SOC
+    coverage: Restore_DFUMode
+    testParameters: ''
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    outputs:
+        Location_ID:
+            lookup: [RunRestore_DFUMode, 1]
+    sequence:
+        actions:
+            - RunRestore_DFUMode:
+                filename: Tech/SOC/Restore_DFUMode.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - Dut
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - ChannelPlugin
+                    - SFC
+                    - Regex
+                    - Utilities
+                    - DCSD
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand    
+
+-   technology: SOC
+    coverage: Restore_NonUI_DCSD_1
+    testParameters: ''
+    inputs:
+        Location_ID: 'find.output("SOC","Restore_DFUMode","","Location_ID")'
+    sequence: 
+        actions:
+            - RunRestore_NonUI_DCSD_1:
+                filename: Tech/SOC/Restore_NonUI_DCSD_1.csv
+                args:
+                    - lookup: [inputs, Location_ID]
+                plugins:
+                    - DCSD
+                    - VariableTable
+
+-   technology: SOC
+    coverage: Restore_NonUI_DCSD_2
+    testParameters: ''
+    outputs:
+        restore_uart_log:
+            lookup: [RunRestore_NonUI_DCSD_2, 1]
+    sequence:
+        actions:
+            - RunRestore_NonUI_DCSD_2:
+                filename: Tech/SOC/Restore_NonUI_DCSD_2.csv
+                plugins:
+                    - Kis_dut
+                    - FixturePlugin
+                    - InteractiveView
+                    - VariableTable
+
+-   technology: SOC
+    coverage: Restore_NonUI_DCSD_3
+    testParameters: '*'
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    sequence:
+        actions:
+            - RunRestore_NonUI_DCSD_3:
+                filename: Tech/SOC/Restore_NonUI_DCSD_3.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - VariableTable
+                    - FixturePlugin
+                    - RunShellCommand
+
+-   technology: SOC
+    coverage: Restore_NonUI_DCSD_4
+    testParameters: ''
+    inputs:
+        restore_uart_log: 'find.output("SOC","Restore_NonUI_DCSD_2","","restore_uart_log")'
+        mlb_type: 'find.output("USBC","OTPProgram","","mlb_type")'
+    outputs:
+        LCRT:
+            lookup: [RunRestore_NonUI_DCSD_4, 1]
+        SIK:
+            lookup: [RunRestore_NonUI_DCSD_4, 2]
+    sequence:
+        actions:
+            - RunRestore_NonUI_DCSD_4:
+                filename: Tech/SOC/Restore_NonUI_DCSD_4.csv
+                args:
+                    - lookup: [inputs, restore_uart_log]
+                    - lookup: [inputs, mlb_type]
+                plugins:
+                    - RunShellCommand
+
+
+-   technology: SOC
+    coverage: Temperature_1
+    testParameters: '*'
+    outputs:
+        THERMAL0_Instant:
+            lookup: [RunTemperature_1, 1]
+        tem_value:
+            lookup: [RunTemperature_1, 2]    
+    sequence:
+        actions:
+            - RunTemperature_1:
+                filename: Tech/SOC/Temperature_1.csv
+                plugins:
+                    - Dut
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - ChannelPlugin
+                    - SFC
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+
+-   technology: SOC
+    coverage: Info_SBIN
+    testParameters: '*'
+    inputs:
+        dut_cfg: 'find.output("USBC","OTPProgram","","dut_cfg")'
+    outputs:
+        soc_info:
+            lookup: [RunInfo_SBIN, 1]
+        soc_p_resp:
+            lookup: [RunInfo_SBIN, 2]
+        MEMORY_SIZE:
+            lookup: [RunInfo_SBIN, 3]
+        binFuse:
+            lookup: [RunInfo_SBIN, 4]    
+        bin_fuse:
+            lookup: [RunInfo_SBIN, 5]
+        SbinKey:
+            lookup: [RunInfo_SBIN, 6]    
+        SBin_status:
+            lookup: [RunInfo_SBIN, 7]
+    conditions:
+        MEMORY_SIZE:
+            lookup: [RunInfo_SBIN, 3]          
+
+    sequence:
+        actions:
+            - RunInfo_SBIN:
+                filename: Tech/SOC/Info_SBIN.csv
+                args:
+                    - lookup: [inputs, dut_cfg]
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - RunShellCommand 
+                    - Mutex
+                    - SystemTool
+
+-   technology: SOC
+    coverage: Temperature
+    testParameters: '*'
+    inputs:
+        Location_ID: 'find.output("USBC","OTPProgram","","Location_ID")'
+    sequence:
+        actions:
+            - RunTemperature:
+                filename: Tech/SOC/Temperature.csv
+                args:
+                    - lookup: [inputs, Location_ID]
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - RunShellCommand
+                    - FixturePlugin
+
+
+-   technology: SOC
+    coverage: Info_1
+    testParameters: '*'
+    inputs:
+        MLB_Num: 'find.output("Fixture","Initialize","","MLB_Num")'
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+        SITE: 'find.output("Fixture","Initialize","","SITE")'
+        boardRev: 'find.output("USBC","OTPProgram","","boardRev")'
+        MEMORY_SIZE: 'find.output("SOC","Info_SBIN","","MEMORY_SIZE")'
+    outputs:
+        BOARD_ID:
+            lookup: [RunInfo_1, 1]
+        mlb_type:
+            lookup: [RunInfo_1, 2]    
+        HAS_TWO_STORAGE_DEVICE:
+            lookup: [RunInfo_1, 3]
+        Chip_ID:
+            lookup: [RunInfo_1, 4]
+        Chip_Ver:
+            lookup: [RunInfo_1, 5]
+        DIE_ID:
+            lookup: [RunInfo_1, 6]
+        FUSE_ID:
+            lookup: [RunInfo_1, 7]
+        ECID:
+            lookup: [RunInfo_1, 8]
+        binning_revision:
+            lookup: [RunInfo_1, 9]
+        soc_p_resp:
+            lookup: [RunInfo_1, 10]    
+        fuse_rev:
+            lookup: [RunInfo_1, 11] 
+        production_mode:
+            lookup: [RunInfo_1, 12] 
+    conditions:
+        HAS_TWO_STORAGE_DEVICE:
+            lookup: [RunInfo_1, 3] 
+        production_mode:
+            lookup: [RunInfo_1, 12]     
+    sequence:
+        actions:
+            - RunInfo_1:
+                filename: Tech/SOC/Info_1.csv
+                args:
+                    - lookup: [inputs, MLB_Num]
+                    - lookup: [inputs, slotNum]
+                    - lookup: [inputs, SITE]
+                    - lookup: [inputs, boardRev]
+                    - lookup: [inputs, MEMORY_SIZE]
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - StationInfo
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+                    - Mutex
+
+
+-   technology: SOC
+    coverage: Info_SEP
+    testParameters: '*'
+    sequence:
+        actions:
+            - RunInfo_SEP:
+                filename: Tech/SOC/Info_SEP.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+
+-   technology: SOC
+    coverage: Temperature_2
+    testParameters: '*'
+    outputs:
+        THERMAL0_Instant:
+            lookup: [RunTemperature_2, 1]
+        tem_value:
+            lookup: [RunTemperature_2, 2]
+    sequence:
+        actions:
+            - RunTemperature_2:
+                filename: Tech/SOC/Temperature_2.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - RunShellCommand
+
+
+-   technology: SOC
+    coverage: Info_ISP
+    testParameters: '*'
+    outputs:
+        ISP_MES:
+            lookup: [RunInfo_ISP, 1]
+    sequence:
+        actions:
+            - RunInfo_ISP:
+                filename: Tech/SOC/Info_ISP.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+
+
+-   technology: SOC
+    coverage: Temperature_3
+    testParameters: '*'
+    outputs:
+        THERMAL0_Instant:
+            lookup: [RunTemperature_3, 1]
+        tem_value:
+            lookup: [RunTemperature_3, 2]
+    sequence:
+        actions:
+            - RunTemperature_3:
+                filename: Tech/SOC/Temperature_3.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - RunShellCommand 
+
+

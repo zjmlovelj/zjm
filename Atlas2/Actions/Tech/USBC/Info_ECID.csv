@@ -1,0 +1,9 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Smokey_ECID_CMD""}",,,,,,,,"Run VerifyAceTRNG"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{expect=""Passed""}",,,,,,,,
+,"+{hangTimeout=""100""}",,,,,,,,
+,"+{Timeout=""100""}",,,,,,,,
+,"+{Commands=""smokey --run ECID --clean --args AssemblyType='SMT' DisplayBehavior=NoDisplay ""SerialNumberSource='MLB#'""""}",,,,,,,,
+,"+{record=""true""}",,,,,,,,

@@ -1,0 +1,164 @@
+-   technology: NAND
+    coverage: PCIeBIST_AEMToolsS6E
+    testParameters: "*"
+    inputs:
+        HAS_TWO_STORAGE_DEVICE: 'find.output("SOC","Info_1","","HAS_TWO_STORAGE_DEVICE")'
+    sequence:
+        actions:
+            - RunPCIeBIST_AEMToolsS6E:
+                filename: Tech/NAND/PCIeBIST_AEMToolsS6E.csv
+                args:
+                     - lookup: [inputs, HAS_TWO_STORAGE_DEVICE]
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+
+
+-   technology: NAND
+    coverage: PCIeBIST_AEMToolsANS4
+    testParameters: '*'
+    inputs:
+        HAS_TWO_STORAGE_DEVICE: 'find.output("SOC","Info_1","","HAS_TWO_STORAGE_DEVICE")'
+    sequence:
+        actions:
+            - RunPCIeBIST_AEMToolsANS4:
+                filename: Tech/NAND/PCIeBIST_AEMToolsANS4.csv
+                args:
+                     - lookup: [inputs, HAS_TWO_STORAGE_DEVICE]
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - RunShellCommand
+
+
+-   technology: NAND
+    coverage: Info_2
+    testParameters: '*'
+    inputs:
+        BOARD_ID: 'find.output("SOC","Info_1","","BOARD_ID")'
+        MLB_Num: 'find.output("Fixture","Initialize","","MLB_Num")'
+        sfc_url: 'find.output("USBC","OTPProgram","","sfc_url")'
+        MEMORY_SIZE: 'find.output("SOC","Info_SBIN","","MEMORY_SIZE")'
+        SbinKey: 'find.output("SOC","Info_SBIN","","SbinKey")'
+        bin_fuse: 'find.output("SOC","Info_SBIN","","bin_fuse")'
+        fuse_rev: 'find.output("SOC","Info_1","","fuse_rev")'
+    outputs:
+        NAND_Total_Controller_Count:
+            lookup: [RunInfo_2, 1]
+        NAND_Chip_ID:
+            lookup: [RunInfo_2, 2]
+    sequence:
+        actions:
+            - RunInfo_2:
+                filename: Tech/NAND/Info_2.csv
+                args:
+                    - lookup: [inputs, BOARD_ID]
+                    - lookup: [inputs, MLB_Num]
+                    - lookup: [inputs, sfc_url]
+                    - lookup: [inputs, MEMORY_SIZE]
+                    - lookup: [inputs, SbinKey]
+                    - lookup: [inputs, bin_fuse]
+                    - lookup: [inputs, fuse_rev]
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+                    - Mutex
+
+-   technology: NAND
+    coverage: Info_GBBTest_1
+    testParameters: '*'
+    sequence:
+        actions:
+            - RunInfo_GBBTest_1:
+                filename: Tech/NAND/Info_GBBTest_1.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+                                                
+
+-   technology: NAND
+    coverage: Info_GBBTest_2
+    testParameters: '*'
+    outputs:
+        GBB_Test_resp:
+            lookup: [RunInfo_GBBTest_2, 1]
+    sequence:
+        actions:
+            - RunInfo_GBBTest_2:
+                filename: Tech/NAND/Info_GBBTest_2.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+                    - Mutex
+
+-   technology: NAND
+    coverage: Info_ANS_HealthTest
+    testParameters: '*'
+    inputs:
+        GBB_Test_resp: 'find.output("NAND","Info_GBBTest_2","","GBB_Test_resp")'
+    sequence:
+        actions:
+            - RunInfo_ANS_HealthTest:
+                filename: Tech/NAND/Info_ANS_HealthTest.csv
+                args:
+                    - lookup: [inputs, GBB_Test_resp]
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand

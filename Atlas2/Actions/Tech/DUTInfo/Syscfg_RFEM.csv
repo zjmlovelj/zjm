@@ -1,0 +1,42 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Parameters,,smokey_WDFU_resp,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-RFEM""}",RFEM_target,,,,,,,"check RFEM already have or not; only fresh board need to write the RFEM key"
+,"+{pattern=""RFEM has already been added""}",RFEM_HAS_ADDED,,,,,,,
+,"+{Input=smokey_WDFU_resp}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Read-RFEM_Print""}",RFEM_print_resp,,,,,,,"Read RFEM key with command syscfg printbyte RFEM"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{Timeout=""10""}",,,,,,,,
+,"+{Commands=""syscfg printbyte RFEM""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-Key""}",RFEM_print_value,,,,,,,"upload RFEM_Key value to insight"
+,"+{attribute=""RFEMKey""}",,,,,,,,
+,"+{removeAllSpaces=""YES""}",,,,,,,,
+,"+{pattern=""Hex:%s+([0-9A-F%s]+)""}",,,,,,,,
+,"+{Input=RFEM_print_resp}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Compare-RFEM_Read-RFEM_Add""}",,,,,,RFEM_HAS_ADDED=="FALSE",,"Compare RFEM with Read back and write key"
+,"+{target=RFEM_print_value}",,,,,,,,
+,"+{pattern=""syscfg addbyte RFEM ([0-9A-F]+)""}",,,,,,,,
+,"+{Input=smokey_WDFU_resp}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTInfo>getByteLen,"{subsubtestname=""Read-Key_Length""}",,,,,,,,"check RFEM key length; mush be 24byte"
+,"+{Input=RFEM_print_value}",,,,,,,,
+,"+{ByteLen=""24""}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-Version""}",,,,,,,,"frist 4byte mush be 01000000"
+,"+{pattern=""(%d%d%d%d%d%d%d%d)%d%d%d%d%d%d%d%d""}",,,,,,,,
+,"+{target=""01000000""}",,,,,,,,
+,"+{Input=RFEM_print_value}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-Value""}",,,,,,,,"second 4byte mush be 00000000"
+,"+{pattern=""%d%d%d%d%d%d%d%d(%d%d%d%d%d%d%d%d)""}",,,,,,,,
+,"+{target=""00000000""}",,,,,,,,
+,"+{Input=RFEM_print_value}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Compare>versionCompare,"{subsubtestname=""Compare-RFEM""}",,,,,,,,"RFEM check with Versioncompare file"
+,"+{comparekey=""RFEM""}",,,,,,,,
+,"+{compareFunc=""rfemVersionCompare""}",,,,,,,,
+,"+{Input=RFEM_print_value}",,,,,,,,
+,"+{record=""false""}",,,,,,,,

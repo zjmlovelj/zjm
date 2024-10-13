@@ -1,0 +1,8 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Read-FW_Version""}",,,,,,,,"Read ISP FW version"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{Timeout=""10""}",,,,,,,,
+,"+{Commands=""camisp --find""}",,,,,,,,
+,"+{pattern=""FW Info :[%s%S]+release%s+:%s+([0-9.]+)""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,

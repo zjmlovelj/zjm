@@ -1,0 +1,76 @@
+-   technology: Accel
+    coverage: SensorData_VendorInfor
+    testParameters: '*'
+    outputs:
+        listsensors_resp:
+            lookup: [RunSensorData_VendorInfor, 1]
+    sequence:
+        actions:
+            - RunSensorData_VendorInfor:
+                filename: Tech/Accel/SensorData_VendorInfor.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+
+-   technology: Accel
+    coverage: SensorData_AccelOnly
+    testParameters: '*'
+    outputs:
+        accel_only_test_resp:
+            lookup: [RunSensorData_AccelOnly, 1]
+        accel_selftest_result:
+            lookup: [RunSensorData_AccelOnly, 2]
+        accel_only_test_sec_resp:
+            lookup: [RunSensorData_AccelOnly, 3]      
+    sequence:
+        actions:
+            - RunSensorData_AccelOnly:
+                filename: Tech/Accel/SensorData_AccelOnly.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+
+-   technology: Accel
+    coverage: SensorData_FS8g_ODR100HZ_Zup
+    testParameters: '*'
+    inputs:
+        accel_only_test_sec_resp: 'find.output("Accel","SensorData_AccelOnly","","accel_only_test_sec_resp")'
+    sequence:
+        actions:
+            - RunSensorData_FS8g_ODR100HZ_Zup:
+                filename: Tech/Accel/SensorData_FS8g_ODR100HZ_Zup.csv
+                args:
+                    - lookup: [inputs, accel_only_test_sec_resp]
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand

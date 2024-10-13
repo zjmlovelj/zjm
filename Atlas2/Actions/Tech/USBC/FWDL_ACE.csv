@@ -1,0 +1,14 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Read-FW_Version""}",ace_ret,,,,,,,"Check ACE3 FW version"
+,"+{dutPluginName=""Kis_dut""}",ace_resp,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{pattern=""0000000:%s+(%w+%s+%w+%s+%w+%s+%w+%s+%w+%s+%w+%s+%w+%s+%w+)""}",,,,,,,,
+,"+{Commands=""ace --pick ATC0 --4cc SRDY --txdata ""0x00"" --rxdata 0;ace --read 0x0f""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/USBC>checkAceFWVersion,"{subsubtestname=""Compare-ACE_FW_Version""}",,,,,,,,"Compare catch log with expect (3.25.0.13.0)"
+,"+{attribute=""ACE3_FW_VER_DFU""}",,,,,,,,
+,"+{expect=""003.016.00.07.00""}",,,,,,,,
+,"+{Input=ace_ret}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Returns,ace_ret,,,,,,,,
+,ace_resp,,,,,,,,

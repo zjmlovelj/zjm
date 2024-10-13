@@ -1,0 +1,13 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Parameters,,RTOS_Version,,,,,,,
+,,SITE,,,,,,,
+Tech/Compare>versionCompare,"{subsubtestname=""Compare-RTOS_Version""}",,,,,,,,"Compare Rtos version with manual maintain"
+,"+{comparekey=""RTOS""}",,,,,,,,
+,"+{compareFunc=""rtosVersionCompare""}",,,,,,,,
+,"+{Input=RTOS_Version}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-SOC-Name""}",,,,,,,,"match SOC Name"
+,"+{log_device=""kis_usb""}",,,,,,,,
+,"+{attribute=""SOC_NAME""}",,,,,,,,
+,"+{pattern=""SOC%=%s+([0-9a-zA-Z]+)""}",,,,,,,,
+,"+{record=""true""}",,,,,,,,

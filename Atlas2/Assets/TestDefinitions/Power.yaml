@@ -1,0 +1,218 @@
+-   technology: Power
+    coverage: Discharge
+    testParameters: 'Initial'
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    sequence:
+        actions:
+            - RunDischarge_Initial:
+                filename: Tech/Power/Discharge_Initial.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - FixturePlugin
+                    - RunShellCommand
+
+-   technology: Power
+    coverage: VoltageCheck
+    testParameters: 'Safety_VBAT0V8'
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    conditions:
+        SafetyCheck0V8:
+            lookup: [RunVoltageCheck_Safety_VBAT0V8, 1]
+    sequence:
+        actions:
+            - RunVoltageCheck_Safety_VBAT0V8:
+                filename: Tech/Power/VoltageCheck_Safety_VBAT0V8.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - FixturePlugin
+                    - RunShellCommand
+
+-   technology: Power
+    coverage: VoltageCheck
+    testParameters: 'Safety_VBUS1V2'
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    conditions:
+        SafetyCheck1V2:
+            lookup: [RunVoltageCheck_Safety_VBUS1V2, 1]
+    sequence:
+        actions:
+            - RunVoltageCheck_Safety_VBUS1V2:
+                filename: Tech/Power/VoltageCheck_Safety_VBUS1V2.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - FixturePlugin
+                    - RunShellCommand
+
+
+-   technology: Power
+    coverage: VoltageCheck
+    testParameters: 'Safety_VBAT4V2'
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    conditions:
+        SafetyCheck4V2:
+            lookup: [RunVoltageCheck_Safety_VBAT4V2, 1]
+    sequence:
+        actions:
+            - RunVoltageCheck_Safety_VBAT4V2:
+                filename: Tech/Power/VoltageCheck_Safety_VBAT4V2.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - FixturePlugin
+                    - RunShellCommand
+
+-   technology: Power
+    coverage: On_Seq
+    testParameters: 'OTP'
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    sequence:
+        actions:
+            - RunOn_Seq_OTP:
+                filename: Tech/Power/On_Seq_OTP.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - FixturePlugin
+                    - RunShellCommand
+
+
+-   technology: Power
+    coverage: Discharge
+    testParameters: 'Initial_OTP'
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    sequence:
+        actions:
+            - RunDischarge_Initial_OTP:
+                filename: Tech/Power/Discharge_Initial_OTP.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - FixturePlugin
+                    - RunShellCommand                   
+
+
+-   technology: Power
+    coverage: On_Seq
+    testParameters: 'FWDL'
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    sequence:
+        actions:
+            - RunOn_Seq_FWDL:
+                filename: Tech/Power/On_Seq_FWDL.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - FixturePlugin
+                    - RunShellCommand
+
+
+-   technology: Power
+    coverage: Discharge
+    testParameters: 'Initial_FWDL'
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    sequence:
+        actions:
+            - RunDischarge_Initial_FWDL:
+                filename: Tech/Power/Discharge_Initial_FWDL.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - FixturePlugin
+                    - RunShellCommand
+
+
+-   technology: Power
+    coverage: On_Seq
+    testParameters: 'Restore'
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    sequence:
+        actions:
+            - RunOn_Seq_Restore:
+                filename: Tech/Power/On_Seq_Restore.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - FixturePlugin
+                    - RunShellCommand
+
+                    
+-   technology: Power
+    coverage: Discharge
+    testParameters: 'Initial_Restore'
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    sequence:
+        actions:
+            - RunDischarge_Initial_Restore:
+                filename: Tech/Power/Discharge_Initial_Restore.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - FixturePlugin
+                    - RunShellCommand
+
+-   technology: Power
+    coverage: On_Seq
+    testParameters: 'Diags'
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    sequence:
+        actions:
+            - RunOn_Seq_Diags:
+                filename: Tech/Power/On_Seq_Diags.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - Dut
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - ChannelPlugin
+                    - FixturePlugin
+                    - RunShellCommand
+                    - Regex
+                    - SFC
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+
+
+-   technology: Power
+    coverage: Discharge
+    testParameters: 'Initial_End'
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    sequence:
+        actions:
+            - RunDischarge_Initial_End:
+                filename: Tech/Power/Discharge_Initial_End.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - Dut
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - ChannelPlugin
+                    - FixturePlugin
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+
+

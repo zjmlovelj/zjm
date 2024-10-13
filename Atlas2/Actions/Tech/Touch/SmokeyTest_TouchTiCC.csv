@@ -1,0 +1,12 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Touch_DFU_IQMeas_CMD""}",,,,,,,,"run smokey Wildfire diags cmd"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{expect=""Passed""}",,,,,,,,
+,"+{pattern=""Sequence done%s*(%S*)""}",,,,,,,,
+,"+{hangTimeout=""100""}",,,,,,,,
+,"+{Timeout=""300""}",,,,,,,,
+,"+{Commands=""smokey Wildfire --test TouchDFUIQMeas --testargs ""TouchDFUIQMeas,TestStation='dfuiq'"" --run ""SerialNumberSource='MLB#'"" ResultsBehavior=NoFile LogBehavior=ConsoleOnly""}",,,,,,,,
+,"+{NotDiagsTriage=""YES""}",,,,,,,,
+,"+{errorCheck=""NO""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,

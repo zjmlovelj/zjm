@@ -1,0 +1,9 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Parameters,,MLB_Num,,,,,,,
+,,fixtureID,,,,,,,
+Tech/Process>DFUNandUOPPoison,"{subsubtestname=""UOP_Poison""}",,,,,,,,DFU_Write_UOP_Poison
+,"+{showView=""YES""}",,,,,,,,
+,"+{MLB_Num=MLB_Num}",,,,,,,,
+,"+{fixtureID=fixtureID}",,,,,,,,
+,"+{message=""DFU_Do_not_apply_AAB_retest_policy__FA_procedure_and_check_in_instantly""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,

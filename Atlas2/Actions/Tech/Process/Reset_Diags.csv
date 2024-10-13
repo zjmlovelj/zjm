@@ -1,0 +1,7 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Tech/EnterEnv>enterEnv,"{subsubtestname=""Send-RBM_Reset_CMD""}",,,,,,,,"Rbm_Reset"
+,"+{dutPlugin=""Kis_dut""}",,,,,,,,
+,"+{channelPlugin=""Kis_channelPlugin""}",,,,,,,,
+,"+{Timeout=""60""}",,,,,,,,
+,"+{Commands=""iboot""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,

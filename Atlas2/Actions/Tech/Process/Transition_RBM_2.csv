@@ -1,0 +1,7 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Parameters,,RBM_Version,,,,,,,
+Tech/Compare>versionCompare,"{subsubtestname=""Compare-RBM_Version""}",,,,,,,,"Compare RBM version with manual maintain"
+,"+{comparekey=""RBMVersionList""}",,,,,,,,
+,"+{compareFunc=""rbmVersionCompare""}",,,,,,,,
+,"+{Input=RBM_Version}",,,,,,,,
+,"+{record=""false""}",,,,,,,,

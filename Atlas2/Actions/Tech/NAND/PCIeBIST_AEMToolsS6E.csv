@@ -1,0 +1,250 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Parameters,,HAS_TWO_STORAGE_DEVICE,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-AEMToolsS6E_CMD""}",,,,,,,,"Run AEMToolsS6E CMD"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{hangTimeout=""600""}",,,,,,,,
+,"+{Timeout=""600""}",,,,,,,,
+,"+{Commands=""smokey --run --clean AEMToolsS6E DisplayBehavior=NoDisplay ""SerialNumberSource='MLB#'""""}",,,,,,,,
+,"+{expect=""Set Pass""}",,,,,,,,
+,"+{NotDiagsTriage=""YES""}",,,,,,,,
+,"+{errorCheck=""NO""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTCmd>copyToHost,"{subsubtestname=""Get-AEMToolsS6E_File""}",,,,,,,,
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{filePath=""nandfs:\\AppleInternal\\Diags\\Logs\\Smokey\\AEMToolsS6E\\""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Cat_Lane0_Test_Result_CMD""}",,,,,,,,'catch s6e lane0 test result'
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{Timeout=""10""}",,,,,,,,
+,"+{Commands=""cat nandfs:\\AppleInternal\\Diags\\Logs\\Smokey\\AEMToolsS6E\\eyemargin_ber_9_atc_0_s6e_lane0.csv""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Cat_Lane1_Test_Result_CMD""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,'catch s6e lane1 test result'
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{Timeout=""10""}",,,,,,,,
+,"+{Commands=""cat nandfs:\\AppleInternal\\Diags\\Logs\\Smokey\\AEMToolsS6E\\eyemargin_ber_9_atc_0_s6e_lane1.csv""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Cat_Test_Result_CMD""}",AEMToolsS6E_resp,,,,,,,'catch s6e test result'
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{Timeout=""30""}",,,,,,,,
+,"+{Commands=""cat nandfs:\\AppleInternal\\Diags\\Logs\\Smokey\\AEMToolsS6E\\results.txt""}",,,,,,,,
+,"+{expect=""s6e_resultcode""}",,,,,,,,
+,"+{NotDiagsTriage=""YES""}",,,,,,,,
+,"+{errorCheck=""NO""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_0_north_ticks""}",,,,,,,,'get s6e_lane_0_north_ticks'
+,"+{pattern=""s6e_lane_0_north_ticks%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_0_south_ticks""}",,,,,,,,"get s6e_lane_0_south_ticks"
+,"+{pattern=""s6e_lane_0_south_ticks%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_0_east_ticks""}",,,,,,,,"get s6e_lane_0_east_ticks"
+,"+{pattern=""s6e_lane_0_east_ticks%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_0_west_ticks""}",,,,,,,,"get s6e_lane_0_west_ticks"
+,"+{pattern=""s6e_lane_0_west_ticks%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_0_eh_mv""}",,,,,,,,"get s6e_lane_0_eh_mv"
+,"+{pattern=""s6e_lane_0_eh_mv%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_0_ew_ps""}",,,,,,,,"get s6e_lane_0_ew_ps"
+,"+{pattern=""s6e_lane_0_ew_ps%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_0_eh_ticks""}",,,,,,,,"get s6e_lane_0_eh_ticks"
+,"+{pattern=""s6e_lane_0_eh_ticks%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_0_ew_ticks""}",,,,,,,,"get s6e_lane_0_ew_ticks"
+,"+{pattern=""s6e_lane_0_ew_ticks%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_0_leftright_2min_ew_ps""}",,,,,,,,"get s6e_lane_0_leftright_2min_ew_ps"
+,"+{pattern=""s6e_lane_0_leftright_2min_ew_ps%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_0_pma_rxa_ctle1_gm_bias_ctrl_adapted_rate5""}",,,,,,,,"get s6e_lane_0_pma_rxa_ctle1_gm_bias_ctrl_adapted_rate5"
+,"+{pattern=""s6e_lane_0_pma_rxa_ctle1_gm_bias_ctrl_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_0_pma_rxa_ctle1_rs_ctrl_gray_adapted_rate5""}",,,,,,,,"get s6e_lane_0_pma_rxa_ctle1_rs_ctrl_gray_adapted_rate5"
+,"+{pattern=""s6e_lane_0_pma_rxa_ctle1_rs_ctrl_gray_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_0_pma_rxa_ctle2_rs_ctrl_fine_gray_adapted_rate5""}",,,,,,,,"get s6e_lane_0_pma_rxa_ctle2_rs_ctrl_fine_gray_adapted_rate5"
+,"+{pattern=""s6e_lane_0_pma_rxa_ctle2_rs_ctrl_fine_gray_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_0_pma_rxa_ctle2_gm_bias_ctrl_adapted_rate5""}",,,,,,,,"get s6e_lane_0_pma_rxa_ctle2_gm_bias_ctrl_adapted_rate5"
+,"+{pattern=""s6e_lane_0_pma_rxa_ctle2_gm_bias_ctrl_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_0_pma_rxa_vga_rs_ctrl_gray_adapted_rate5""}",,,,,,,,"get s6e_lane_0_pma_rxa_vga_rs_ctrl_gray_adapted_rate5"
+,"+{pattern=""s6e_lane_0_pma_rxa_vga_rs_ctrl_gray_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_0_pma_rxa_ctle2_rs_ctrl_gray_adapted_rate5""}",,,,,,,,"get s6e_lane_0_pma_rxa_ctle2_rs_ctrl_gray_adapted_rate5"
+,"+{pattern=""s6e_lane_0_pma_rxa_ctle2_rs_ctrl_gray_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_0_pma_rxa_vga_cl_ctrl_adapted_rate5""}",,,,,,,,"get s6e_lane_0_pma_rxa_vga_cl_ctrl_adapted_rate5"
+,"+{pattern=""s6e_lane_0_pma_rxa_vga_cl_ctrl_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_0_pma_rxa_ctle1_lf_cs_adapted_rate5""}",,,,,,,,"get s6e_lane_0_pma_rxa_ctle1_lf_cs_adapted_rate5"
+,"+{pattern=""s6e_lane_0_pma_rxa_ctle1_lf_cs_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_0_pma_rxa_ctle1_cs_ctrl_gray_adapted_rate5""}",,,,,,,,"get s6e_lane_0_pma_rxa_ctle1_cs_ctrl_gray_adapted_rate5"
+,"+{pattern=""s6e_lane_0_pma_rxa_ctle1_cs_ctrl_gray_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_0_pma_rxa_ctle1_tia_gain_ctrl_adapted_rate5""}",,,,,,,,"get s6e_lane_0_pma_rxa_ctle1_tia_gain_ctrl_adapted_rate5"
+,"+{pattern=""s6e_lane_0_pma_rxa_ctle1_tia_gain_ctrl_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_0_pma_rxa_ctle1_cs_ctrl_fine_gray_adapted_rate5""}",,,,,,,,"get s6e_lane_0_pma_rxa_ctle1_cs_ctrl_fine_gray_adapted_rate5"
+,"+{pattern=""s6e_lane_0_pma_rxa_ctle1_cs_ctrl_fine_gray_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_0_pma_rxa_ctle1_attn_ctrl_adapted_rate5""}",,,,,,,,"get s6e_lane_0_pma_rxa_ctle1_attn_ctrl_adapted_rate5"
+,"+{pattern=""s6e_lane_0_pma_rxa_ctle1_attn_ctrl_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_0_pma_rxa_ctle2_attn_ctrl_adapted_rate5""}",,,,,,,,"get s6e_lane_0_pma_rxa_ctle2_attn_ctrl_adapted_rate5"
+,"+{pattern=""s6e_lane_0_pma_rxa_ctle2_attn_ctrl_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_0_pma_rxa_ctle2_cs_ctrl_gray_adapted_rate5""}",,,,,,,,"get s6e_lane_0_pma_rxa_ctle2_cs_ctrl_gray_adapted_rate5"
+,"+{pattern=""s6e_lane_0_pma_rxa_ctle2_cs_ctrl_gray_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_0_pma_rxa_ctle2_tia_bias_ctrl_adapted_rate5""}",,,,,,,,"get s6e_lane_0_pma_rxa_ctle2_tia_bias_ctrl_adapted_rate5"
+,"+{pattern=""s6e_lane_0_pma_rxa_ctle2_tia_bias_ctrl_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_0_pma_rxa_ctle2_cs_ctrl_fine_gray_adapted_rate5""}",,,,,,,,"get s6e_lane_0_pma_rxa_ctle2_cs_ctrl_fine_gray_adapted_rate5"
+,"+{pattern=""s6e_lane_0_pma_rxa_ctle2_cs_ctrl_fine_gray_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_1_north_ticks""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,"get s6e_lane_1_north_ticks"
+,"+{pattern=""s6e_lane_1_north_ticks%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_1_south_ticks""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,"get s6e_lane_1_south_ticks"
+,"+{pattern=""s6e_lane_1_south_ticks%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_1_east_ticks""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,"get s6e_lane_1_east_ticks"
+,"+{pattern=""s6e_lane_1_east_ticks%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_1_west_ticks""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,"get s6e_lane_1_west_ticks"
+,"+{pattern=""s6e_lane_1_west_ticks%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_1_eh_mv""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,"get s6e_lane_1_eh_mv"
+,"+{pattern=""s6e_lane_1_eh_mv%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_1_ew_ps""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,"get s6e_lane_1_ew_ps"
+,"+{pattern=""s6e_lane_1_ew_ps%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_1_eh_ticks""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,"get s6e_lane_1_eh_ticks"
+,"+{pattern=""s6e_lane_1_eh_ticks%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_1_ew_ticks""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,"get s6e_lane_1_ew_ticks"
+,"+{pattern=""s6e_lane_1_ew_ticks%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_1_leftright_2min_ew_ps""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,"get s6e_lane_1_leftright_2min_ew_ps"
+,"+{pattern=""s6e_lane_1_leftright_2min_ew_ps%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_1_pma_rxa_ctle1_gm_bias_ctrl_adapted_rate5""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,"get s6e_lane_1_pma_rxa_ctle1_gm_bias_ctrl_adapted_rate5"
+,"+{pattern=""s6e_lane_1_pma_rxa_ctle1_gm_bias_ctrl_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_1_pma_rxa_ctle1_rs_ctrl_gray_adapted_rate5""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,"get s6e_lane_1_pma_rxa_ctle1_rs_ctrl_gray_adapted_rate5"
+,"+{pattern=""s6e_lane_1_pma_rxa_ctle1_rs_ctrl_gray_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_1_pma_rxa_ctle2_rs_ctrl_fine_gray_adapted_rate5""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,"get s6e_lane_1_pma_rxa_ctle2_rs_ctrl_fine_gray_adapted_rate5"
+,"+{pattern=""s6e_lane_1_pma_rxa_ctle2_rs_ctrl_fine_gray_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_1_pma_rxa_ctle2_gm_bias_ctrl_adapted_rate5""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,"get s6e_lane_1_pma_rxa_ctle2_gm_bias_ctrl_adapted_rate5"
+,"+{pattern=""s6e_lane_1_pma_rxa_ctle2_gm_bias_ctrl_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_1_pma_rxa_ctle1_lf_rs_adapted_rate5""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,"get s6e_lane_1_pma_rxa_ctle1_lf_rs_adapted_rate5"
+,"+{pattern=""s6e_lane_1_pma_rxa_ctle1_lf_rs_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_1_pma_rxa_ctle2_tia_gain_ctrl_adapted_rate5""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,"get s6e_lane_1_pma_rxa_ctle2_tia_gain_ctrl_adapted_rate5"
+,"+{pattern=""s6e_lane_1_pma_rxa_ctle2_tia_gain_ctrl_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_1_pma_rxa_ctle2_rs_ctrl_gray_adapted_rate5""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,"get s6e_lane_1_pma_rxa_ctle2_rs_ctrl_gray_adapted_rate5"
+,"+{pattern=""s6e_lane_1_pma_rxa_ctle2_rs_ctrl_gray_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_1_pma_rxa_vga_cl_ctrl_adapted_rate5""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,"get s6e_lane_1_pma_rxa_vga_cl_ctrl_adapted_rate5"
+,"+{pattern=""s6e_lane_1_pma_rxa_vga_cl_ctrl_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_1_pma_rxa_ctle1_lf_cs_adapted_rate5""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,"get s6e_lane_1_pma_rxa_ctle1_lf_cs_adapted_rate5"
+,"+{pattern=""s6e_lane_1_pma_rxa_ctle1_lf_cs_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_1_pma_rxa_ctle1_tia_bias_ctrl_adapted_rate5""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,"get s6e_lane_1_pma_rxa_ctle1_tia_bias_ctrl_adapted_rate5"
+,"+{pattern=""s6e_lane_1_pma_rxa_ctle1_tia_bias_ctrl_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_1_pma_rxa_ctle1_cs_ctrl_gray_adapted_rate5""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,"get s6e_lane_1_pma_rxa_ctle1_cs_ctrl_gray_adapted_rate5"
+,"+{pattern=""s6e_lane_1_pma_rxa_ctle1_cs_ctrl_gray_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_1_pma_rxa_ctle1_tia_gain_ctrl_adapted_rate5""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,"get s6e_lane_1_pma_rxa_ctle1_tia_gain_ctrl_adapted_rate5"
+,"+{pattern=""s6e_lane_1_pma_rxa_ctle1_tia_gain_ctrl_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_1_pma_rxa_ctle1_cs_ctrl_fine_gray_adapted_rate5""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,"get s6e_lane_1_pma_rxa_ctle1_cs_ctrl_fine_gray_adapted_rate5"
+,"+{pattern=""s6e_lane_1_pma_rxa_ctle1_cs_ctrl_fine_gray_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_1_pma_rxa_ctle1_attn_ctrl_adapted_rate5""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,"get s6e_lane_1_pma_rxa_ctle1_attn_ctrl_adapted_rate5"
+,"+{pattern=""s6e_lane_1_pma_rxa_ctle1_attn_ctrl_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_1_pma_rxa_ctle2_attn_ctrl_adapted_rate5""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,"get s6e_lane_1_pma_rxa_ctle2_attn_ctrl_adapted_rate5"
+,"+{pattern=""s6e_lane_1_pma_rxa_ctle2_attn_ctrl_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_1_pma_rxa_ctle2_cs_ctrl_gray_adapted_rate5""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,"get s6e_lane_1_pma_rxa_ctle2_cs_ctrl_gray_adapted_rate5"
+,"+{pattern=""s6e_lane_1_pma_rxa_ctle2_cs_ctrl_gray_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_1_pma_rxa_ctle2_tia_bias_ctrl_adapted_rate5""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,"get s6e_lane_1_pma_rxa_ctle2_tia_bias_ctrl_adapted_rate5"
+,"+{pattern=""s6e_lane_1_pma_rxa_ctle2_tia_bias_ctrl_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_1_pma_rxa_ctle2_cs_ctrl_fine_gray_adapted_rate5""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,"get s6e_lane_1_pma_rxa_ctle2_cs_ctrl_fine_gray_adapted_rate5"
+,"+{pattern=""s6e_lane_1_pma_rxa_ctle2_cs_ctrl_fine_gray_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-s6e_lane_1_pma_rxa_ctle1_rs_ctrl_fine_gray_adapted_rate5""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,"get s6e_lane_1_pma_rxa_ctle1_rs_ctrl_fine_gray_adapted_rate5"
+,"+{pattern=""s6e_lane_1_pma_rxa_ctle1_rs_ctrl_fine_gray_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsS6E_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,

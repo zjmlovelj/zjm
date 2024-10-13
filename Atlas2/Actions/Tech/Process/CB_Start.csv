@@ -1,0 +1,11 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-RTC_Set_CMD""}",,,,,,,,"Set_RTC_Start"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{Commands=""rtc --set""}",,,,,,,,
+,"+{Date=""%Y%m%d%H%M%S""}",,,,,,,,
+,"+{Timeout=""3""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Process>startCB,"{subsubtestname=""Start_Process_Control""}",,,,,,,,"Start_Process_Control"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,

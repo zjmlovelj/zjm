@@ -1,0 +1,48 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Parameters,,MLB_Num,,,,,,,
+,,smokey_WDFU_resp,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-WSKU""}",WSKU_HAS_ADDED,,,,,,,"check RFEM already have or not;  only fresh board need to write the RFEM key"
+,"+{expect=""WSKU has already been added""}",,,,,,,,
+,"+{Input=smokey_WDFU_resp}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Read-WSKU_Print""}",WSKU_print_resp,,,,,,,"Read WSKU key with command syscfg print WSKU"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{Timeout=""10""}",,,,,,,,
+,"+{Commands=""syscfg print WSKU""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-Key""}",WSKU_print_value,,,,,,,"upload WSKU_Key to insight"
+,"+{attribute=""WSKUKey""}",,,,,,,,
+,"+{pattern=""syscfg print WSKU%s+([0-9A-Fx ]+)""}",,,,,,,,
+,"+{Input=WSKU_print_resp}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Compare-Value_Read_and_Write""}",,,,,,WSKU_HAS_ADDED=="FALSE",,"Compare WSKU with Read back and writ key"
+,"+{target=WSKU_print_value}",,,,,,,,
+,"+{pattern=""syscfg add WSKU ([0-9A-Fx ]+)""}",,,,,,,,
+,"+{Input=smokey_WDFU_resp}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTInfo>getByteLen,"{subsubtestname=""Read-Key_Length""}",,,,,,,,"check WSKU key length; mush be 16byte"
+,"+{Input=WSKU_print_value}",,,,,,,,
+,"+{ByteLen=""16""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-Version""}",,,,,,,,"frist 4byte mush be 0x00000001"
+,"+{pattern=""([0-9A-Fx]+) [0-9A-Fx]+ [0-9A-Fx]+""}",,,,,,,,
+,"+{target=""0x00000001""}",,,,,,,,
+,"+{Input=WSKU_print_value}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-Value""}",,,,,,,,"second 4byte mush be 0x00000000"
+,"+{pattern=""[0-9A-Fx]+ ([0-9A-Fx]+) [0-9A-Fx]+""}",,,,,,,,
+,"+{target=""0x00000000""}",,,,,,,,
+,"+{Input=WSKU_print_value}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Compare>versionCompare,"{subsubtestname=""Compare-WSKU""}",,,,,,,,"WSKU check with Versioncompare file"
+,"+{comparekey=""WSKU""}",,,,,,,,
+,"+{compareFunc=""wskuVersionCompare""}",,,,,,,,
+,"+{pattern=""(SKU [0-9]+)""}",,,,,,,,
+,"+{Input=WSKU_print_value}",,,,,,,,
+,"+{MLB_Num=MLB_Num}",,,,,,,,
+,"+{smokey_WDFU_resp=smokey_WDFU_resp}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Returns,WSKU_HAS_ADDED,,,,,,,,
+,WSKU_print_resp,,,,,,,,
+,WSKU_print_value,,,,,,,,

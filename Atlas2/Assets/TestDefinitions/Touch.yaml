@@ -1,0 +1,178 @@
+-   technology: Touch
+    coverage: SmokeyTest
+    testParameters: TouchShorts
+    sequence:
+        actions:
+            - RunSmokeyTest_TouchShorts:
+                filename: Tech/Touch/SmokeyTest_TouchShorts.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand                  
+
+
+-   technology: Touch
+    coverage: SmokeyTest
+    testParameters: TouchTiCC
+    sequence:
+        actions:
+            - RunSmokeyTest_TouchTiCC:
+                filename: Tech/Touch/SmokeyTest_TouchTiCC.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+
+-   technology: Touch
+    coverage: SmokeyTest
+    testParameters: TouchGeneralTest
+    outputs:
+        Grape_Properties_resp:
+            lookup: [RunSmokeyTest_TouchGeneralTest, 1]
+        TOUCH_FIRMWARE:
+            lookup: [RunSmokeyTest_TouchGeneralTest, 2]
+    sequence:
+        actions:
+            - RunSmokeyTest_TouchGeneralTest:
+                filename: Tech/Touch/SmokeyTest_TouchGeneralTest.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+
+-   technology: Touch
+    coverage: SmokeyTest
+    testParameters: TouchGPIOTest
+    sequence:
+        actions:
+            - RunSmokeyTest_TouchGPIOTest:
+                filename: Tech/Touch/SmokeyTest_TouchGPIOTest.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand                     
+
+-   technology: Touch
+    coverage: SmokeyTest_TiCC
+    testParameters: "*"
+    inputs:
+        Chip_ID: 'find.output("SOC","Info_1","","Chip_ID")'
+        ECID: 'find.output("SOC","Info_1","","ECID")'
+        boardRev: 'find.output("USBC","OTPProgram","","boardRev")'
+        MLB_Num: 'find.output("Fixture","Initialize","","MLB_Num")'
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    outputs:
+        TiCC_SN:
+            lookup: [RunSmokeyTest_TiCC, 1]
+        TiCC_Ver:
+            lookup: [RunSmokeyTest_TiCC, 2]
+        crc32_key:
+            lookup: [RunSmokeyTest_TiCC, 3]
+    sequence:
+        actions:
+            - RunSmokeyTest_TiCC:
+                filename: Tech/Touch/SmokeyTest_TiCC.csv
+                args:
+                    - lookup: [inputs, Chip_ID]
+                    - lookup: [inputs, ECID]
+                    - lookup: [inputs, boardRev]
+                    - lookup: [inputs, MLB_Num]
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - Dut
+                    - ChannelPlugin
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - FDR
+                    - USBFS
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+
+-   technology: Touch
+    coverage: GPIOCheck_SPI_ConnectivityTest
+    testParameters: '*'
+    sequence:
+        actions:
+            - RunGPIOCheck_SPI_ConnectivityTest:
+                filename: Tech/Touch/GPIOCheck_SPI_ConnectivityTest.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+
+
+-   technology: Touch
+    coverage: GPIOCheck_5
+    testParameters: '*'
+    sequence:
+        actions:
+            - RunGPIOCheck_5:
+                filename: Tech/Touch/GPIOCheck_5.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+
+

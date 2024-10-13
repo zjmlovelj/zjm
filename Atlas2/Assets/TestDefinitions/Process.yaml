@@ -1,0 +1,310 @@
+-   technology: Process
+    coverage: Transition_Diags_1
+    testParameters: '*'
+    inputs:
+        Location_ID: 'find.output("USBC","OTPProgram","","Location_ID")'
+    sequence:
+        actions:
+            - RunTransition_Diags_1:
+                filename: Tech/Process/Transition_Diags_1.csv
+                args:
+                    - lookup: [inputs, Location_ID]
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - InteractiveView
+                    - Regex
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+                    - Utilities
+
+
+-   technology: Process
+    coverage: CB_Init
+    testParameters: '*'
+    sequence:
+        actions:
+            - RunCB_Init:
+                filename: Tech/Process/CB_Init.csv
+                plugins:
+                    - Dut
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - ChannelPlugin
+                    - FixturePlugin
+                    - InteractiveView
+                    - SFC
+                    - Regex
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+
+-   technology: Process
+    coverage: Transition_RTOS_1
+    testParameters: '*'
+    inputs:
+        Location_ID: 'find.output("USBC","OTPProgram","","Location_ID")'
+    sequence:
+        actions:
+            - RunTransition_RTOS_1:
+                filename: Tech/Process/Transition_RTOS_1.csv
+                args:
+                    - lookup: [inputs, Location_ID]
+                plugins:
+                    - Dut
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - ChannelPlugin
+                    - FixturePlugin
+                    - InteractiveView
+                    - SFC
+                    - Regex
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin 
+
+
+-   technology: Process
+    coverage: Transition_RTOS_2
+    testParameters: '*'
+    inputs:
+        RTOS_Version: 'find.output("DUTInfo","RTOSFW","","RTOS_Version")'
+    sequence:
+        actions:
+            - RunTransition_RTOS_2:
+                filename: Tech/Process/Transition_RTOS_2.csv
+                args:
+                    - lookup: [inputs, RTOS_Version]
+                plugins:
+                    - Dut
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - ChannelPlugin
+                    - FixturePlugin
+                    - InteractiveView
+                    - SFC
+                    - Regex
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+
+
+
+-   technology: Process
+    coverage: Transition_RBM_1
+    testParameters: '*'
+    inputs:
+        Location_ID: 'find.output("USBC","OTPProgram","","Location_ID")'
+    sequence:
+        actions:
+            - RunTransition_RBM_1:
+                filename: Tech/Process/Transition_RBM_1.csv
+                args:
+                    - lookup: [inputs, Location_ID]
+                plugins:
+                    - Dut
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - ChannelPlugin
+                    - FixturePlugin
+                    - InteractiveView
+                    - SFC
+                    - Regex
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+                    - Utilities
+
+-   technology: Process
+    coverage: Transition_RBM_2
+    testParameters: '*'
+    inputs:
+        RBM_Version: 'find.output("DUTInfo","RBMFW","","RBM_Version")'
+    sequence:
+        actions:
+            - RunTransition_RBM_2:
+                filename: Tech/Process/Transition_RBM_2.csv
+                args:
+                    - lookup: [inputs, RBM_Version]
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin                 
+
+
+-   technology: Process
+    coverage: Transition_Diags_2
+    testParameters: '*'
+    sequence:
+        actions:
+            - RunTransition_Diags_2:
+                filename: Tech/Process/Transition_Diags_2.csv
+                plugins:
+                    - Dut
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - ChannelPlugin
+                    - FixturePlugin
+                    - InteractiveView
+                    - SFC
+                    - Regex
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+                    - Utilities
+
+
+-   technology: Process
+    coverage: CB_Start
+    testParameters: '*'
+    sequence:
+        actions:
+            - RunCB_Start:
+                filename: Tech/Process/CB_Start.csv
+                plugins:
+                    - Dut
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - ChannelPlugin
+                    - FixturePlugin
+                    - InteractiveView
+                    - SFC
+                    - Regex
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+
+
+
+-   technology: Process
+    coverage: Reset_Diags
+    testParameters: '*'
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    sequence:
+        actions:
+            - RunReset_Diags:
+                filename: Tech/Process/Reset_Diags.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - Dut
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - ChannelPlugin
+                    - FixturePlugin
+                    - InteractiveView
+                    - SFC
+                    - Regex
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+                    - Utilities
+
+-   technology: Process
+    coverage: CB_2
+    testParameters: '*'
+    inputs:
+        MLB_Num: 'find.output("Fixture","Initialize","","MLB_Num")'
+    sequence:
+        actions:
+            - RunCB_2:
+                filename: Tech/Process/CB_2.csv
+                args:
+                    - lookup: [inputs, MLB_Num]
+                plugins:
+                    - Dut
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - ChannelPlugin
+                    - FixturePlugin
+                    - InteractiveView
+                    - SFC
+                    - Regex
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+
+
+-   technology: Process
+    coverage: CB_Finish
+    testParameters: "*"
+    sequence:
+        actions:
+            - RunCB_Finish:
+                filename: Tech/Process/CB_Finish.csv
+                plugins:
+                    - Dut
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - ChannelPlugin
+                    - FixturePlugin
+                    - InteractiveView
+                    - SFC
+                    - Regex
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+
+
+-   technology: Process
+    coverage: Teardown
+    testParameters: getDeviceOverallResult
+    conditions:
+        testfail:
+            lookup: [RungetDeviceOverallResult, 1]
+        Poison:
+            lookup: [RungetDeviceOverallResult, 2]
+    sequence:
+        actions:
+            - data:
+                dataQuery: true
+            - RungetDeviceOverallResult:
+                filename: Tech/Process/getDeviceOverallResult.csv
+                args:
+                    - lookup: [data, 4]
+                plugins:
+                    - VariableTable
+                    - StationInfo 
+
+                    

@@ -1,0 +1,18 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Parameters,,MLB_Num,,,,,,,
+,,slotNum,,,,,,,
+,,testfail,,,,,,,
+Tech/Fixture>sendFixtureCommand,"{subsubtestname=""Set-LED_GREEN_ON""}",,,,,,testfail ~= "TRUE",,Set LED GREEN
+,"+{Commands=""led_green_on""}",,,,,,,,
+,"+{slotNum=slotNum}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Fixture>sendFixtureCommand,"{subsubtestname=""Set-LED_RED_ON""}",,,,,,testfail == "TRUE",,Set LED RED
+,"+{Commands=""led_red_on""}",,,,,,,,
+,"+{slotNum=slotNum}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Fixture>getRpcServerLog,"{subsubtestname=""Get-RPC_Server_Log""}",,,,,,testfail == "TRUE",,Get rpc server log from xavier
+,"+{record=""false""}",,,,,,,,
+Tech/SOC>addLogToInsight,"{subsubtestname=""Set-Log_To_Insight""}",,,,,,,,Add fixture log to PDCA
+,"+{productstage=""NPI""}",,,,,,,,
+,"+{MLB_Num=MLB_Num}",,,,,,,,
+,"+{record=""false""}",,,,,,,,

@@ -1,0 +1,17 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Parameters,,slotNum,,,,,,,
+Tech/Fixture>sendFixtureCommand,"{subsubtestname=""Get-Xavier_FW_Version""}",,,,,,,,"print fixture's Xavier FW version"
+,"+{attribute=""MIX_FW_Version""}",,,,,,,,
+,"+{Commands=""get_version""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Fixture>sendFixtureCommand,"{subsubtestname=""Get-Xavier_SerialNumber""}",,,,,,,,"print fixture's Xavier SerialNumber"
+,"+{attribute=""Xavier-001""}",,,,,,,,
+,"+{Commands=""fixture_command""}",,,,,,,,
+,"+{args=""get_xavier_serial_number;;3000""}",,,,,,,,
+,"+{slotNum=slotNum}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>getSationInfo,"{subsubtestname=""Get-User""}",user,,,,,,,"Get User Info"
+,"+{Config_file=""/Users/gdlocal/Library/Atlas2/supportFiles/InfoConfig.json""}",Project,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Returns,user,,,,,,,,
+,Project,,,,,,,,

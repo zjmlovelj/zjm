@@ -1,0 +1,6 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Tech/SOC>getEnvVersion,"{subsubtestname=""Read-RBM_Version""}",RBM_Version,,,,,,,rbm version
+,"+{env=""rbm""}",,,,,,,,
+,"+{log_device=""kis_usb.log""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Returns,RBM_Version,,,,,,,,

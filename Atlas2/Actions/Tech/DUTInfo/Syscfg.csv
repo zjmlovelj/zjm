@@ -1,0 +1,22 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Initial_CMD""}",,,,,,,,"send syscfg init"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{expect=""Finish""}",,,,,,,,
+,"+{Timeout=""3""}",,,,,,,,
+,"+{Commands=""syscfg init""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-RTC_Set_CMD""}",,,,,,,,"Set RTC"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{Commands=""rtc --set""}",,,,,,,,
+,"+{Date=""%Y%m%d%H%M%S""}",,,,,,,,
+,"+{Timeout=""3""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-RTC_Set_CMD""}",,,,,,,,"get RTC"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{expect=""RTC_Time""}",,,,,,,,
+,"+{Commands=""rtc --get""}",,,,,,,,
+,"+{Timeout=""3""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,

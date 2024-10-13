@@ -1,0 +1,26 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Grape_Safe_Mode_CMD""}",,,,,,,,"Set touch module to safe mode"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{expect=""OK""}",,,,,,,,
+,"+{Timeout=""10""}",,,,,,,,
+,"+{Commands=""touch --sel grape --set_param boot-safe-mode true""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-TouchShorts_Test_CMD""}",,,,,,,,"touch short test"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{expect=""Passed""}",,,,,,,,
+,"+{pattern=""Sequence done[%s%S]-(%w+)""}",,,,,,,,
+,"+{hangTimeout=""100""}",,,,,,,,
+,"+{Timeout=""200""}",,,,,,,,
+,"+{Commands=""smokey --run LogBehavior=ConsoleOnly ResultsBehavior=NoFile Wildfire --test ""TouchShorts"" ControlBitAccess=ReadOnly ""SerialNumberSource='MLB#'""""}",,,,,,,,
+,"+{NotDiagsTriage=""YES""}",,,,,,,,
+,"+{errorCheck=""NO""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Touch_Off_CMD""}",,,,,,,,touch off
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{expect=""OK""}",,,,,,,,
+,"+{Timeout=""10""}",,,,,,,,
+,"+{Commands=""touch --off""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,

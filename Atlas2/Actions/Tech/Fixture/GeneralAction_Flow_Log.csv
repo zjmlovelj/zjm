@@ -1,0 +1,6 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Parameters,,MLB_Num,,,,,,,
+Tech/Common>generateFlowLog,"{subsubtestname=""Get-Flow_Log""}",,,,,,,,"generate the flow log and pivot csv"
+,"+{MLB_Num=MLB_Num}",,,,,,,,
+,"+{logFile=""uart.log,kis_usb.log,ticc.bin,get.bin,/Smokey.log""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,

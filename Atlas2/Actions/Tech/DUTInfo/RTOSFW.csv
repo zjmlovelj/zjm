@@ -1,0 +1,13 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Tech/SOC>getEnvVersion,"{subsubtestname=""Read-RTOS_Version""}",RTOS_Version,,,,,,,"Rtos_version"
+,"+{env=""rtos""}",,,,,,,,
+,"+{log_device=""kis_usb.log""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Read-SOC_info""}",,,,,,,,"Read SOC Fuse config"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{Timeout=""10""}",,,,,,,,
+,"+{delimiter=""SEGPE>""}",,,,,,,,
+,"+{Commands=""fuse config""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Returns,RTOS_Version,,,,,,,,

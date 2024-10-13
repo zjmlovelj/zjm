@@ -1,0 +1,35 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-PressureSensor_Test_CMD""}",phosphorus_test_resp,,,,,,,"Conﬁgure AOP GPIO;Collect system information;Initiate/connect pressure sensor"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{Timeout=""10""}",,,,,,,,
+,"+{Commands=""egpio --pick aop --pin 35 --mode input --pull up --read;sensor --listsensors;sensor --sel pressure --init;sensor --sel pressure --conntest;sensor --sel pressure --turnoff;wait 20;sensor --sel pressure --init;sensorreg --sel pressure -r 0x00 4;sensorreg --sel pressure -r 0x45 10""}",,,,,,,,
+,"+{expect=""OK""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Read-Press_Average""}",Sample1000ms_PR_Pressure_Average,,,,,,,"Test pressure sensor;Turn off pressure sensor"
+,"+{dutPluginName=""Kis_dut""}",pressure_test_resp,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{targetindex=""2""}",,,,,,,,
+,"+{isparametric=""YES""}",,,,,,,,
+,"+{pattern=""average: pressure = ([+-]?[0-9.]+), temp = [+-]?[0-9.]+""}",,,,,,,,
+,"+{Timeout=""10""}",,,,,,,,
+,"+{Commands=""sensor --sel pressure --sample 1000ms --stats;sensor --sel pressure --turnoff""}",,,,,,,,
+,"+{expect=""OK""}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-Press_Std""}",,,,,,,,Read pressure value
+,"+{pattern=""std%-dev%: pressure = ([+-]?[0-9.]+), temp = [+-]?[0-9.]+""}",,,,,,,,
+,"+{factor=""1000""}",,,,,,,,
+,"+{Input=pressure_test_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-ODR""}",,,,,,,,Read ODR
+,"+{pattern=""calculated odr%: ([+-]?[0-9.]+)Hz""}",,,,,,,,
+,"+{Input=pressure_test_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-Temp_Average""}",,,,,,,,Read Temp Average
+,"+{pattern=""average%: pressure = %-?[0-9.]+, temp = ([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=pressure_test_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-Temp_Std""}",,,,,,,,Read Temp Std 
+,"+{pattern=""std%-dev%: pressure = %-?[0-9.]+, temp = ([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=pressure_test_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,

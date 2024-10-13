@@ -1,0 +1,7 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Read-Syscfg_List""}",,,,,,,,"list syscfg after test"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{Timeout=""30""}",,,,,,,,
+,"+{Commands=""syscfg list""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,

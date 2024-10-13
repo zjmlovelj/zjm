@@ -1,0 +1,22 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Tech/Common>delay,"{subsubtestname=""Delay-1000ms""}",,,,,,,,"delay 1000ms"
+,"+{delay=""1000""}",,,,,,,,
+,"+{unit=""ms""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Read-FW_Version""}",rt13_ret,,,,,,,"read RT13 FW"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{pattern=""Data:%s+(.+)""}",,,,,,,,
+,"+{Commands=""i2c --devread 0 0x18 0xa 0x41 multiple""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/USBC>checkRT13FWVersion,"{subsubtestname=""Compare-RT13_FW_Version""}",,,,,,,,"Check RT13 FW version"
+,"+{attribute=""RT13_FW_Version""}",,,,,,,,
+,"+{expect=""@AppleRetimerTypeCFirmware-275~33__2024-08-02-11:40:34-PDT""}",,,,,,,,
+,"+{Input=rt13_ret}",,,,,,,,
+,"+{fa_sof=""YES""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>delay,"{subsubtestname=""Delay-100ms""}",,,,,,,,"delay 100ms"
+,"+{delay=""100""}",,,,,,,,
+,"+{unit=""ms""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Returns,rt13_ret,,,,,,,,

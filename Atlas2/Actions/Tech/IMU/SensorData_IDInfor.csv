@@ -1,0 +1,27 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Parameters,,accel_gyro_normal_test_resp,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-inertial_manu_id""}",,,,,,,,parse inertial manu id from uart.log
+,"+{attribute=""Gyro_Manu_ID""}",,,,,,,,
+,"+{pattern=""manu_id = (0x[0-9a-fA-F]+)""}",,,,,,,,
+,"+{Input=accel_gyro_normal_test_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-inertial_rev_id""}",,,,,,,,parse inertial rev id from uart.log
+,"+{attribute=""Gyro_Rev_ID""}",,,,,,,,
+,"+{pattern=""rev_id = (0x[0-9a-fA-F]+)""}",,,,,,,,
+,"+{Input=accel_gyro_normal_test_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-inertial_chip_id""}",,,,,,,,parse inertial chip id from uart.log
+,"+{attribute=""Gyro_Chip_ID""}",,,,,,,,
+,"+{pattern=""chip_id = (0x[0-9a-fA-F]+)""}",,,,,,,,
+,"+{Input=accel_gyro_normal_test_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-inertial_mems_id""}",,,,,,,,parse inertial mems id from uart.log
+,"+{attribute=""Gyro_Mems_ID""}",,,,,,,,
+,"+{pattern=""mems_id = (0x[0-9a-fA-F]+)""}",,,,,,,,
+,"+{Input=accel_gyro_normal_test_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-inertial_asic_id""}",,,,,,,,parse inertial asic id from uart.log
+,"+{attribute=""Gyro_ASIC_ID""}",,,,,,,,
+,"+{pattern=""asic_id = (0x[0-9a-fA-F]+)""}",,,,,,,,
+,"+{Input=accel_gyro_normal_test_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,

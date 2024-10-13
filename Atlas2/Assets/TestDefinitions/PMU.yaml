@@ -1,0 +1,94 @@
+-   technology: PMU
+    coverage: GPIOCheck_4
+    testParameters: '*'
+    inputs:
+        mlb_type: 'find.output("USBC","OTPProgram","","mlb_type")'
+    sequence:
+        actions:
+            - RunGPIOCheck_4:
+                filename: Tech/PMU/GPIOCheck_4.csv
+                args:
+                    - lookup: [inputs, mlb_type]
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand   
+
+
+-   technology: PMU
+    coverage: GPIOCheck_6
+    testParameters: '*'
+    inputs:
+        mlb_type: 'find.output("USBC","OTPProgram","","mlb_type")'
+    sequence:
+        actions:
+            - RunGPIOCheck_6:
+                filename: Tech/PMU/GPIOCheck_6.csv
+                args:
+                    - lookup: [inputs, mlb_type]
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+
+                    
+-   technology: PMU
+    coverage: UnderVoltageWarning_Abbey
+    testParameters: '*'
+    sequence:
+        actions:
+            - RunUnderVoltageWarning_Abbey:
+                filename: Tech/PMU/UnderVoltageWarning_Abbey.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - InteractiveView
+                    - RunShellCommand
+
+
+-   technology: PMU
+    coverage: UnderVoltageWarning_Club
+    testParameters: '*'
+    sequence:
+        actions:
+            - RunUnderVoltageWarning_Club:
+                filename: Tech/PMU/UnderVoltageWarning_Club.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - InteractiveView
+                    - RunShellCommand
+
+

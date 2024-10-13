@@ -1,0 +1,16 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Parameters,,boardRev,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Read-Board_REV""}",Board_REV_Compare,,,,,,,"get board rev"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{pattern=""Board Revision: ([0-9a-zA-Z]+)""}",,,,,,,,
+,"+{Timeout=""3""}",,,,,,,,
+,"+{Commands=""boardrev""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Compare>CompareInfo,"{subsubtestname=""Compare-Board_REV-SFC_Board_REV""}",,,,,,,,"Compare board revision with manual maintain"
+,"+{firstValue=boardRev}",,,,,,,,
+,"+{secondValue=Board_REV_Compare}",,,,,,,,
+,"+{attribute=""BOARD_REV""}",,,,,,,,
+,"+{Timeout=""3""}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Returns,Board_REV_Compare,,,,,,,,

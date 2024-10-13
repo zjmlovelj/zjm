@@ -1,0 +1,37 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Parameters,,slotNum,,,,,,,
+Tech/Fixture>sendFixtureCommand,"{subsubtestname=""Set-VBAT_OCP-8A""}",,,,,,,,"set VBATT OCP to 3A"
+,"+{Commands=""relay_switch""}",,,,,,,,
+,"+{args=""VBATT_OCP_8A;SET""}",,,,,,,,
+,"+{slotNum=slotNum}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Fixture>sendFixtureCommand,"{subsubtestname=""Set-VBUS_OCP-3A5""}",,,,,,,,"set VBUS OCP to 3.5A"
+,"+{Commands=""relay_switch""}",,,,,,,,
+,"+{args=""VBUS_OCP_3A5;SET""}",,,,,,,,
+,"+{slotNum=slotNum}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Fixture>sendFixtureCommand,"{subsubtestname=""Set-VBAT-4V2""}",,,,,,,,"Set VBAT TO 4.2V"
+,"+{Commands=""relay_switch""}",,,,,,,,
+,"+{args=""vbatt;on""}",,,,,,,,
+,"+{slotNum=slotNum}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Fixture>sendFixtureCommand,"{subsubtestname=""Connect-Debug_UART""}",,,,,,,,"connect to UART_TX"
+,"+{Commands=""relay_switch""}",,,,,,,,
+,"+{args=""UART_TX;connect""}",,,,,,,,
+,"+{slotNum=slotNum}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Fixture>sendFixtureCommand,"{subsubtestname=""Set-PDVBUS-5V""}",,,,,,,,"Set PDVBUS TO 5V"
+,"+{Commands=""relay_switch""}",,,,,,,,
+,"+{args=""pdvbus;on""}",,,,,,,,
+,"+{slotNum=slotNum}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Fixture>sendFixtureCommand,"{subsubtestname=""Connect-USB_Kis""}",,,,,,,,"connect to USB_Kis"
+,"+{Commands=""relay_switch""}",,,,,,,,
+,"+{args=""USB_Kis;connect""}",,,,,,,,
+,"+{slotNum=slotNum}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Fixture>sendFixtureCommand,"{subsubtestname=""Set-GPIO_ACE2SOC_DOCK_CONNECT-1V2""}",,,,,,,,"set 1.2v to GPIO_ACE2SOC_dock_connect"
+,"+{Commands=""relay_switch""}",,,,,,,,
+,"+{args=""GPIO_Ace2SOC_Dock_Connect;connect""}",,,,,,,,
+,"+{slotNum=slotNum}",,,,,,,,
+,"+{record=""false""}",,,,,,,,

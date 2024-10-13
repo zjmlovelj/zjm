@@ -1,0 +1,77 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Accel_Connectivity_CMD""}",,,,,,,,"accel conntest"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{targetindex=""3""}",,,,,,,,
+,"+{Timeout=""10""}",,,,,,,,
+,"+{Commands=""sensor --sel accel --init;wait 20;sensor --sel accel --conntest;sensor --sel accel --turnoff;wait 20""}",,,,,,,,
+,"+{expect=""PASS""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Accel_Selftest_CMD""}",accel_only_test_resp,,,,,,,"accel self test"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{targetindex=""3""}",,,,,,,,
+,"+{expect=""passed""}",,,,,,,,
+,"+{Timeout=""30""}",,,,,,,,
+,"+{Commands=""sensor --sel accel --init;wait 20;sensor --sel accel --exectest selftest;sensor --sel accel --turnoff;wait 20""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-Accel_Selftest-Result""}",accel_selftest_result_resp,,,,,,,"accel test result"
+,"+{pattern=""PASS""}",accel_selftest_result,,,,,,,
+,"+{failWhenNotFound=""YES""}",,,,,,,,
+,"+{Input=accel_only_test_resp}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-accel_selftest_x_pos""}",,,,,,accel_selftest_result=="FALSE",,"Read accel selftest x pos"
+,"+{pattern=""pos%-response%: x = (-?[0-9]+)""}",,,,,,,,
+,"+{Input=accel_only_test_resp}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-accel_selftest_y_pos""}",,,,,,accel_selftest_result=="FALSE",,"Read accel selftest y pos"
+,"+{pattern=""pos%-response%: x = %-?[0-9]+, y = (-?[0-9]+)""}",,,,,,,,
+,"+{Input=accel_only_test_resp}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-accel_selftest_z_pos""}",,,,,,accel_selftest_result=="FALSE",,"Read accel selftest z pos"
+,"+{pattern=""pos%-response%: x = %-?[0-9]+, y = %-?[0-9]+, z = (-?[0-9]+)""}",,,,,,,,
+,"+{Input=accel_only_test_resp}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-accel_selftest_x_neg""}",,,,,,accel_selftest_result=="FALSE",,"Read accel selftest x neg"
+,"+{pattern=""neg%-response%: x = (-?[0-9]+)""}",,,,,,,,
+,"+{Input=accel_only_test_resp}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-accel_selftest_y_neg""}",,,,,,accel_selftest_result=="FALSE",,"Read accel selftest y neg"
+,"+{pattern=""neg%-response%: x = %-?[0-9]+, y = (-?[0-9]+)""}",,,,,,,,
+,"+{Input=accel_only_test_resp}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-accel_selftest_z_neg""}",,,,,,accel_selftest_result=="FALSE",,"Read accel selftest z neg"
+,"+{pattern=""neg%-response%: x = %-?[0-9]+, y = %-?[0-9]+, z = (-?[0-9]+)""}",,,,,,,,
+,"+{Input=accel_only_test_resp}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-accel_selftest_x_symerr""}",,,,,,accel_selftest_result=="FALSE",,"Read accel selftest x symerr"
+,"+{pattern=""SymErr%-response%: x = (-?[0-9]+)""}",,,,,,,,
+,"+{Input=accel_only_test_resp}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-accel_selftest_y_symerr""}",,,,,,accel_selftest_result=="FALSE",,"Read accel selftest y symerr"
+,"+{pattern=""SymErr%-response%: x = %-?[0-9]+, y = (-?[0-9]+)""}",,,,,,,,
+,"+{Input=accel_only_test_resp}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-accel_selftest_z_symerr""}",,,,,,accel_selftest_result=="FALSE",,"Read accel selftest z symerr"
+,"+{pattern=""SymErr%-response%: x = %-?[0-9]+, y = %-?[0-9]+, z = (-?[0-9]+)""}",,,,,,,,
+,"+{Input=accel_only_test_resp}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Accel_Selftest_Manual_CMD""}",,,,,,,,"accel exectest selftest_manual"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{Timeout=""10""}",,,,,,,,
+,"+{targetindex=""2""}",,,,,,,,
+,"+{Commands=""sensor --sel accel --exectest selftest_manual;sensor --sel accel --turnoff;wait 20""}",,,,,,,,
+,"+{expect=""PASS""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Accel_Sample_Status_CMD""}",accel_only_test_sec_resp,,,,,,,"get accel sample 500ms stats"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{Timeout=""30""}",,,,,,,,
+,"+{targetindex=""5""}",,,,,,,,
+,"+{Commands=""sensor --sel accel --init;wait 20;sensor --sel accel --set rate 100;sensor --sel accel --set dynamic_range 32;sensor --sel accel --sample 500ms --stats;sensorreg -s accel --dump;sensor --sel accel --turnoff""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+,"+{expect=""OK""}",,,,,,,,
+Returns,accel_only_test_resp,,,,,,,,
+,accel_selftest_result,,,,,,,,
+,accel_only_test_sec_resp,,,,,,,,

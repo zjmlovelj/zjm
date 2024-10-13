@@ -1,0 +1,4 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Tech/Common>getSlotNum,"{subsubtestname=""Get-Channel_ID""}",slotNum,,,,,,,"get slot number(base 1)"
+,"+{record=""true""}",,,,,,,,
+Returns,slotNum,,,,,,,,

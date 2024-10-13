@@ -1,0 +1,7 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Tech/Restore>checkHangAndKernelPanic,"{subsubtestname=""Check-Kernel_Panic""}",restore_uart_log,,,,,,,"check for panic during restore"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{hangTimeout=""180""}",,,,,,,,
+,"+{Timeout=""1500""}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Returns,restore_uart_log,,,,,,,,
