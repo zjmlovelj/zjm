@@ -364,8 +364,8 @@ function Restore.restoreDFUModeCheck(paraTab)
         helper.flowLogFinish(false, paraTab, locationId, "Get LocationID failed")
         helper.reportFailure("Get LocationID failed")
     end
-    local VariableTable = Device.getPlugin("VariableTable")
-    VariableTable.setVar("isRestoreFinished", false)
+    local variableTable = Device.getPlugin("VariableTable")
+    variableTable.setVar("isRestoreFinished", false)
     helper.flowLogFinish(true, paraTab, locationId)
     return locationId
 end

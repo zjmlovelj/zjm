@@ -3,20 +3,19 @@ Disable,Technology,Coverage,TestParameters,Dependency,Conditions,Product,Station
 ,Fixture,Initialize,,,,,,Production,/Fixture.yaml,,,,"Fixture init"
 ,Fixture,SoftwareCheck,,,,,,Production,/Fixture.yaml,Y,,,"Software Check"
 ,Fixture,HardwareCheck,,,,,,Production,/Fixture.yaml,Y,,,"Hardware Check"
-,Fixture,GeneralAction,Reset_Initial,,,,,Production,/Fixture.yaml,Y,,,"Fixture_Reset_Initial"
-,Fixture,GeneralAction,Led_Inprogress_On,,,,,Production,/Fixture.yaml,Y,,,"Set LED Color to Blue"
+,Fixture,GeneralAction,Initial,,,,,Production,/Fixture.yaml,Y,,,"Fixture_Reset_Initial"
 ,Power,Discharge,Initial,,,,,Production,/Power.yaml,Y,,,"Rail_Discharge-Initial"
 ,Power,VoltageCheck,Safety_VBAT0V8,,,,,Production,/Power.yaml,Y,,,"VBATT_LV_Short_Check"
 ,Power,VoltageCheck,Safety_VBUS1V2,,,,,Production,/Power.yaml,Y,,,"VBUS_Short_Check"
 ,Power,VoltageCheck,Safety_VBAT4V2,,,,,Production,/Power.yaml,Y,,,"VBATT_HV_Short_Check"
 ,Power,On_Seq,OTP,,,,,Production,/Power.yaml,Y,,,"On_Seq_OTP"
 ,USBC,OTPProgram,,,,,,Production,/USBC.yaml,,,,"OTP_Program"
-,Power,Discharge,Initial_OTP,,,,,Production,/Power.yaml,Y,,,"OTP_Discharge-Initial"
+,Power,Discharge,OTP,,,,,Production,/Power.yaml,Y,,,"OTP_Discharge-Initial"
 ,Power,On_Seq,FWDL,,,,,Production,/Power.yaml,Y,,,"On_Seq_FWDL"
 ,USBC,FWDL_ACEFlash_SPI,,,,,,Production,/USBC.yaml,Y,,,"FWDL"
-,Power,Discharge,Initial_FWDL,,,,,Production,/Power.yaml,Y,,,"FWDL_Discharge-Initial"
+,Power,Discharge,FWDL,,,,,Production,/Power.yaml,Y,,,"FWDL_Discharge-Initial"
 ,Power,On_Seq,Restore,,,,,Production,/Power.yaml,,,,"On_Seq_Restore"
-,USBC,Info_ACE3_FWVersion,,,,,,Production,/USBC.yaml,Y,,,"checkOTPVersion"
+,USBC,Info_ACE3,,,,,,Production,/USBC.yaml,Y,,,"checkOTPVersion"
 ,SOC,Restore_DFUMode,,,,,,Production,/SOC.yaml,Y,,,"Restore_DFUModeCheck"
 ,-,-,-,,,,,,,,,,
 ,SOC,Restore_NonUI_DCSD_1,,"{SOC,Restore_DFUMode,}",,,,Production,/SOC.yaml,Y,,,"Do restore process"
@@ -25,20 +24,20 @@ Disable,Technology,Coverage,TestParameters,Dependency,Conditions,Product,Station
 Y,SOC,Restore_NonUI_DCSD_3,,"{SOC,Restore_DFUMode,}",,,,Production,/SOC.yaml,Y,,,"Ace_Provisioning_Power"
 ,-,-,-,,,,,,,,,,
 ,SOC,Restore_NonUI_DCSD_4,,"{SOC,Restore_NonUI_DCSD_1,},{SOC,Restore_NonUI_DCSD_2,}",,,,Production,/SOC.yaml,,,,"CheckPoint for the restore process"
-,Power,Discharge,Initial_Restore,,,,,Production,/Power.yaml,,,,"Restore_Discharge-Initial"
+,Power,Discharge,Restore,,,,,Production,/Power.yaml,,,,"Restore_Discharge-Initial"
 ,Power,On_Seq,Diags,,,,,Production,/Power.yaml,Y,,,"On_Seq_Diags"
 ,Process,Transition_Diags_1,,,,,,Production,/Process.yaml,Y,,,"Enter_Diags_check"
 ,DUTInfo,BoardRevision,,,,,,Production,/DUTInfo.yaml,,,,"get borad revision"
 ,SOC,Temperature_1,,,,,,Production,/SOC.yaml,,,,"SOC Temperature"
-,DUTInfo,DiagsFW_Version,,,,,,Production,/DUTInfo.yaml,,,,"Get Diags Version"
-,Process,CB_Init,,,,,,Production,/Process.yaml,,,,"cb init"
+,DUTInfo,DiagsFW,,,,,,Production,/DUTInfo.yaml,,,,"Get Diags Version"
+Y,Process,CB_Init,,,,,,Production,/Process.yaml,,,,"cb init"
 ,DUTInfo,Syscfg,,,,,,Production,/DUTInfo.yaml,,,,"Write and Read Syscfg"
-,SOC,Info_SBIN,,,,,,Production,/SOC.yaml,,,,"Write sbin"
+,SOC,Info_SBIN,,,,,,Production,/SOC.yaml,Y,,,"Write sbin"
 ,USBC,FWDL_ACE,,,,,,Production,/USBC.yaml,,,,"Check ACE FW version"
 ,USBC,Info_RT13,,,,,,Production,/USBC.yaml,,,,"Check RT13 FW Version"
 ,DUTInfo,DiagsFW_CRC_Check,,,,,,Production,/DUTInfo.yaml,,,,"Check Diags CRC"
 ,SOC,Temperature,,,,,,Production,/SOC.yaml,,,,"SOC_Thermal-OffOn"
-,DUTInfo,Syscfg_List_1,,,,,,Production,/DUTInfo.yaml,,,,"List syscfg"
+,DUTInfo,Syscfg_1,,,,,,Production,/DUTInfo.yaml,,,,"List syscfg"
 ,Process,Transition_RTOS_1,,,,,,Production,/Process.yaml,,,,
 ,DUTInfo,RTOSFW,,,,,,Production,/DUTInfo.yaml,,,,"Get RTOSFW_Version"
 ,Process,Transition_RTOS_2,,,,,,Production,/Process.yaml,,,,
@@ -51,12 +50,13 @@ Y,SOC,Restore_NonUI_DCSD_3,,"{SOC,Restore_DFUMode,}",,,,Production,/SOC.yaml,Y,,
 Y,Process,CB_Start,,,user~="DQE",,,Production,/Process.yaml,,,,"startProcessControl"
 ,DUTInfo,Syscfg,MLBCFG,,,,,Production,/DUTInfo.yaml,,,,"Write and Read CFG"
 ,SOC,Info_1,,,,,,Production,/SOC.yaml,,,,"Get the SOC Info"
+,SOC,Info_Harvest,,,,,,Production,/SOC.yaml,,,,"Get the Harvest Fuse IP Info"
 ,DUTInfo,Presencecheck_Mogul,,,,,,Production,/DUTInfo.yaml,,,,"Need EFI Diags support to configure Mogul via Ace with generic AID"
 ,PMU,UnderVoltageWarning_Abbey,,,,,,Production,/PMU.yaml,,,,
 ,PMU,UnderVoltageWarning_Club,,,,,,Production,/PMU.yaml,,,,
-,NAND,Info_2,,,,,,Production,/NAND.yaml,,,,
+,NAND,Info_2,,,,,,Production,/NAND.yaml,,,,"Get the NAND Info"
 ,NAND,Info_GBBTest_1,,,,,,Production,/NAND.yaml,,,,
-,Speaker,Reset,,,,,,Production,/Speaker.yaml,,,,
+,Speaker,Reset,,,,,,Production,/Speaker.yaml,Y,,,
 ,SOC,Info_SEP,,,,,,Production,/SOC.yaml,,,,
 ,USBC,LeakageCheck,VBUS_To_PP5V0,,,,,Production,/USBC.yaml,,,,"ERS 2.1.2"
 ,USBC,LeakageCheck,VBUS_To_PPHV,,,,,Production,/USBC.yaml,,,,"ERS 2.1.6(Ace3 Only)"
@@ -65,12 +65,12 @@ Y,Process,CB_Start,,,user~="DQE",,,Production,/Process.yaml,,,,"startProcessCont
 ,USBC,LeakageCheck,CC1-2_To_PPCABLE-PP5V0,,,,,Production,/USBC.yaml,,,,"ERS 2.1.3"
 ,USBC,LeakageCheck,PP5V0_To_VBUS,,,Production_Mode=="0",,Production,/USBC.yaml,,,,"ERS 2.1.1"
 ,USBC,LeakageCheck,PPHV_To_VBUS,,,,,Production,/USBC.yaml,,,,"ERS 2.1.7"
-,NAND,PCIeBIST_AEMToolsS6E,,,,,,Production,/NAND.yaml,,,,
-,NAND,PCIeBIST_AEMToolsANS4,,,,,,Production,/NAND.yaml,,,,
-,RF,Wifi_AEMToolsWifi3nm,,,,,,Production,/RF.yaml,,,,
-,RF,Baseband_AEMToolsBaseband3nm,,,mlb_type=="MLB_B",,,Production,/RF.yaml,,,,
-,RF,Wifi_AEMToolsProxima,,,,,,Production,/RF.yaml,,,,
-,RF,Baseband_AEMToolsSinopeGen4,,,mlb_type=="MLB_B",,,Production,/RF.yaml,,,,
+,NAND,PCIeBIST_S6E,,,,,,Production,/NAND.yaml,,,,
+,NAND,PCIeBIST_ANS4,,,,,,Production,/NAND.yaml,,,,
+,RF,Wifi_3nm,,,,,,Production,/RF.yaml,,,,
+,RF,Baseband_3nm,,,mlb_type=="MLB_B",,,Production,/RF.yaml,,,,
+,RF,Wifi_Proxima,,,,,,Production,/RF.yaml,,,,
+,RF,Baseband_SinopeGen4,,,mlb_type=="MLB_B",,,Production,/RF.yaml,,,,
 Y,IMU,AEMTools_Baseband_AEMTool_RC,,,mlb_type=="MLB_B",,,Production,/IMU.yaml,,,,"only for P1 request by EE Beck,confirm with tony,test new TC"
 Y,IMU,AEMTools_Baseband_AEMTool_RC3V4,,,mlb_type=="MLB_B",,,Production,/IMU.yaml,,,,"for P2 build request by EE Beck,confirm with tony,test new TC"
 ,RF,Baseband,,,mlb_type=="MLB_B",,,Production,/RF.yaml,,,,"BB_Firmware_Load-Diags"
@@ -79,17 +79,18 @@ Y,RF,Wifi,,,,,,Production,/RF.yaml,,,,"WiFi_Firmware_Load-Diags,confirm with ton
 Y,RF,Bluetooth,,,,,,Production,/RF.yaml,,,,"BT_Firmware_Load-Diags,confirm with tony,test new TC"
 ,RF,NFC,,,,,,Production,/RF.yaml,,,,"Stockholm-General_Test"
 ,DUTInfo,Syscfg_Mac,,,,,,Production,/DUTInfo.yaml,,,,"Write Mac address"
-,Touch,SmokeyTest,TouchShorts,,,,,Production,/Touch.yaml,,,,
-,Touch,SmokeyTest,TouchTiCC,,,,,Production,/Touch.yaml,,,,
+,Touch,SmokeyTest,TouchShorts,,,,,Production,/Touch.yaml,Y,,,
+,Touch,SmokeyTest,TouchDFUIQMeas,,,,,Production,/Touch.yaml,,,,
 ,Touch,SmokeyTest,TouchGeneralTest,,,,,Production,/Touch.yaml,,,,
 ,Touch,SmokeyTest,TouchGPIOTest,,,,,Production,/Touch.yaml,,,,
+,Touch,SmokeyTest_TiCC,,,,,,Production,/Touch.yaml,,,,
 Y,Touch,GPIOCheck_SPI_ConnectivityTest,,,,,,Production,/Touch.yaml,,,,"Base on this rdar://107505867 confirm with tony,test new TC "
 ,PMU,GPIOCheck_4,,,,,,Production,/PMU.yaml,,,,
 ,Touch,GPIOCheck_5,,,,,,Production,/Touch.yaml,,,,
 ,PMU,GPIOCheck_6,,,,,,Production,/PMU.yaml,,,,
 ,RF,SmokeyTest,WDFU,,,,,Production,/RF.yaml,,,,"WDFU Smokey Test"
-Y,DUTInfo,Syscfg,RFEM,,,,,Production,/DUTInfo.yaml,,,,"RFEM_sanity_check"
-Y,DUTInfo,Syscfg,WSKU,,mlb_type=="MLB_B",,,Production,/DUTInfo.yaml,,,,"WSKU_sanity_check"
+,DUTInfo,Syscfg,RFEM,,,,,Production,/DUTInfo.yaml,,,,"RFEM_sanity_check"
+,DUTInfo,Syscfg,WSKU,,mlb_type=="MLB_B",,,Production,/DUTInfo.yaml,,,,"WSKU_sanity_check"
 ,SOC,Temperature_2,,,,,,Production,/SOC.yaml,,,,"SOC Temperature"
 Y,SOC,Info_ISP,,,,,,Production,/SOC.yaml,,,,"confirm with tony,test new TC"
 ,Accel,SensorData_VendorInfor,,,,,,Production,/Accel.yaml,,,,"Accel_Test"
@@ -104,16 +105,15 @@ Y,SOC,Info_ISP,,,,,,Production,/SOC.yaml,,,,"confirm with tony,test new TC"
 ,NAND,Info_GBBTest_2,,,,,,Production,/NAND.yaml,,,,
 ,NAND,Info_ANS_HealthTest,,,,,,Production,/NAND.yaml,,,,
 Y,Process,CB_2,,,user~="DQE",,,Production,/Process.yaml,,,,
-,DUTInfo,Syscfg_List_2,,,,,,Production,/DUTInfo.yaml,,,,"List syscfg"
-,SOC,Temperature_3,,,,,,Production,/SOC.yaml,,,,"SOC Temperature"
 ,USBC,Info_AceTRNG,,,,,,Production,/USBC.yaml,,,,
 ,USBC,ForceDFU_ADFU,,,,,,Production,/USBC.yaml,,,,"ADFU check"
-,USBC,Info_ECID,,,,,,Production,/USBC.yaml,,,,
-Y,Touch,SmokeyTest_TiCC,,,,,,Production,/Touch.yaml,,,,
+,DUTInfo,ECID,,,,,,Production,/DUTInfo.yaml,,,,"rdar://132387832 (J6x7, EVT, DFU/Burnin, smokey ECID coverage, submission 20240724)"
+,DUTInfo,Syscfg_2,,,,,,Production,/DUTInfo.yaml,,,,"List syscfg"
+,SOC,Temperature_3,,,,,,Production,/SOC.yaml,,,,"SOC Temperature"
 Y,USBC,PresenceCheck,,,,,,Production,/USBC.yaml,Y,,,"Check ACE Hang"
 Y,Process,CB_Finish,,,user~="DQE",,,Production,/Process.yaml,,,,"Write CB"
 ,=,=,=,,,,,,,,,,
-,Power,Discharge,Initial_End,,,,,Production,/Power.yaml,,,,"Discharge"
+,Power,Discharge,End,,,,,Production,/Power.yaml,,,,"Discharge"
 ,Fixture,GeneralAction_4,,,,,,Production,/Fixture.yaml,,,,"Fixture_Reset"
 ,Process,Teardown,getDeviceOverallResult,,,,,Production,/Process.yaml,,,,
 ,Fixture,GeneralAction_6,,,,,,Production,/Fixture.yaml,,,,

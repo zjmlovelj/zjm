@@ -1,12 +1,12 @@
 -   technology: NAND
-    coverage: PCIeBIST_AEMToolsS6E
+    coverage: PCIeBIST_S6E
     testParameters: "*"
     inputs:
         HAS_TWO_STORAGE_DEVICE: 'find.output("SOC","Info_1","","HAS_TWO_STORAGE_DEVICE")'
     sequence:
         actions:
-            - RunPCIeBIST_AEMToolsS6E:
-                filename: Tech/NAND/PCIeBIST_AEMToolsS6E.csv
+            - RunPCIeBIST_S6E:
+                filename: Tech/NAND/PCIeBIST_S6E.csv
                 args:
                      - lookup: [inputs, HAS_TWO_STORAGE_DEVICE]
                 plugins:
@@ -25,14 +25,14 @@
 
 
 -   technology: NAND
-    coverage: PCIeBIST_AEMToolsANS4
+    coverage: PCIeBIST_ANS4
     testParameters: '*'
     inputs:
         HAS_TWO_STORAGE_DEVICE: 'find.output("SOC","Info_1","","HAS_TWO_STORAGE_DEVICE")'
     sequence:
         actions:
-            - RunPCIeBIST_AEMToolsANS4:
-                filename: Tech/NAND/PCIeBIST_AEMToolsANS4.csv
+            - RunPCIeBIST_ANS4:
+                filename: Tech/NAND/PCIeBIST_ANS4.csv
                 args:
                      - lookup: [inputs, HAS_TWO_STORAGE_DEVICE]
                 plugins:
@@ -57,7 +57,6 @@
         sfc_url: 'find.output("USBC","OTPProgram","","sfc_url")'
         MEMORY_SIZE: 'find.output("SOC","Info_SBIN","","MEMORY_SIZE")'
         SbinKey: 'find.output("SOC","Info_SBIN","","SbinKey")'
-        bin_fuse: 'find.output("SOC","Info_SBIN","","bin_fuse")'
         fuse_rev: 'find.output("SOC","Info_1","","fuse_rev")'
     outputs:
         NAND_Total_Controller_Count:
@@ -74,7 +73,6 @@
                     - lookup: [inputs, sfc_url]
                     - lookup: [inputs, MEMORY_SIZE]
                     - lookup: [inputs, SbinKey]
-                    - lookup: [inputs, bin_fuse]
                     - lookup: [inputs, fuse_rev]
                 plugins:
                     - Kis_dut

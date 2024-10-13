@@ -44,7 +44,7 @@ local function groupStateMachineTestMainFailAndStopDevice(err)
     print("Software error was caught: " .. err)
     for _, device in ipairs(Group.allDevices()) do
         print(device .. ": Failing for software exception : " .. err)
-        Group.failDevice(device, truncateFailureMsg(err))
+        Group.failDevice(device, 'Software error was caught; check device.log for details.')
         Group.stopDevice(device)
     end
 end

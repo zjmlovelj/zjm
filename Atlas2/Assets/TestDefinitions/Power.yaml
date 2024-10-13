@@ -86,13 +86,13 @@
 
 -   technology: Power
     coverage: Discharge
-    testParameters: 'Initial_OTP'
+    testParameters: 'OTP'
     inputs:
         slotNum: 'find.output("Fixture","Channel","","slotNum")'
     sequence:
         actions:
             - RunDischarge_Initial_OTP:
-                filename: Tech/Power/Discharge_Initial_OTP.csv
+                filename: Tech/Power/Discharge_OTP.csv
                 args:
                     - lookup: [inputs, slotNum]
                 plugins:
@@ -118,13 +118,13 @@
 
 -   technology: Power
     coverage: Discharge
-    testParameters: 'Initial_FWDL'
+    testParameters: 'FWDL'
     inputs:
         slotNum: 'find.output("Fixture","Channel","","slotNum")'
     sequence:
         actions:
             - RunDischarge_Initial_FWDL:
-                filename: Tech/Power/Discharge_Initial_FWDL.csv
+                filename: Tech/Power/Discharge_FWDL.csv
                 args:
                     - lookup: [inputs, slotNum]
                 plugins:
@@ -150,13 +150,13 @@
                     
 -   technology: Power
     coverage: Discharge
-    testParameters: 'Initial_Restore'
+    testParameters: 'Restore'
     inputs:
         slotNum: 'find.output("Fixture","Channel","","slotNum")'
     sequence:
         actions:
-            - RunDischarge_Initial_Restore:
-                filename: Tech/Power/Discharge_Initial_Restore.csv
+            - RunDischarge_Restore:
+                filename: Tech/Power/Discharge_Restore.csv
                 args:
                     - lookup: [inputs, slotNum]
                 plugins:
@@ -193,13 +193,13 @@
 
 -   technology: Power
     coverage: Discharge
-    testParameters: 'Initial_End'
+    testParameters: 'End'
     inputs:
         slotNum: 'find.output("Fixture","Channel","","slotNum")'
     sequence:
         actions:
-            - RunDischarge_Initial_End:
-                filename: Tech/Power/Discharge_Initial_End.csv
+            - RunDischarge_End:
+                filename: Tech/Power/Discharge_End.csv
                 args:
                     - lookup: [inputs, slotNum]
                 plugins:

@@ -489,8 +489,6 @@ end
 -- convert hex to binary
 function CommonFunc.hexToBinary(value, bit_start, bit_end)
 
-    Log.LogInfo("$$$$ value result " .. tostring(value))  
-
     value = CommonFunc.decimalToBinary(tonumber(value))
 
     Log.LogInfo("$$$$ value1 result " .. value)  

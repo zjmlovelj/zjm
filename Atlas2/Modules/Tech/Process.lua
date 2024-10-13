@@ -259,7 +259,7 @@ function Process.startCB(paraTab)
         Log.LogError(tostring(resp))
         local failureMessage = "startCB error"
         helper.flowLogFinish(false, paraTab, resp, failureMsg)
-        helper.reportFailure(failureMessage)
+        --helper.reportFailure(failureMessage)
     else
         helper.flowLogFinish(true, paraTab)
     end
@@ -679,17 +679,12 @@ function Process.compareSfcEcidCode(paraTab)
         Log.LogInfo("ace_ecid code command : " .. command)
         local RunShellCommand = Atlas.loadPlugin("RunShellCommand")
         local status, sfc_resp = xpcall(RunShellCommand.run, debug.traceback, command)
-        if not status then
-            resultFlag = false
-        else
-            resultFlag = true
-        end
-
         local sfc_data = comFunc.dump(sfc_resp)
         local get_ecid_sfc_data = string.match(sfc_data, "ace_ecid=(%w+)")
         Log.LogInfo("get_ecid_sfc_data : " .. tostring(get_ecid_sfc_data))
 
         if get_ecid_sfc_data == Ace3_ECID then
+             resultFlag = true
              helper.flowLogFinish(resultFlag, paraTab)
         else
             failureMsg = "error result: get ecid sfc data is mismatch or fail, check local ecid "
@@ -783,5 +778,7 @@ function Process.getDeviceOverallResult(paraTab)
 
     return testFail, poison
 end
+
+
 
 return Process

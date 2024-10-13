@@ -1,6 +1,6 @@
 Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
 Parameters,,slotNum,,,,,,,
-Tech/Fixture>sendFixtureCommand,"{subsubtestname=""Set-LED_INPROGRESS_ON""}",,,,,,,,"set LED INPROGRESS ON"
+Tech/Fixture>sendFixtureCommand,"{subsubtestname=""Set-LED_INPROGRESS-ON""}",,,,,,,,"set LED INPROGRESS ON"
 ,"+{Commands=""led_inprogress_on""}",,,,,,,,
 ,"+{slotNum=slotNum}",,,,,,,,
 ,"+{record=""false""}",,,,,,,,

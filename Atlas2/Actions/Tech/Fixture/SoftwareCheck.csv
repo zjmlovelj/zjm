@@ -1,11 +1,11 @@
 Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
 Parameters,,slotNum,,,,,,,
 Tech/Fixture>sendFixtureCommand,"{subsubtestname=""Get-Xavier_FW_Version""}",,,,,,,,"print fixture's Xavier FW version"
-,"+{attribute=""MIX_FW_Version""}",,,,,,,,
+,"+{attribute=""Xavier_FW_Version""}",,,,,,,,
 ,"+{Commands=""get_version""}",,,,,,,,
 ,"+{record=""false""}",,,,,,,,
 Tech/Fixture>sendFixtureCommand,"{subsubtestname=""Get-Xavier_SerialNumber""}",,,,,,,,"print fixture's Xavier SerialNumber"
-,"+{attribute=""Xavier-001""}",,,,,,,,
+,"+{attribute=""Xavier_SN""}",,,,,,,,
 ,"+{Commands=""fixture_command""}",,,,,,,,
 ,"+{args=""get_xavier_serial_number;;3000""}",,,,,,,,
 ,"+{slotNum=slotNum}",,,,,,,,

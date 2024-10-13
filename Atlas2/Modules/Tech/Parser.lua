@@ -372,7 +372,6 @@ function Parser.compareValueWithOpreation(paraTab)
     local opreationType = paraTab.opreationType
     local result = false
     local failureMsg = ""
-    local Regex = Device.getPlugin("Regex")
     if opreationType == "ACC" then
         local ret = tonumber(tonumber(value1, 2) | tonumber(value2, 2))
         local memSize = value3
@@ -396,12 +395,10 @@ function Parser.compareValueWithOpreation(paraTab)
             failureMsg = "memory Size error"
         end
     elseif opreationType == "DISP" then
-        if value1 == "1" and value2 == "1" then
-            failureMsg = "DISP value1 = value2"
-        elseif value1 == "0" and value2 == "0" then
-            failureMsg = "DISP value1 = value2"
-        else
+        if value1 == "0" and value2 == "0" then
             result = true
+        else
+            failureMsg = "DISP value1 and value2 must be 0"
         end
     elseif opreationType == "ATC" then
         if value1 == "1" then

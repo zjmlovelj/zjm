@@ -69,6 +69,7 @@ local MAIN_TESTS = common.MAIN_TESTS
 local MAIN_ACTIONS = common.MAIN_ACTIONS
 local TEARDOWN_TESTS = common.TEARDOWN_TESTS
 local TEARDOWN_ACTIONS = common.TEARDOWN_ACTIONS
+local Column = common.Column
 
 -- save an clean _ENV to used by load below
 -- this enables using lua default functions like tonumber() and print()
@@ -510,8 +511,8 @@ end
 -- 1. If there are no conditional_limit, prefix, mode/product/stationType exists, length(stationVersion) <= 48
 -- 2. Among conditional_limit, prefix, mode/product/stationType, length(stationVersion) + prefix <= 47
 function M.checkStationVersionLength(plistContent,
-                                     limitInfo,
                                      plistPath,
+                                     limitInfo,
                                      limitVersionPrefix)
     if not string.find(plistContent, '<key>StationVersion</key>') then
         E:missStationVersionKey(plistPath)
@@ -563,44 +564,76 @@ function M.checkStationVersionLength(plistContent,
     end
 end
 
--- check all plists file which have StationVersion key under config folder
-function M.checkStationVersionsInPlistDirectory(plistDirectory,
-                                                limitInfo,
-                                                limitVersionPrefix)
-    for _, filePath in ipairs(helper.ls(plistDirectory .. '/*.plist')) do
-        local plistContent = helper.readPlist(filePath)
-        if string.find(plistContent, '<key>StationVersion</key>') then
-            M.checkStationVersionLength(plistContent, limitInfo, filePath,
-                                        limitVersionPrefix)
+function M.checkStationMode(plistContent, plistPath, modes)
+    if not string.find(plistContent, '<key>GroupArgs</key>') then
+        E:missGroupArgsKeyKey(plistPath)
+        return
+    end
+
+    local _, groupArgsEndIndex = string.find(plistContent,
+                                             '<key>GroupArgs</key>')
+    local afterGroupArgs = string.sub(plistContent, groupArgsEndIndex + 1)
+    local _, arrayEndTagIndex = afterGroupArgs:find('</array>')
+    local groupArgsArrayAsString = string.sub(afterGroupArgs, 1,
+                                              arrayEndTagIndex)
+
+    local modesInPlistTable = {}
+    local modesInPlist = groupArgsArrayAsString:gmatch(
+                         "<string>([%g ]-)</string>")
+    for mode in modesInPlist do
+        table.insert(modesInPlistTable, mode)
+    end
+    if #modesInPlistTable == 0 then
+        E:emptyStationMode(plistPath)
+    else
+        local lastMode = modesInPlistTable[#modesInPlistTable]
+        if not helper.hasVal(modes, lastMode) then
+            E:invalidStationMode(plistPath, modes, lastMode)
         end
     end
 end
 
--- check multiple plist directory
-function M.checkStationVersionWithStationPlistDirectory(plistDirectoryPaths,
-                                                        limitInfo,
-                                                        limitVersionPrefix)
+function M.processPlistsCheckInDirectories(plistDirectoryPaths,
+                                           callback, ...)
     if plistDirectoryPaths == nil then
         return
     end
     for _, plistPath in ipairs(plistDirectoryPaths) do
-        M.checkStationVersionsInPlistDirectory(plistPath, limitInfo,
-                                               limitVersionPrefix)
+        local plistPaths = helper.ls(plistPath .. '/*.plist')
+        M.processPlistsCheckByPaths(plistPaths, callback, ...)
     end
 end
 
--- check multiple plists
-function M.checkStationVersionWithStationPlist(plistPaths,
-                                               limitInfo,
-                                               limitVersionPrefix)
+function M.processPlistsCheckByPaths(plistPaths, callback, ...)
     if plistPaths == nil then
         return
     end
     for _, plistPath in ipairs(plistPaths) do
         local plistContent = helper.readPlist(plistPath)
-        M.checkStationVersionLength(plistContent, limitInfo, plistPath,
-                                    limitVersionPrefix)
+        callback(plistContent, plistPath, ...)
     end
+end
+
+function M.processSinglePlistCheck(plistDirectoryPaths,
+                                   plistPaths,
+                                   callback, ...)
+    M.processPlistsCheckByPaths(plistPaths, callback, ...)
+    M.processPlistsCheckInDirectories(plistDirectoryPaths, callback, ...)
+end
+
+function M.checkStationPlist(plistDirectoryPaths,
+                             plistPaths,
+                             limitInfo,
+                             limitVersionPrefix,
+                             modes)
+    M.processSinglePlistCheck(plistDirectoryPaths, plistPaths,
+                              M.checkStationVersionLength, limitInfo,
+                              limitVersionPrefix)
+    M.processSinglePlistCheck(plistDirectoryPaths, plistPaths,
+                              M.checkStationMode, modes)
+
+    -- not used by runner
+    limitInfo.numberPossibleLimitVersions = nil
 end
 
 function M.insertLimitVersionPrefix(limitVersionPrefix,
@@ -652,12 +685,31 @@ function M.processStationMultiActionDirectory(stationActionDirectories)
     return seenActionTable
 end
 
+function M.markConditionAsUsed(conditions, name, where, location)
+    local wheres = common.conditionUsage
+    assert(wheres[where] ~= nil,
+           '[Internal] invalid where in markConditionAsUsed: ' ..
+           tostring(where) .. '; expecting one in ' .. dump(wheres))
+
+    if conditions[name] == nil then
+        conditions[name] = {}
+        -- defensive: ensure caller get the right key to prevent
+        -- getting setting.Test instead of setting.Tests
+        setmetatable(conditions[name], {
+            __index = function(_, k)
+                if wheres[k] == nil then
+                    E:internalUnsupportedKey(k)
+                end
+            end
+        })
+    end
+    conditions[name][where] = location
+end
+
 function M.findConditionsFromLimits(limitForMode,
                                     conditionIdentifier,
                                     mode)
-    local limitHasProduct, limitHasStationType, limitsHasConditions = false,
-                                                                      false,
-                                                                      false
+    local limitsHasConditions = false
     if limitForMode then
         for _, setting in ipairs(limitForMode) do
             local location = "Technology: " .. setting.Technology ..
@@ -671,13 +723,8 @@ function M.findConditionsFromLimits(limitForMode,
                 local tokens = ce.tokenize(setting.required)
                 for _, token in ipairs(tokens) do
                     if token.type == 'identifier' then
-                        if conditionIdentifier[token.value] == nil then
-                            conditionIdentifier[token.value] = {}
-                        end
-                        conditionIdentifier[token.value].usedInLimitRequired =
-                        true
-                        conditionIdentifier[token.value].limitLocation =
-                        location
+                        M.markConditionAsUsed(conditionIdentifier, token.value,
+                                              'LimitRequired', location)
                     end
                 end
             end
@@ -686,25 +733,22 @@ function M.findConditionsFromLimits(limitForMode,
                 local tokens = ce.tokenize(setting.conditions)
                 for _, token in ipairs(tokens) do
                     if token.type == 'identifier' then
-                        if conditionIdentifier[token.value] == nil then
-                            conditionIdentifier[token.value] = {}
-                        end
-                        conditionIdentifier[token.value].usedInLimitCondition =
-                        true
-                        conditionIdentifier[token.value].limitLocation =
-                        location
+                        M.markConditionAsUsed(conditionIdentifier, token.value,
+                                              'LimitConditions', location)
                     end
                 end
             end
             if setting.product ~= nil then
-                limitHasProduct = true
+                M.markConditionAsUsed(conditionIdentifier, Column.Product,
+                                      'Limits', location)
             end
             if setting.stationType ~= nil then
-                limitHasStationType = true
+                M.markConditionAsUsed(conditionIdentifier, Column.StationType,
+                                      'Limits', location)
             end
         end
     end
-    return limitHasProduct, limitHasStationType, limitsHasConditions
+    return limitsHasConditions
 end
 
 function M.findConditionsFromActions(sortedActions,
@@ -714,34 +758,29 @@ function M.findConditionsFromActions(sortedActions,
     end
     -- code below assumes sortedActions is not nil.
     for _, setting in ipairs(sortedActions) do
-        local location = "Test Defdefinition: " .. setting.actionSpec
+        local location = "Test Definition: " .. setting.actionSpec
         if setting.args ~= nil then
             for _, input in ipairs(setting.args) do
                 if input.condition ~= nil and input.condition ~= 'Mode' then
-                    if conditionIdentifier[input.condition] == nil then
-                        conditionIdentifier[input.condition] = {}
-                    end
-                    conditionIdentifier[input.condition].usedInYamlInputs = true
-                    conditionIdentifier[input.condition].yamlLocation = location
+
+                    M.markConditionAsUsed(conditionIdentifier, input.condition,
+                                          'TestInputs', location)
                 end
             end
         end
         if setting.testConditions ~= nil then
-            for testConditionsName, _ in pairs(setting.testConditions) do
-                if conditionIdentifier[testConditionsName] == nil then
-                    conditionIdentifier[testConditionsName] = {}
-                end
-                conditionIdentifier[testConditionsName].initializedInYaml = true
-                conditionIdentifier[testConditionsName].yamlLocation = location
+            for name, _ in pairs(setting.testConditions) do
+
+                M.markConditionAsUsed(conditionIdentifier, name,
+                                      'TestConditions', location)
             end
         end
     end
 end
 
-function M.findConditionsFromMain(sortedTests,
-                                  conditionIdentifier,
-                                  mode)
-    local hasProduct, hasStationType = false, false
+function M.findConditionsFromMainTable(sortedTests,
+                                       conditionIdentifier,
+                                       mode)
     if sortedTests then
         for _, setting in ipairs(sortedTests) do
             local location = "Technology: " .. setting.Technology ..
@@ -754,46 +793,29 @@ function M.findConditionsFromMain(sortedTests,
                 local tokens = ce.tokenize(setting.Conditions)
                 for _, token in ipairs(tokens) do
                     if token.type == 'identifier' then
-                        if conditionIdentifier[token.value] == nil then
-                            conditionIdentifier[token.value] = {}
-                        end
-                        conditionIdentifier[token.value].usedInMain = true
-                        conditionIdentifier[token.value].mainLocation = location
+                        M.markConditionAsUsed(conditionIdentifier, token.value,
+                                              'Tests', location)
                     end
                 end
             end
             if setting.product then
-                hasProduct = true
+                M.markConditionAsUsed(conditionIdentifier, Column.Product,
+                                      'Tests', location)
             end
             if setting.stationType then
-                hasStationType = true
+                M.markConditionAsUsed(conditionIdentifier, Column.StationType,
+                                      'Tests', location)
             end
         end
     end
-    return hasProduct, hasStationType
 end
 
 -- if condition in condition table is not used in main table, limit table and test definition table
 -- then it will be remove from condition table
-function M.returnUsedCondition(conditionVar,
-                               conditionIdentifier,
-                               mainHasProduct,
-                               mainHasStationType,
-                               teardownHasProduct,
-                               teardownHasStationType,
-                               limitHasProduct,
-                               limitHasStationType)
+function M.returnUsedCondition(conditionVar, conditionIdentifier)
     local newCondition = {}
     for _, setting in ipairs(conditionVar) do
         local name = setting.name
-        if name == "Product" and
-        (mainHasProduct or teardownHasProduct or limitHasProduct) then
-            table.insert(newCondition, setting)
-        end
-        if name == 'StationType' and
-        (mainHasStationType or teardownHasStationType or limitHasStationType) then
-            table.insert(newCondition, setting)
-        end
         if conditionIdentifier[name] ~= nil then
             table.insert(newCondition, setting)
         end
@@ -802,21 +824,12 @@ function M.returnUsedCondition(conditionVar,
 end
 
 function M.removeUnusedCondition(conditionsForCopy,
-                                 conditionIdentifier,
-                                 mainHasProduct,
-                                 mainHasStationType,
-                                 teardownHasProduct,
-                                 teardownHasStationType,
-                                 limitHasProduct,
-                                 limitHasStationType)
+                                 conditionIdentifier)
     for _, conditionType in ipairs(common.CONDITION_REMOVE_TYPE) do
         if conditionsForCopy[conditionType] then
             conditionsForCopy[conditionType] =
             M.returnUsedCondition(conditionsForCopy[conditionType],
-                                  conditionIdentifier, mainHasProduct,
-                                  mainHasStationType, teardownHasProduct,
-                                  teardownHasStationType, limitHasProduct,
-                                  limitHasStationType)
+                                  conditionIdentifier)
             if helper.isEmptyTable(conditionsForCopy[conditionType]) then
                 conditionsForCopy[conditionType] = nil
             end
@@ -832,9 +845,24 @@ function M.checkTestConditionGenerate(testConditionsForCopy,
     for _, setting in ipairs(testConditionsForCopy) do
         local name = setting.name
         if conditionIdentifier[name] ~= nil and
-        conditionIdentifier[name].initializedInYaml == nil then
+        conditionIdentifier[name].TestConditions == nil then
             E:testConditionNotGenerate(name)
         end
+
+    end
+end
+
+function M.addConditionIfNecessary(usages, name, conditions)
+    -- usage: key-value pairs.
+    --     key: Tests/LimitRequired/LimitConditions/TestInputs/TestConditions
+    --   value: string; where is this condition used.
+    local usage = usages[name]
+    local used = usage and (usage.Tests or usage.Limits or usage.TestInputs)
+    local declared = condition.findKeywordInConditions(conditions, name)
+    if used and not declared then
+        local f = condition['addDefault' .. name .. 'GroupCondition']
+        assert(f and type(f) == 'function')
+        f(conditions)
     end
 end
 
@@ -848,44 +876,33 @@ function M.checkConditionUse(sortedMainTests,
     local conditionIdentifier = {}
     local testPlanAttribute = {}
     -- find the indentifiers in limit require and limit conditions column
-    local limitHasProduct, limitHasStationType, limitsHasConditions =
-    M.findConditionsFromLimits(limitForMode, conditionIdentifier, mode)
+    local limitsHasConditions = M.findConditionsFromLimits(limitForMode,
+                                                           conditionIdentifier,
+                                                           mode)
     testPlanAttribute['limitsHasConditions'] = limitsHasConditions
     -- find the indentifiers in yaml inputs and lookup
     M.findConditionsFromActions(sortedMainActions, conditionIdentifier)
     M.findConditionsFromActions(sortedTeardownActions, conditionIdentifier)
     -- find the indentifiers in main table conditions column
-    local mainHasProduct, mainHasStationType =
-    M.findConditionsFromMain(sortedMainTests, conditionIdentifier, mode)
-    local teardownHasProduct, teardownHasStationType =
-    M.findConditionsFromMain(sortedTeardownTests, conditionIdentifier, mode)
+    M.findConditionsFromMainTable(sortedMainTests, conditionIdentifier, mode)
+    M.findConditionsFromMainTable(sortedTeardownTests, conditionIdentifier, mode)
+
+    M.addConditionIfNecessary(conditionIdentifier, Column.Product,
+                              conditionsForCopy)
+    M.addConditionIfNecessary(conditionIdentifier, Column.StationType,
+                              conditionsForCopy)
+
     -- check all indentifiers if they are in condition table
     M.checkAllIdentifierInCondition(conditionIdentifier, conditionsForCopy)
 
     -- if a group or init condition is not used in main table or limit table or yaml,
     -- then this condition will be removed from condition table.
-    M.removeUnusedCondition(conditionsForCopy, conditionIdentifier,
-                            mainHasProduct, mainHasStationType,
-                            teardownHasProduct, teardownHasStationType,
-                            limitHasProduct, limitHasStationType)
+    M.removeUnusedCondition(conditionsForCopy, conditionIdentifier)
     M.checkTestConditionGenerate(conditionsForCopy.test, conditionIdentifier)
-    local productInConditionTable = condition.findKeywordInConditions(
-                                    conditionsForCopy, "Product")
-    local stationTypeInConditionTable = condition.findKeywordInConditions(
-                                        conditionsForCopy, "StationType")
-    if (mainHasProduct or teardownHasProduct or limitHasProduct) and
-    (not productInConditionTable) then
-        condition.handleProductAsCondition(conditionsForCopy)
-    end
 
-    if (mainHasStationType or limitHasStationType or teardownHasStationType) and
-    (not stationTypeInConditionTable) then
-        condition.handleStationTypeAsCondition(conditionsForCopy)
-    end
     testPlanAttribute['requireConditionValidator'] = false
     for _, value in pairs(conditionIdentifier) do
-        if value.usedInLimitRequired or value.usedInLimitCondition or
-        value.usedInMain then
+        if value.LimitRequired or value.LimitConditions or value.Tests then
             testPlanAttribute['requireConditionValidator'] = true
         end
     end
@@ -912,13 +929,8 @@ function M.compile(mainCSVPath,
     limits.processLimits(limitsCSVPath, allTests, allTestFilters, conditions)
     M.insertLimitVersionPrefix(limitVersionPrefix, limitInfo, stationPlist,
                                stationPlistDirectory)
-    M.checkStationVersionWithStationPlist(stationPlist, limitInfo,
-                                          limitVersionPrefix)
-    M.checkStationVersionWithStationPlistDirectory(stationPlistDirectory,
-                                                   limitInfo, limitVersionPrefix)
-    -- not used by runner
-    limitInfo.numberPossibleLimitVersions = nil
-
+    M.checkStationPlist(stationPlistDirectory, stationPlist, limitInfo,
+                        limitVersionPrefix, allTestFilters[common.MODE])
     -- main csv rows for mode
     local mainSequenceSortedByMode = sortSequenceByMode(mainSequenceScrubbed,
                                                         allTestFilters[common.MODE])
@@ -1130,9 +1142,9 @@ function M.preprocessMainSequence(mainCSVPath)
         -- TODO: Use OOP for parsing CSV to avoid duplicate code across limits + main CSVs
         -- E.g. CSVFile base class -> subclasses for Limits and Main,
         -- each implement their own parse/process/findDuplicate functions
-        C.parseFilter(row, 'Mode')
-        C.parseFilter(row, 'Product')
-        C.parseFilter(row, 'StationType')
+        C.parseFilter(row, Column.Mode)
+        C.parseFilter(row, Column.Product)
+        C.parseFilter(row, Column.StationType)
         C.addSeenFilters(allFilters, {
             [common.MODE] = row[common.MODE],
             [common.PRODUCT] = row[common.PRODUCT],
@@ -1567,7 +1579,7 @@ function M.checkActions(testDef, actionNames, seenActionTable)
                     break
                 end
             end
-            if actionExist == false then
+            if actionExist == false and action.dataQuery ~= true then
                 E:actionFileDoNotExists(action.filename)
             end
         end
@@ -1864,10 +1876,9 @@ function M.checkIdentifierInCondition(identifier,
             if identifier == name then
                 -- Currently, test conditions are not supported in Conditions column of limit table.
                 -- TODO: Remove below if-block once support for test conditions is defined.
-                if identifierData.usedInLimitCondition == true and conditionType ==
-                'test' then
+                if identifierData.LimitConditions and conditionType == 'test' then
                     E:unsupportedConditionTypeInLimitTable(name,
-                                                           identifierData.limitLocation)
+                                                           identifierData.LimitConditions)
                 end
                 haveIdentifier = true
                 break
@@ -1892,19 +1903,15 @@ function M.checkAllIdentifierInCondition(conditionIdentifier,
                                                             identifierData,
                                                             conditionsForCopy)
         if not haveIdentifier then
-            if identifierData.usedInMain then
-                E:conditionMissingIdentifier(identifierData.mainLocation,
-                                             identifier)
-            elseif identifierData.usedInLimitRequired or
-            identifierData.usedInLimitCondition then
-                E:conditionMissingIdentifier(identifierData.limitLocation,
-                                             identifier)
-            elseif identifierData.usedInYamlInputs or
-            identifierData.initializedInYaml then
-                E:conditionMissingIdentifier(identifierData.yamlLocation,
-                                             identifier)
+            local locations = {}
+            for key in pairs(common.conditionUsage) do
+                if identifierData[key] then
+                    table.insert(locations, identifierData[key])
+                end
             end
-
+            if next(locations) then
+                E:undefinedConditionVariable(identifier, locations)
+            end
         end
     end
 end
@@ -2471,7 +2478,6 @@ function M.convertToIndices(sortedMainGraph,
 
         action.deps = pl.tablex.copy(scrubbedDeps)
     end
-
 end
 
 return M

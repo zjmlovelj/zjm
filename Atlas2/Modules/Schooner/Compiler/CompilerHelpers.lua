@@ -840,42 +840,27 @@ function M.containsIsolatedEscape(str, escape, delimiter)
 end
 
 -- args same as checkForIsolatedReturns
-function M.removeValidReturns(content)
-    -- Logic in pattern used below:
-    -- 1. Match on ", followed by anything but \r
-    -- 2. Match on all (>=1) \r
-    -- 3. Match on anything but " or \n (to avoid corner cases)
-    -- 4. Match on ending "
-    -- Ex: 'a,b,c,"xxx\ryy"\r,1,"2",3'
-    -- \r in "xxx\ryy" is valid so we want to remove that
-    -- \r in \r,1 is invalid so we want to keep that
-    return content:gsub('"[^\r]*\r+[^"\n]*"', '')
+function M.removeQuotedContent(content)
+    -- Ex: 'a,b,c,"xxxyy"\r,1,"2",3'
+    -- This function removes all content within double quotes, including the quotes
+    -- For example, the input string 'a,b,c,"xxxyy"\r,1,"2",3' would become 'a,b,c,\r,1,,3'
+    return content:gsub('"(.-)"', '')
 end
 
 -- args:
 -- content - content of file:read("*a") as one long string
 function M.checkForIsolatedReturns(content)
     -- \r should be followed by \n, capture character following \r
-    local findPattern = '\r(.?)'
+    local findPattern = '()\r(.?)'
 
-    -- First remove all valid (e.g. double quoted) instances of \r
-    -- Ex: The string 'foo, bar, "blah blah \r blah", baz' is valid
-    local copy = M.removeValidReturns(content)
-
-    while true do
-        local charPos, capturePos, capture = copy:find(findPattern)
-        -- char wasn't found
-        if charPos == nil then
-            break
+    local copy = M.removeQuotedContent(content)
+    local matchs = copy:gmatch(findPattern, 1)
+    local capPos = 1
+    for startPos, charAfterCR in matchs do
+        if charAfterCR ~= '\n' then
+            error_:isolatedReturn(string.sub(copy, capPos, startPos))
         end
-
-        -- \r must be followed by \n
-        if capture ~= '\n' then
-            error_:isolatedReturn(string.sub(copy, 1, charPos))
-        end
-
-        -- Update subject string to non-parsed piece
-        copy = copy:sub(capturePos + 1)
+        capPos = startPos + 1
     end
 end
 

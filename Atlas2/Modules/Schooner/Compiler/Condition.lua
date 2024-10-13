@@ -230,7 +230,7 @@ function Condition.findKeywordInConditions(conditions, keyword)
     return false
 end
 
-function Condition.handleProductAsCondition(conditions)
+function Condition.addDefaultProductGroupCondition(conditions)
     if conditions.group == nil then
         conditions["group"] = {}
     end
@@ -248,7 +248,7 @@ function Condition.handleProductAsCondition(conditions)
     })
 end
 
-function Condition.handleStationTypeAsCondition(conditions)
+function Condition.addDefaultStationTypeGroupCondition(conditions)
     if conditions.group == nil then
         conditions["group"] = {}
     end

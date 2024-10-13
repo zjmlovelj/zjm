@@ -1,23 +1,4 @@
-Current_Version: 1.0.9
-*****************************************************************
-build stage P1
-script Ver: 1.0.9
-change date: 20240730
-SW engineer: Xiao Hu
-
-1. add ACE HANG timeout 50s.
-2. update PCIe Eye Scan test sequence.
-
-*****************************************************************
-
-*****************************************************************
-build stage P1
-script Ver: 1.0.8
-change date: 20240729
-SW engineer: Mundo Guo
-
-1. Update version compare file for main build,CrystalETianshan22E60570q changed to CrystalETianshan22E60570s
-
+Current_Version: 1.0.28_DOE
 *****************************************************************
 build stage P1
 script Ver: 1.0.28_DOE

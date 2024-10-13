@@ -66,7 +66,9 @@ function helpers.hasVal(valueArr, valueStr)
     return false
 end
 
-function helpers.isNonEmptyString(str) return str ~= nil and str ~= '' end
+function helpers.isNonEmptyString(str)
+    return str ~= nil and type(str) == 'string' and str ~= ''
+end
 
 function helpers.isTable(t) return type(t) == 'table' end
 

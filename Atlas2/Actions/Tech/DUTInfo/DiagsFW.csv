@@ -1,6 +1,6 @@
 Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
 Parameters,,SITE,,,,,,,
-Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Read-Version""}",Diags_version,,,,,,,"Read Diags version for dut"
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Read-Version""}",Diags_version,,,,,,,"Read Diags version from dut"
 ,"+{dutPluginName=""Kis_dut""}",Version_Info,,,,,,,
 ,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
 ,"+{attribute=""DIAGS_VERSION_DFU""}",,,,,,,,
@@ -9,17 +9,17 @@ Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Read-Version""}",Diags_version,,,
 ,"+{Timeout=""5""}",,,,,,,,
 ,"+{Commands=""version""}",,,,,,,,
 ,"+{record=""false""}",,,,,,,,
-Tech/Common>parseWithRegexString,"{subsubtestname=""Read-SOC_Chip_Code""}",,,,,,,,"Read SOC Chip Code for dut"
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-SOC_Chip_Code""}",,,,,,,,"Read SOC Chip Code from dut"
 ,"+{Input=Version_Info}",,,,,,,,
 ,"+{attribute=""SOC_CHIP_CODE""}",,,,,,,,
 ,"+{pattern=""(%w+)%s+Diagnostics""}",,,,,,,,
 ,"+{record=""false""}",,,,,,,,
 Tech/Common>parseWithRegexString,"{subsubtestname=""Read-iBoot_Version""}",,,,,,,,"Read iBoot Version for dut"
-,"+{attribute=""iBoot_Version""}",,,,,,,,
+,"+{attribute=""IBOOT_VERSION""}",,,,,,,,
 ,"+{pattern=""BUILD_TAG:%s*(iBoot%-[0-9.]+)""}",,,,,,,,
 ,"+{log_device=""kis_usb""}",,,,,,,,
 ,"+{record=""false""}",,,,,,,,
-Tech/Common>parseWithRegexString,"{subsubtestname=""Read-Nand_Version""}",,,,,,,,"read Nand Version"
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-Nand_Version""}",,,,,,,,"read Nand Version from restore log"
 ,"+{attribute=""NAND_REVISION""}",,,,,,,,
 ,"+{pattern=""nvme:%s+%|%s+Unknown%s+device([A-Z0-9]+)%s""}",,,,,,,,
 ,"+{log_device=""kis_usb""}",,,,,,,,

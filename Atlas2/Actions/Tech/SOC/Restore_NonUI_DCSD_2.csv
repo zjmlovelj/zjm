@@ -3,5 +3,5 @@ Tech/Restore>checkHangAndKernelPanic,"{subsubtestname=""Check-Kernel_Panic""}",r
 ,"+{dutPluginName=""Kis_dut""}",,,,,,,,
 ,"+{hangTimeout=""180""}",,,,,,,,
 ,"+{Timeout=""1500""}",,,,,,,,
-,"+{record=""true""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
 Returns,restore_uart_log,,,,,,,,

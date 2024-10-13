@@ -140,14 +140,12 @@
             lookup: [RunInfo_SBIN, 2]
         MEMORY_SIZE:
             lookup: [RunInfo_SBIN, 3]
-        binFuse:
+        fuse_rev:
             lookup: [RunInfo_SBIN, 4]    
-        bin_fuse:
-            lookup: [RunInfo_SBIN, 5]
         SbinKey:
-            lookup: [RunInfo_SBIN, 6]    
+            lookup: [RunInfo_SBIN, 5]    
         SBin_status:
-            lookup: [RunInfo_SBIN, 7]
+            lookup: [RunInfo_SBIN, 6]
     conditions:
         MEMORY_SIZE:
             lookup: [RunInfo_SBIN, 3]          
@@ -203,7 +201,6 @@
         slotNum: 'find.output("Fixture","Channel","","slotNum")'
         SITE: 'find.output("Fixture","Initialize","","SITE")'
         boardRev: 'find.output("USBC","OTPProgram","","boardRev")'
-        MEMORY_SIZE: 'find.output("SOC","Info_SBIN","","MEMORY_SIZE")'
     outputs:
         BOARD_ID:
             lookup: [RunInfo_1, 1]
@@ -231,9 +228,7 @@
             lookup: [RunInfo_1, 12] 
     conditions:
         HAS_TWO_STORAGE_DEVICE:
-            lookup: [RunInfo_1, 3] 
-        production_mode:
-            lookup: [RunInfo_1, 12]     
+            lookup: [RunInfo_1, 3]
     sequence:
         actions:
             - RunInfo_1:
@@ -243,7 +238,6 @@
                     - lookup: [inputs, slotNum]
                     - lookup: [inputs, SITE]
                     - lookup: [inputs, boardRev]
-                    - lookup: [inputs, MEMORY_SIZE]
                 plugins:
                     - Kis_dut
                     - Kis_channelPlugin
@@ -260,6 +254,33 @@
                     - RunShellCommand
                     - Mutex
 
+
+-   technology: SOC
+    coverage: Info_Harvest
+    testParameters: '*'
+    inputs:
+        MEMORY_SIZE: 'find.output("SOC","Info_SBIN","","MEMORY_SIZE")'
+    sequence:
+        actions:
+            - RunInfo_Harvest:
+                filename: Tech/SOC/Info_Harvest.csv
+                args:
+                    - lookup: [inputs, MEMORY_SIZE]
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - StationInfo
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+                    - Mutex
 
 -   technology: SOC
     coverage: Info_SEP

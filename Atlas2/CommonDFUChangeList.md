@@ -1,4 +1,44 @@
-Coverage_Version = "1.0.15"
+Coverage_Version = "1.0.21.2"
+
+*****************************************************************
+script Ver：1.0.21.2
+change date：20240813
+SW engineer： Haoran Zhou
+
+1. add copyToHost function copy AEMTool file to host upload insight.
+2. update compareValueWithOpreation function follow new ERS.
+
+*****************************************************************
+script Ver：1.0.21
+change date：20240813
+SW engineer： Andrew Chen
+
+1. del Group.setDevicePrimaryIdentity function when UOP Fail not show message on UI.
+2. Optimize functions of checkHangAndKernelPanicr for set “Poison” variable to true when restore hit panic.
+3. Optimize DiagsTriage feature for collection NPI debug log at teardown when send command fail or error.
+
+*****************************************************************
+script Ver：1.0.20
+change date：20240812
+SW engineer： Allen Zhong
+
+1. diagstriage function spilt enableUSB, DiagsTriage, disableUSB.
+
+*****************************************************************
+script Ver：1.0.20
+change date：20240809
+SW engineer： Allen Zhong
+
+1.Add diagstriage function when send command fail.
+
+*****************************************************************
+script Ver：1.0.16
+change date：20240805
+SW engineer： Allen Zhong
+
+1.Add Check Limit function in GroupFunctions.lua when open atlas2.
+2.delete device.log limit check.
+3.Optimize getLocationID and restoreDFUModeCheck function, add judge inner call of "paraTab.InnerCall" in DFUCommon.lua and restore.lua.
 
 *****************************************************************
 script Ver：1.0.15
@@ -8,7 +48,6 @@ SW engineer： liang liu
 1.Optimize getBaseLoctionID function, when PRM Vendor don't find right kis port result can't enter diag.
 2.ptimize sendCmdAndParse function in DUTCmd.lua.
 3.Optimize finishCB error result stop test.
-*****************************************************************
 
 *****************************************************************
 script Ver：1.0.14

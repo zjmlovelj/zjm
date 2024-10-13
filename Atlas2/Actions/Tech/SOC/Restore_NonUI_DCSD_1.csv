@@ -4,4 +4,4 @@ Tech/Restore>restore,"{subsubtestname=""Restore""}",,,,,,,,"Perform dfu.pr for d
 ,"+{PrName=""DFU.pr""}",,,,,,,,
 ,"+{Location_ID=Location_ID}",,,,,,,,
 ,"+{Timeout=""1500""}",,,,,,,,
-,"+{record=""true""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,

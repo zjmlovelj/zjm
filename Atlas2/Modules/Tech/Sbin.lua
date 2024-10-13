@@ -117,15 +117,15 @@ function SBin.getSbinKey(paraTab)
     local resultFlag = false
     local failureMsg = ''
     local SbinKey = '-999'
-    local binFuse = paraTab.InputValues1
+    local FuseRev = paraTab.InputValues1
     local dramSize = paraTab.InputValues2
-    helper.LogInfo("binFuse >>>>>: ",binFuse)
+    helper.LogInfo("FuseRev >>>>>: ",FuseRev)
     helper.LogInfo("dramSize >>>>>: ",dramSize)
-    if binFuse ~= nil and dramSize ~= nil then
+    if FuseRev ~= nil and dramSize ~= nil then
         local fuseConfigTable = loadFuseConfig(paraTab)
         if fuseConfigTable then
             for _,v in ipairs(fuseConfigTable) do
-                if v["Bin_Fuse"] == binFuse and v["DRAM_Size"] == dramSize then
+                if v["Fuse_Rev"] == FuseRev and v["DRAM_Size"] == dramSize then
                     SbinKey = v["SBIN_Value"]
                     resultFlag = true
                     break
@@ -135,7 +135,7 @@ function SBin.getSbinKey(paraTab)
             failureMsg = 'load csv error'
         end
     else
-        failureMsg = 'binFuse or dramSize is empty'
+        failureMsg = 'FuseRev or dramSize is empty'
     end
 
     if (paraTab.attribute) then
@@ -228,7 +228,6 @@ function SBin.compareBinFuseConfig(paraTab)
     local failureMsg = ''
     local binValue = paraTab.binValue
     binValue = tostring(binValue)
-    local binFuse = paraTab.binFuse
     local fuseRev = paraTab.fuseRev
     local dramSize = paraTab.dramSize
     local Pcore = paraTab.Pcore
@@ -236,18 +235,15 @@ function SBin.compareBinFuseConfig(paraTab)
 
     Log.LogInfo("binValue >>>>>: ",binValue)
     Log.LogInfo("fuseRev >>>>>: ",fuseRev)
-    Log.LogInfo("binFuse >>>>>: ",binFuse)
     Log.LogInfo("dramSize >>>>>: ",dramSize)
     Log.LogInfo("Pcore >>>>>: ",Pcore)
     Log.LogInfo("nandSize >>>>>: ",nandSize)
 
-    if binValue ~= nil and binFuse ~= nil and fuseRev ~= nil and
-     dramSize ~= nil and Pcore ~= nil and nandSize ~= nil then
+    if binValue ~= nil and fuseRev ~= nil and dramSize ~= nil and Pcore ~= nil and nandSize ~= nil then
         local fuseConfigTable = loadFuseConfig(paraTab)
         if fuseConfigTable then
             for _,v in ipairs(fuseConfigTable) do
-                if v["SBIN_Value"] == binValue and v["Fuse_Rev"] == fuseRev and 
-                    v["Bin_Fuse"] == binFuse and v["DRAM_Size"] == dramSize and 
+                if v["SBIN_Value"] == binValue and v["Fuse_Rev"] == fuseRev and v["DRAM_Size"] == dramSize and 
                     v["Pcore_Status"] == Pcore and v["NAND_Size"] == nandSize then
                     resultFlag = true
                     break
@@ -257,7 +253,7 @@ function SBin.compareBinFuseConfig(paraTab)
             failureMsg = 'load csv error'
         end
     else
-        failureMsg = 'binValue or fuseRev or binFuse or dramSize or Pcore or nandSize is empty'
+        failureMsg = 'binValue or fuseRev or dramSize or Pcore or nandSize is empty'
     end
 
     if resultFlag then

@@ -1,5 +1,5 @@
 Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
-Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Touch_DFU_IQMeas_CMD""}",,,,,,,,"run smokey Wildfire diags cmd"
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Touch_DFU_IQMeas_CMD""}",,,,,,,,"run smokey Wildfire TouchDFUIQMeas cmd"
 ,"+{dutPluginName=""Kis_dut""}",,,,,,,,
 ,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
 ,"+{expect=""Passed""}",,,,,,,,

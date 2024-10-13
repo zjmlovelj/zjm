@@ -1,11 +1,12 @@
 Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
 Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Read-GPIO_PMU_TO_ACE_FORCE_DFU_BTN_3V3_H/L_State""}",,,,,,,,"ACE DFU mode check"
+,"+{attribute=""ADFU_State""}",,,,,,,,
 ,"+{dutPluginName=""Kis_dut""}",,,,,,,,
 ,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
-,"+{expect=""41 44 46 55""}",,,,,,,,
-,"+{targetindex=""5""}",,,,,,,,
 ,"+{Timeout=""30""}",,,,,,,,
+,"+{pattern=""0000000:%s+(%w+%s+%w+%s+%w+%s+%w+)%s+ADFU""}",,,,,,,,
 ,"+{Commands=""ace -r 0x03;wait 200;ace --4cc ADFU --txdata ""0x01"";wait 200;ace -r 0x03""}",,,,,,,,
 ,"+{NotDiagsTriage=""YES""}",,,,,,,,
 ,"+{errorCheck=""NO""}",,,,,,,,
+,"+{isparametric=""YES""}",,,,,,,,
 ,"+{record=""true""}",,,,,,,,

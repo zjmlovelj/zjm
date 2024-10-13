@@ -52,10 +52,16 @@
         HAS_TWO_STORAGE_DEVICE:
             lookup: [RunInitialize, 19]  
         MEMORY_SIZE:
-            lookup: [RunInitialize, 20]  
+            lookup: [RunInitialize, 20]
+        RFEM_HAS_ADDED:
+            lookup: [RunInitialize, 21]
+        WSKU_HAS_ADDED:
+            lookup: [RunInitialize, 22]          
     conditions:
         SITE:
             lookup: [RunInitialize, 1]
+        production_mode:
+            lookup: [RunInitialize, 8]         
         ACE3_Responsive_Status_1:
             lookup: [RunInitialize, 12]
         ACE3_Responsive_Status_2:
@@ -65,7 +71,11 @@
         PRODUCTION_SOC:
             lookup: [RunInitialize, 15]  
         accel_selftest_result:
-            lookup: [RunInitialize, 18]                     
+            lookup: [RunInitialize, 18]
+        RFEM_HAS_ADDED:
+            lookup: [RunInitialize, 21]
+        WSKU_HAS_ADDED:
+            lookup: [RunInitialize, 22]                                    
     inputs:
         slotNum: 'find.output("Fixture","Channel","","slotNum")'
     sequence:
@@ -127,27 +137,13 @@
                     
 -   technology: Fixture
     coverage: GeneralAction
-    testParameters: 'Reset_Initial'
+    testParameters: 'Initial'
     inputs:
         slotNum: 'find.output("Fixture","Channel","","slotNum")'
     sequence:
         actions:
-            - RunGeneralAction_Reset_Initial:
-                filename: Tech/Fixture/GeneralAction_Reset_Initial.csv
-                args:
-                    - lookup: [inputs, slotNum]
-                plugins:
-                    - FixturePlugin
-
--   technology: Fixture
-    coverage: GeneralAction
-    testParameters: 'Led_Inprogress_On'
-    inputs:
-        slotNum: 'find.output("Fixture","Channel","","slotNum")'
-    sequence:
-        actions:
-            - RunGeneralAction_Led_Inprogress_On:
-                filename: Tech/Fixture/GeneralAction_Led_Inprogress_On.csv
+            - RunGeneralAction_Initial:
+                filename: Tech/Fixture/GeneralAction_Initial.csv
                 args:
                     - lookup: [inputs, slotNum]
                 plugins:
@@ -162,7 +158,7 @@
     sequence:
         actions:
             - RunGeneralAction_4:
-                filename: Tech/Fixture/GeneralAction_Reset_Initial.csv
+                filename: Tech/Fixture/GeneralAction_4.csv
                 args:
                     - lookup: [inputs, slotNum]
                 plugins:

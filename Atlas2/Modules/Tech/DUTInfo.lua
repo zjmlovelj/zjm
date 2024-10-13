@@ -13,6 +13,8 @@ local helper = require("Tech/SMTLoggingHelper")
 local comFunc = require("Tech/CommonFunc")
 local DFUCommon = require("Tech/DFUCommon")
 local Common = require("Tech/Common")
+local USBC = require("Tech/USBC")
+local fileUtils = require("ALE/FileUtils")
 
 --[[---------------------------------------------------------------------------------
 Unique Function ID : [ID:0030, Version: v0.1, Type:DFU]
@@ -126,6 +128,47 @@ function DUTInfo.getByteLen(paraTab)
         helper.flowLogFinish(false, paraTab, retLen, "Get Byte len fail")    
     end
     return retLen
+end
+
+--[[---------------------------------------------------------------------------------
+Unique Function ID : [ID:0093, Version: v0.1, Type:Common]
+Name: DUTInfo.compareValueOfBinFileAtAddress(paraTab)
+Function description: Function to compare the value of a binary file at an address 
+Input : Table
+Output : N/A
+-----------------------------------------------------------------------------------]]
+
+function DUTInfo.compareValueOfBinFileAtAddress(paraTab)
+    helper.flowLogStart(paraTab)
+    local compareValue = paraTab.Input
+    local fileName = paraTab.fileName
+    local address = paraTab.address
+    local length = paraTab.length
+    local byteFormat = paraTab.byteFormat
+    local binFilePath = fileUtils.joinPaths(Device.userDirectory, fileName)
+    local failureMsg = ""
+    
+    if address then
+        address = tonumber(address)
+    else
+        address = 0
+    end
+
+    if length then
+        length = tonumber(length)
+    else
+        length = #content
+    end
+
+    local value = USBC.bytesToHexStr(binFilePath, address, length, byteFormat)
+    value = comFunc.trim(value)
+
+    if string.upper(value) == compareValue then
+        helper.flowLogFinish(true, paraTab)
+    else
+        failureMsg = "match error, [" .. value .. "] not compare [" .. compareValue .. "]"
+        helper.flowLogFinish(false, paraTab, value, failureMsg)
+    end
 end
 
 

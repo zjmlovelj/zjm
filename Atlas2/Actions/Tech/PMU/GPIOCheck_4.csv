@@ -38,35 +38,42 @@ Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Club_Select_CMD""}",,,,,,,,"
 ,"+{Commands=""reg select club""}",,,,,,,,
 ,"+{expect=""OK""}",,,,,,,,
 ,"+{record=""false""}",,,,,,,,
-Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Set_GPIO_PMU_TO_BBPMU_VBUS_DET_To_HIGH_CMD""}",,,,,,,,"set GPIO_PMU_TO_BBPMU_VBUS_DET to High"
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Baseband_On_CMD""}",,,,,,mlb_type =='MLB_B',,BB power on
 ,"+{dutPluginName=""Kis_dut""}",,,,,,,,
 ,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
-,"+{Commands=""reg write 0x1837 0x41""}",,,,,,,,
+,"+{Commands=""baseband --on""}",,,,,,,,
 ,"+{expect=""OK""}",,,,,,,,
 ,"+{record=""false""}",,,,,,,,
-Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Read-GPIO_PMU_TO_BBPMU_VBUS_DET_HIGH""}",,,,,,,,"check GPIO_PMU_TO_BBPMU_VBUS_DET state"
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Set_GPIO_PMU_TO_BBPMU_ON_HIGH_CMD""}",,,,,,mlb_type =='MLB_B',,set GPIO_PMU_TO_BBPMU_ON to High
 ,"+{dutPluginName=""Kis_dut""}",,,,,,,,
 ,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
-,"+{pattern=""0x1837%s*=%>%s*0x(%d+)""}",,,,,,,,
-,"+{isparametric=""YES""}",,,,,,,,
-,"+{Commands=""reg read 0x1837""}",,,,,,,,
-,"+{record=""true""}",,,,,,,,
-Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Set_GPIO_PMU_TO_BBPMU_VBUS_DET_To_LOW_CMD""}",,,,,,,,"set GPIO_PMU_TO_BBPMU_VBUS_DET to LOW"
-,"+{dutPluginName=""Kis_dut""}",,,,,,,,
-,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
-,"+{Commands=""reg write 0x1837 0x40""}",,,,,,,,
+,"+{Timeout=""5""}",,,,,,,,
+,"+{Commands=""pmugpio --pin 12 --output 1 --pushpull""}",,,,,,,,
 ,"+{expect=""OK""}",,,,,,,,
 ,"+{record=""false""}",,,,,,,,
-Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Read-GPIO_PMU_TO_BBPMU_VBUS_DET_LOW""}",,,,,,,,"check GPIO_PMU_TO_BBPMU_VBUS_DET state"
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Read-GPIO_PMU_TO_BBPMU_ON_HIGH""}",,,,,,mlb_type =='MLB_B',,check GPIO_PMU_TO_BBPMU_ON state
 ,"+{dutPluginName=""Kis_dut""}",,,,,,,,
 ,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
-,"+{pattern=""0x1837%s*=%>%s*0x(%d+)""}",,,,,,,,
+,"+{pattern=""PMU%s*GPIO%[12%]%s*=%s*(%d*)""}",,,,,,,,
 ,"+{isparametric=""YES""}",,,,,,,,
-,"+{Commands=""reg read 0x1837""}",,,,,,,,
+,"+{Commands=""pmugpio --pin 12 --get""}",,,,,,,,
 ,"+{record=""true""}",,,,,,,,
-Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Set_GPIO_PMU_TO_BBPMU_VBUS_DET_To_Default_CMD""}",,,,,,,,"set GPIO_PMU_TO_BBPMU_VBUS_DET to Default"
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Set_GPIO_PMU_TO_BBPMU_ON_LOW_CMD""}",,,,,,mlb_type=='MLB_B',,set GPIO_PMU_TO_BBPMU_ON to LOW
 ,"+{dutPluginName=""Kis_dut""}",,,,,,,,
 ,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
-,"+{Commands=""reg write 0x1837 0x41""}",,,,,,,,
+,"+{Commands=""pmugpio --pin 12 --output 0 --pushpull""}",,,,,,,,
+,"+{expect=""OK""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Read-GPIO_PMU_TO_BBPMU_ON_LOW""}",,,,,,mlb_type=='MLB_B',,check GPIO_PMU_TO_BBPMU_ON state
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{pattern=""PMU%s*GPIO%[12%]%s*=%s*(%d*)""}",,,,,,,,
+,"+{isparametric=""YES""}",,,,,,,,
+,"+{Commands=""pmugpio --pin 12 --get""}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-BB_OFF_CMD""}",,,,,,mlb_type=='MLB_B',,BB power off
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{Commands=""baseband --off""}",,,,,,,,
 ,"+{expect=""OK""}",,,,,,,,
 ,"+{record=""false""}",,,,,,,,

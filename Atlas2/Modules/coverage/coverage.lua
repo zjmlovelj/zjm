@@ -126,10 +126,6 @@ return  {
           name = "Project",
           validator = {
             allowedList = {
-              "J410",
-              "J507",
-              "J537",
-              "J481",
               "J817",
               "J820",
               "Unset"
@@ -337,6 +333,28 @@ return  {
             },
             type = "IN"
           }
+        },
+        {
+          name = "RFEM_HAS_ADDED",
+          validator = {
+            allowedList = {
+              "TRUE",
+              "FALSE",
+              "Unset"
+            },
+            type = "IN"
+          }
+        },
+        {
+          name = "WSKU_HAS_ADDED",
+          validator = {
+            allowedList = {
+              "TRUE",
+              "FALSE",
+              "Unset"
+            },
+            type = "IN"
+          }
         }
       }
     },
@@ -345,6 +363,7 @@ return  {
       },
       limitPositionInfos = {
       },
+      usesAllowedList = true,
       withMode = false,
       withProduct = false,
       withStationType = false
@@ -353,7 +372,7 @@ return  {
       {
         lowerLimit = 1,
         required = true,
-        subsubtestname = "Get-Channel_ID",
+        subsubtestname = "Channel_ID",
         subtestname = "Channel",
         testname = "Fixture",
         upperLimit = 4
@@ -442,11 +461,12 @@ return  {
         upperLimit = 4410
       },
       {
-        lowerLimit = 0,
+        lowerLimit = 0.01,
         required = "SafetyCheck4V2==\"PASS\"",
         subsubtestname = "Measure-IBAT",
         subtestname = "VoltageCheck_Safety_VBAT4V2",
         testname = "Power",
+        units = "mA",
         upperLimit = 155
       },
       {
@@ -490,21 +510,75 @@ return  {
         upperLimit = 16
       },
       {
-        lowerLimit = 24,
+        allowedList = {
+          "0x00000001"
+        },
         required = "mlb_type==\"MLB_B\"",
+        subsubtestname = "Read-Version",
+        subtestname = "Syscfg_WSKU",
+        testname = "DUTInfo"
+      },
+      {
+        allowedList = {
+          "0x00000000"
+        },
+        required = "mlb_type==\"MLB_B\"",
+        subsubtestname = "Read-Value",
+        subtestname = "Syscfg_WSKU",
+        testname = "DUTInfo"
+      },
+      {
+        allowedList = {
+          "0x00000001 0x00000000 0x00005757 0x00000000"
+        },
+        required = "WSKU_HAS_ADDED==\"FALSE\"",
+        subsubtestname = "Compare-Value_Read_and_Write",
+        subtestname = "Syscfg_WSKU",
+        testname = "DUTInfo"
+      },
+      {
+        lowerLimit = 40,
+        required = true,
         subsubtestname = "Read-Key_Length",
         subtestname = "Syscfg_RFEM",
         testname = "DUTInfo",
-        upperLimit = 24
+        upperLimit = 40
       },
       {
-        lowerLimit = 1,
+        allowedList = {
+          "02000000"
+        },
+        required = true,
+        subsubtestname = "Read-Version",
+        subtestname = "Syscfg_RFEM",
+        testname = "DUTInfo"
+      },
+      {
+        allowedList = {
+          "00000000"
+        },
+        required = true,
+        subsubtestname = "Read-Value",
+        subtestname = "Syscfg_RFEM",
+        testname = "DUTInfo"
+      },
+      {
+        allowedList = {
+          "0200000000000000534B5900000000004D5552000000000001000000210000000100000020000000"
+        },
+        required = "RFEM_HAS_ADDED==\"FALSE\"",
+        subsubtestname = "Compare-RFEM_Read-RFEM_Add",
+        subtestname = "Syscfg_RFEM",
+        testname = "DUTInfo"
+      },
+      {
+        allowedList = {
+          "0x01"
+        },
         required = true,
         subsubtestname = "Read-Test_mode_Abbey",
         subtestname = "UnderVoltageWarning_Abbey",
-        testname = "PMU",
-        units = "string",
-        upperLimit = 1
+        testname = "PMU"
       },
       {
         lowerLimit = 0,
@@ -539,13 +613,13 @@ return  {
         upperLimit = 1
       },
       {
-        lowerLimit = 1,
+        allowedList = {
+          "0x01"
+        },
         required = true,
         subsubtestname = "Read-Test_mode_Club",
         subtestname = "UnderVoltageWarning_Club",
-        testname = "PMU",
-        units = "string",
-        upperLimit = 1
+        testname = "PMU"
       },
       {
         lowerLimit = 0,
@@ -783,7 +857,7 @@ return  {
         upperLimit = 1.1
       },
       {
-        lowerLimit = 1e-05,
+        lowerLimit = 1.0e-05,
         required = true,
         subsubtestname = "Read-accel_only_std_x",
         subtestname = "SensorData_FS8g_ODR100HZ_Zup",
@@ -792,7 +866,7 @@ return  {
         upperLimit = 0.05
       },
       {
-        lowerLimit = 1e-05,
+        lowerLimit = 1.0e-05,
         required = true,
         subsubtestname = "Read-accel_only_std_y",
         subtestname = "SensorData_FS8g_ODR100HZ_Zup",
@@ -801,7 +875,7 @@ return  {
         upperLimit = 0.05
       },
       {
-        lowerLimit = 1e-05,
+        lowerLimit = 1.0e-05,
         required = true,
         subsubtestname = "Read-accel_only_std_z",
         subtestname = "SensorData_FS8g_ODR100HZ_Zup",
@@ -846,7 +920,7 @@ return  {
         upperLimit = 1.1
       },
       {
-        lowerLimit = 1e-05,
+        lowerLimit = 1.0e-05,
         required = true,
         subsubtestname = "Read-accel_normal_std_x",
         subtestname = "SensorData_FS8g_ODR200HZ_Zup",
@@ -855,7 +929,7 @@ return  {
         upperLimit = 0.05
       },
       {
-        lowerLimit = 1e-05,
+        lowerLimit = 1.0e-05,
         required = true,
         subsubtestname = "Read-accel_normal_std_y",
         subtestname = "SensorData_FS8g_ODR200HZ_Zup",
@@ -864,7 +938,7 @@ return  {
         upperLimit = 0.05
       },
       {
-        lowerLimit = 1e-05,
+        lowerLimit = 1.0e-05,
         required = true,
         subsubtestname = "Read-accel_normal_std_z",
         subtestname = "SensorData_FS8g_ODR200HZ_Zup",
@@ -918,7 +992,7 @@ return  {
         upperLimit = 50
       },
       {
-        lowerLimit = 1e-05,
+        lowerLimit = 1.0e-05,
         required = true,
         subsubtestname = "Read-gyro_normal_std_x",
         subtestname = "SensorData_FS2000dps_ODR200HZ",
@@ -927,7 +1001,7 @@ return  {
         upperLimit = 1
       },
       {
-        lowerLimit = 1e-05,
+        lowerLimit = 1.0e-05,
         required = true,
         subsubtestname = "Read-gyro_normal_std_y",
         subtestname = "SensorData_FS2000dps_ODR200HZ",
@@ -936,7 +1010,7 @@ return  {
         upperLimit = 1
       },
       {
-        lowerLimit = 1e-05,
+        lowerLimit = 1.0e-05,
         required = true,
         subsubtestname = "Read-gyro_normal_std_z",
         subtestname = "SensorData_FS2000dps_ODR200HZ",
@@ -955,7 +1029,7 @@ return  {
       },
       {
         lowerLimit = 0,
-        required = true,
+        required = "mlb_type==\"MLB_B\"",
         subsubtestname = "Read-GPIO_BB_TO_PMU_HOST_WAKE_L_LOW",
         subtestname = "GPIOCheck_4",
         testname = "PMU",
@@ -963,192 +1037,112 @@ return  {
       },
       {
         lowerLimit = 1,
-        required = true,
+        required = "mlb_type==\"MLB_B\"",
         subsubtestname = "Read-GPIO_BB_TO_PMU_HOST_WAKE_L_HIGH",
         subtestname = "GPIOCheck_4",
         testname = "PMU",
         upperLimit = 1
       },
       {
-        lowerLimit = 40,
-        required = true,
-        subsubtestname = "Read-GPIO_PMU_TO_BBPMU_VBUS_DET_LOW",
-        subtestname = "GPIOCheck_4",
-        testname = "PMU",
-        upperLimit = 40
-      },
-      {
-        lowerLimit = 41,
-        required = true,
-        subsubtestname = "Read-GPIO_PMU_TO_BBPMU_VBUS_DET_HIGH",
-        subtestname = "GPIOCheck_4",
-        testname = "PMU",
-        upperLimit = 41
-      },
-      {
         lowerLimit = 0,
-        required = true,
-        subsubtestname = "Read-GPIO_SOC_TO_DISPLAY_TOUCH_EB_LOW",
-        subtestname = "GPIOCheck_5",
-        testname = "Touch",
-        upperLimit = 0
-      },
-      {
-        lowerLimit = 1,
-        required = true,
-        subsubtestname = "Read-GPIO_SOC_TO_DISPLAY_TOUCH_EB_HIGH",
-        subtestname = "GPIOCheck_5",
-        testname = "Touch",
-        upperLimit = 1
-      },
-      {
-        lowerLimit = 0,
-        required = true,
-        subsubtestname = "Read-GPIO_TOUCH_TO_BT_SYNC_LOW",
-        subtestname = "GPIOCheck_5",
-        testname = "Touch",
-        upperLimit = 0
-      },
-      {
-        lowerLimit = 0,
-        required = true,
-        subsubtestname = "Read-WLAN_GPIO_TOUCH_TO_BT_SYNC_LOW",
-        subtestname = "GPIOCheck_5",
-        testname = "Touch",
-        upperLimit = 0
-      },
-      {
-        lowerLimit = 1,
-        required = true,
-        subsubtestname = "Read-GPIO_TOUCH_TO_BT_SYNC_HIGH",
-        subtestname = "GPIOCheck_5",
-        testname = "Touch",
-        upperLimit = 1
-      },
-      {
-        lowerLimit = 1,
-        required = true,
-        subsubtestname = "Read-WLAN_GPIO_TOUCH_TO_BT_SYNC_HIGH",
-        subtestname = "GPIOCheck_5",
-        testname = "Touch",
-        upperLimit = 1
-      },
-      {
-        lowerLimit = 0,
-        required = true,
-        subsubtestname = "Read-GPIO_GRAPE_TO_TCON_FORCE_PWM_1V8_LOW",
-        subtestname = "GPIOCheck_5",
-        testname = "Touch",
-        upperLimit = 0
-      },
-      {
-        lowerLimit = 1,
-        required = true,
-        subsubtestname = "Read-GPIO_GRAPE_TO_TCON_FORCE_PWM_1V8_HIGH",
-        subtestname = "GPIOCheck_5",
-        testname = "Touch",
-        upperLimit = 1
-      },
-      {
-        lowerLimit = 0,
-        required = true,
-        subsubtestname = "Read-GPIO_GRAPE_TO_SCORPIUS_TIME_SYNC_1V8_LOW",
-        subtestname = "GPIOCheck_5",
-        testname = "Touch",
-        upperLimit = 0
-      },
-      {
-        lowerLimit = 1,
-        required = true,
-        subsubtestname = "Read-GPIO_GRAPE_TO_SCORPIUS_TIME_SYNC_1V8_HIGH",
-        subtestname = "GPIOCheck_5",
-        testname = "Touch",
-        upperLimit = 1
-      },
-      {
-        lowerLimit = 0,
-        required = true,
-        subsubtestname = "Read-GPIO_POTOMAC_TO_PMU_WAKE_1V8_LOW",
-        subtestname = "GPIOCheck_6",
-        testname = "PMU",
-        upperLimit = 0
-      },
-      {
-        lowerLimit = 1,
-        required = true,
-        subsubtestname = "Read-GPIO_POTOMAC_TO_PMU_WAKE_1V8_HIGH",
-        subtestname = "GPIOCheck_6",
-        testname = "PMU",
-        upperLimit = 1
-      },
-      {
-        lowerLimit = 0,
-        required = true,
-        subsubtestname = "Read-GPIO_PMU_TO_ROTTERDAM_EN_LOW",
-        subtestname = "GPIOCheck_6",
-        testname = "PMU",
-        upperLimit = 0
-      },
-      {
-        lowerLimit = 1,
-        required = true,
-        subsubtestname = "Read-GPIO_PMU_TO_ROTTERDAM_EN_HIGH",
-        subtestname = "GPIOCheck_6",
-        testname = "PMU",
-        upperLimit = 1
-      },
-      {
-        lowerLimit = 0,
-        required = true,
-        subsubtestname = "Read-GPIO_PMU_TO_SCORPIUS_EXT_DOTARA_EN_1V8_LOW",
-        subtestname = "GPIOCheck_6",
-        testname = "PMU",
-        upperLimit = 0
-      },
-      {
-        lowerLimit = 1,
-        required = true,
-        subsubtestname = "Read-GPIO_PMU_TO_SCORPIUS_EXT_DOTARA_EN_1V8_HIGH",
-        subtestname = "GPIOCheck_6",
-        testname = "PMU",
-        upperLimit = 1
-      },
-      {
-        lowerLimit = 0,
-        required = true,
-        subsubtestname = "Read-GPIO_PMU_TO_NAND_LOW_BATT_L_LOW",
-        subtestname = "GPIOCheck_6",
-        testname = "PMU",
-        upperLimit = 0
-      },
-      {
-        lowerLimit = 1,
-        required = true,
-        subsubtestname = "Read-GPIO_PMU_TO_NAND_LOW_BATT_L_HIGH",
-        subtestname = "GPIOCheck_6",
-        testname = "PMU",
-        upperLimit = 1
-      },
-      {
-        lowerLimit = 0,
-        required = true,
-        subsubtestname = "Read-GPIO_PMU_TO_SCORPIUS_MCU_NRST_L_1V8_LOW",
-        subtestname = "GPIOCheck_6",
-        testname = "PMU",
-        upperLimit = 0
-      },
-      {
-        lowerLimit = 1,
-        required = true,
-        subsubtestname = "Read-GPIO_PMU_TO_SCORPIUS_MCU_NRST_L_1V8_HIGH",
-        subtestname = "GPIOCheck_6",
-        testname = "PMU",
-        upperLimit = 1
-      },
-      {
-        lowerLimit = 0,
-        required = true,
+        required = "mlb_type==\"MLB_B\"",
         subsubtestname = "Read-GPIO_PMU_TO_BBPMU_ON_LOW",
+        subtestname = "GPIOCheck_4",
+        testname = "PMU",
+        upperLimit = 0
+      },
+      {
+        lowerLimit = 1,
+        required = "mlb_type==\"MLB_B\"",
+        subsubtestname = "Read-GPIO_PMU_TO_BBPMU_ON_HIGH",
+        subtestname = "GPIOCheck_4",
+        testname = "PMU",
+        upperLimit = 1
+      },
+      {
+        lowerLimit = 0,
+        required = true,
+        subsubtestname = "Read-GPIO_SOC_TO_GRAPE_EB_LOW",
+        subtestname = "GPIOCheck_5",
+        testname = "Touch",
+        upperLimit = 0
+      },
+      {
+        lowerLimit = 1,
+        required = true,
+        subsubtestname = "Read-GPIO_SOC_TO_GRAPE_EB_HIGH",
+        subtestname = "GPIOCheck_5",
+        testname = "Touch",
+        upperLimit = 1
+      },
+      {
+        lowerLimit = 0,
+        required = true,
+        subsubtestname = "Read-GPIO_GRAPE_TO_BT_SYNC_LOW",
+        subtestname = "GPIOCheck_5",
+        testname = "Touch",
+        upperLimit = 0
+      },
+      {
+        lowerLimit = 0,
+        required = true,
+        subsubtestname = "Read-WLAN_GPIO_GRAPE_TO_BT_SYNC_LOW",
+        subtestname = "GPIOCheck_5",
+        testname = "Touch",
+        upperLimit = 0
+      },
+      {
+        lowerLimit = 1,
+        required = true,
+        subsubtestname = "Read-GPIO_GRAPE_TO_BT_SYNC_HIGH",
+        subtestname = "GPIOCheck_5",
+        testname = "Touch",
+        upperLimit = 1
+      },
+      {
+        lowerLimit = 1,
+        required = true,
+        subsubtestname = "Read-WLAN_GPIO_GRAPE_TO_BT_SYNC_HIGH",
+        subtestname = "GPIOCheck_5",
+        testname = "Touch",
+        upperLimit = 1
+      },
+      {
+        lowerLimit = 0,
+        required = true,
+        subsubtestname = "Read-GPIO_GRAPE_TO_SYSTEM_FPWM_LOW",
+        subtestname = "GPIOCheck_5",
+        testname = "Touch",
+        upperLimit = 0
+      },
+      {
+        lowerLimit = 1,
+        required = true,
+        subsubtestname = "Read-GPIO_GRAPE_TO_SYSTEM_FPWM_HIGH",
+        subtestname = "GPIOCheck_5",
+        testname = "Touch",
+        upperLimit = 1
+      },
+      {
+        lowerLimit = 0,
+        required = true,
+        subsubtestname = "Read-GPIO_GRAPE_TO_MAHI_AOP_COEX_1V8_LOW",
+        subtestname = "GPIOCheck_5",
+        testname = "Touch",
+        upperLimit = 0
+      },
+      {
+        lowerLimit = 1,
+        required = true,
+        subsubtestname = "Read-GPIO_GRAPE_TO_MAHI_AOP_COEX_1V8_HIGH",
+        subtestname = "GPIOCheck_5",
+        testname = "Touch",
+        upperLimit = 1
+      },
+      {
+        lowerLimit = 0,
+        required = true,
+        subsubtestname = "Read-GPIO_STYX_TO_PMU_WAKE_1V6_LOW",
         subtestname = "GPIOCheck_6",
         testname = "PMU",
         upperLimit = 0
@@ -1156,7 +1150,7 @@ return  {
       {
         lowerLimit = 1,
         required = true,
-        subsubtestname = "Read-GPIO_PMU_TO_BBPMU_ON_HIGH",
+        subsubtestname = "Read-GPIO_STYX_TO_PMU_WAKE_1V6_HIGH",
         subtestname = "GPIOCheck_6",
         testname = "PMU",
         upperLimit = 1
@@ -1164,7 +1158,7 @@ return  {
       {
         lowerLimit = 0,
         required = true,
-        subsubtestname = "Read-GPIO_PMU_TO_WLAN_REG_ON_LOW",
+        subsubtestname = "Read-GPIO_PMU_TO_SE_EN_LOW",
         subtestname = "GPIOCheck_6",
         testname = "PMU",
         upperLimit = 0
@@ -1172,7 +1166,71 @@ return  {
       {
         lowerLimit = 1,
         required = true,
-        subsubtestname = "Read-GPIO_PMU_TO_WLAN_REG_ON_HIGH",
+        subsubtestname = "Read-GPIO_PMU_TO_SE_EN_HIGH",
+        subtestname = "GPIOCheck_6",
+        testname = "PMU",
+        upperLimit = 1
+      },
+      {
+        lowerLimit = 0,
+        required = true,
+        subsubtestname = "Read-GPIO_MAHI_TO_SYS_WAKE_LOW",
+        subtestname = "GPIOCheck_6",
+        testname = "PMU",
+        upperLimit = 0
+      },
+      {
+        lowerLimit = 1,
+        required = true,
+        subsubtestname = "Read-GPIO_MAHI_TO_SYS_WAKE_HIGH",
+        subtestname = "GPIOCheck_6",
+        testname = "PMU",
+        upperLimit = 1
+      },
+      {
+        lowerLimit = 0,
+        required = true,
+        subsubtestname = "Read-GPIO_PMU_TO_NAND_LOW_PWR_BOOT_L_LOW",
+        subtestname = "GPIOCheck_6",
+        testname = "PMU",
+        upperLimit = 0
+      },
+      {
+        lowerLimit = 1,
+        required = true,
+        subsubtestname = "Read-GPIO_PMU_TO_NAND_LOW_PWR_BOOT_L_HIGH",
+        subtestname = "GPIOCheck_6",
+        testname = "PMU",
+        upperLimit = 1
+      },
+      {
+        lowerLimit = 0,
+        required = true,
+        subsubtestname = "Read-GPIO_SYS_TO_MAHI_RESET_L_LOW",
+        subtestname = "GPIOCheck_6",
+        testname = "PMU",
+        upperLimit = 0
+      },
+      {
+        lowerLimit = 1,
+        required = true,
+        subsubtestname = "Read-GPIO_SYS_TO_MAHI_RESET_L_HIGH",
+        subtestname = "GPIOCheck_6",
+        testname = "PMU",
+        upperLimit = 1
+      },
+      {
+        lowerLimit = 0,
+        required = true,
+        subsubtestname = "Read-GPIO_PMU_TO_WLAN_REG_ON_BUF_LOW",
+        subtestname = "GPIOCheck_6",
+        testname = "PMU",
+        upperLimit = 0
+      },
+      {
+        lowerLimit = 1,
+        required = true,
+        subsubtestname = "Read-GPIO_PMU_TO_WLAN_REG_ON_BUF_HIGH",
         subtestname = "GPIOCheck_6",
         testname = "PMU",
         upperLimit = 1
@@ -1482,7 +1540,7 @@ return  {
         lowerLimit = 230,
         required = true,
         subsubtestname = "Read-s6e_lane_0_eh_mv",
-        subtestname = "PCIeBIST_AEMToolsS6E",
+        subtestname = "PCIeBIST_S6E",
         testname = "NAND",
         units = "mV"
       },
@@ -1490,7 +1548,7 @@ return  {
         lowerLimit = 9.375,
         required = true,
         subsubtestname = "Read-s6e_lane_0_ew_ps",
-        subtestname = "PCIeBIST_AEMToolsS6E",
+        subtestname = "PCIeBIST_S6E",
         testname = "NAND",
         units = "ps"
       },
@@ -1498,7 +1556,7 @@ return  {
         lowerLimit = 230,
         required = "HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2'",
         subsubtestname = "Read-s6e_lane_1_eh_mv",
-        subtestname = "PCIeBIST_AEMToolsS6E",
+        subtestname = "PCIeBIST_S6E",
         testname = "NAND",
         units = "mV"
       },
@@ -1506,7 +1564,7 @@ return  {
         lowerLimit = 9.375,
         required = "HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2'",
         subsubtestname = "Read-s6e_lane_1_ew_ps",
-        subtestname = "PCIeBIST_AEMToolsS6E",
+        subtestname = "PCIeBIST_S6E",
         testname = "NAND",
         units = "ps"
       },
@@ -1514,7 +1572,7 @@ return  {
         lowerLimit = 230,
         required = true,
         subsubtestname = "Read-ans4_lane_0_eh_mv",
-        subtestname = "PCIeBIST_AEMToolsANS4",
+        subtestname = "PCIeBIST_ANS4",
         testname = "NAND",
         units = "mV"
       },
@@ -1522,7 +1580,7 @@ return  {
         lowerLimit = 9.375,
         required = true,
         subsubtestname = "Read-ans4_lane_0_ew_ps",
-        subtestname = "PCIeBIST_AEMToolsANS4",
+        subtestname = "PCIeBIST_ANS4",
         testname = "NAND",
         units = "ps"
       },
@@ -1530,7 +1588,7 @@ return  {
         lowerLimit = 230,
         required = "HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2'",
         subsubtestname = "Read-ans4_lane_1_eh_mv",
-        subtestname = "PCIeBIST_AEMToolsANS4",
+        subtestname = "PCIeBIST_ANS4",
         testname = "NAND",
         units = "mV"
       },
@@ -1538,7 +1596,7 @@ return  {
         lowerLimit = 9.375,
         required = "HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2'",
         subsubtestname = "Read-ans4_lane_1_ew_ps",
-        subtestname = "PCIeBIST_AEMToolsANS4",
+        subtestname = "PCIeBIST_ANS4",
         testname = "NAND",
         units = "ps"
       },
@@ -1546,7 +1604,7 @@ return  {
         lowerLimit = 100,
         required = true,
         subsubtestname = "Read-pcie_0_lane_0_eh_mv",
-        subtestname = "Wifi_AEMToolsWifi3nm",
+        subtestname = "Wifi_3nm",
         testname = "RF",
         units = "mV"
       },
@@ -1554,7 +1612,7 @@ return  {
         lowerLimit = 37.5,
         required = true,
         subsubtestname = "Read-pcie_0_lane_0_ew_ps",
-        subtestname = "Wifi_AEMToolsWifi3nm",
+        subtestname = "Wifi_3nm",
         testname = "RF",
         units = "ps"
       },
@@ -1562,7 +1620,7 @@ return  {
         lowerLimit = 100,
         required = true,
         subsubtestname = "Read-pcie_0_r0_lane_0_eh_mv",
-        subtestname = "Wifi_AEMToolsWifi3nm",
+        subtestname = "Wifi_3nm",
         testname = "RF",
         units = "mV"
       },
@@ -1570,23 +1628,23 @@ return  {
         lowerLimit = 37.5,
         required = true,
         subsubtestname = "Read-pcie_0_r0_lane_0_ew_ps",
-        subtestname = "Wifi_AEMToolsWifi3nm",
+        subtestname = "Wifi_3nm",
         testname = "RF",
         units = "ps"
       },
       {
         lowerLimit = 100,
-        required = true,
+        required = "mlb_type==\"MLB_B\"",
         subsubtestname = "Read-pciesinope_1_lane_0_eh_mv",
-        subtestname = "Baseband_AEMToolsSinopeGen4",
+        subtestname = "Baseband_SinopeGen4",
         testname = "RF",
         units = "mV"
       },
       {
-        lowerLimit = 18.75,
-        required = true,
+        lowerLimit = 20,
+        required = "mlb_type==\"MLB_B\"",
         subsubtestname = "Read-pciesinope_1_lane_0_ew_ps",
-        subtestname = "Baseband_AEMToolsSinopeGen4",
+        subtestname = "Baseband_SinopeGen4",
         testname = "RF",
         units = "ps"
       },
@@ -1594,7 +1652,7 @@ return  {
         lowerLimit = 100,
         required = true,
         subsubtestname = "Read-pcieproxima_0_lane_0_eh_mv",
-        subtestname = "Wifi_AEMToolsProxima",
+        subtestname = "Wifi_Proxima",
         testname = "RF",
         units = "mV"
       },
@@ -1602,7 +1660,7 @@ return  {
         lowerLimit = 37.5,
         required = true,
         subsubtestname = "Read-pcieproxima_0_lane_0_ew_ps",
-        subtestname = "Wifi_AEMToolsProxima",
+        subtestname = "Wifi_Proxima",
         testname = "RF",
         units = "ps"
       },
@@ -1610,7 +1668,7 @@ return  {
         lowerLimit = 100,
         required = "mlb_type==\"MLB_B\"",
         subsubtestname = "Read-baseband_1_lane_0_eh_mv",
-        subtestname = "Baseband_AEMToolsBaseband3nm",
+        subtestname = "Baseband_3nm",
         testname = "RF",
         units = "mV"
       },
@@ -1618,7 +1676,7 @@ return  {
         lowerLimit = 20,
         required = "mlb_type==\"MLB_B\"",
         subsubtestname = "Read-baseband_1_lane_0_ew_ps",
-        subtestname = "Baseband_AEMToolsBaseband3nm",
+        subtestname = "Baseband_3nm",
         testname = "RF",
         units = "ps"
       },
@@ -1642,7 +1700,7 @@ return  {
       },
       {
         lowerLimit = 0,
-        required = false,
+        required = true,
         subsubtestname = "Read-nRows",
         subtestname = "SmokeyTest_TiCC",
         testname = "Touch",
@@ -1650,7 +1708,7 @@ return  {
       },
       {
         lowerLimit = 0,
-        required = false,
+        required = true,
         subsubtestname = "Read-nCols",
         subtestname = "SmokeyTest_TiCC",
         testname = "Touch",
@@ -1658,7 +1716,7 @@ return  {
       },
       {
         lowerLimit = 0,
-        required = false,
+        required = true,
         subsubtestname = "Read-Rfb",
         subtestname = "SmokeyTest_TiCC",
         testname = "Touch",
@@ -1666,7 +1724,7 @@ return  {
       },
       {
         lowerLimit = 0,
-        required = false,
+        required = true,
         subsubtestname = "Read-DMD",
         subtestname = "SmokeyTest_TiCC",
         testname = "Touch",
@@ -1674,11 +1732,11 @@ return  {
       },
       {
         lowerLimit = 0,
-        required = false,
+        required = true,
         subsubtestname = "Read-HWGain",
         subtestname = "SmokeyTest_TiCC",
         testname = "Touch",
-        upperLimit = 255
+        upperLimit = 65535
       },
       {
         lowerLimit = 5000,
@@ -1705,6 +1763,42 @@ return  {
         upperLimit = 91
       },
       {
+        allowedList = {
+          "00"
+        },
+        required = true,
+        subsubtestname = "Read-AuthInfo2_Instant",
+        subtestname = "Presencecheck_Mogul",
+        testname = "DUTInfo"
+      },
+      {
+        allowedList = {
+          "EF"
+        },
+        required = true,
+        subsubtestname = "Read-SelfTest1_Instant",
+        subtestname = "Presencecheck_Mogul",
+        testname = "DUTInfo"
+      },
+      {
+        allowedList = {
+          "00"
+        },
+        required = true,
+        subsubtestname = "Read-SelfTest2_Instant",
+        subtestname = "Presencecheck_Mogul",
+        testname = "DUTInfo"
+      },
+      {
+        allowedList = {
+          "00"
+        },
+        required = true,
+        subsubtestname = "Read-SelfTest3_Instant",
+        subtestname = "Presencecheck_Mogul",
+        testname = "DUTInfo"
+      },
+      {
         lowerLimit = 10,
         required = true,
         subsubtestname = "Read-Tp000_Instant",
@@ -2409,8 +2503,24 @@ return  {
       {
         lowerLimit = 0,
         required = true,
+        subsubtestname = "Read-ECPU_SW_Disable_Name",
+        subtestname = "Info_Harvest",
+        testname = "SOC",
+        upperLimit = 0
+      },
+      {
+        lowerLimit = 0,
+        required = true,
+        subsubtestname = "Read-GFX_SW_Disable_Name",
+        subtestname = "Info_Harvest",
+        testname = "SOC",
+        upperLimit = 0
+      },
+      {
+        lowerLimit = 0,
+        required = true,
         subsubtestname = "Read-ATC0_SW_Disable_Name",
-        subtestname = "Info_1",
+        subtestname = "Info_Harvest",
         testname = "SOC",
         upperLimit = 0
       },
@@ -2418,7 +2528,7 @@ return  {
         lowerLimit = 1,
         required = true,
         subsubtestname = "Read-ATC1_SW_Disable_Name",
-        subtestname = "Info_1",
+        subtestname = "Info_Harvest",
         testname = "SOC",
         upperLimit = 1
       },
@@ -2426,7 +2536,7 @@ return  {
         lowerLimit = 1,
         required = true,
         subsubtestname = "Read-ATC2_SW_Disable_Name",
-        subtestname = "Info_1",
+        subtestname = "Info_Harvest",
         testname = "SOC",
         upperLimit = 1
       },
@@ -2434,9 +2544,61 @@ return  {
         lowerLimit = 1,
         required = true,
         subsubtestname = "Read-ATC3_SW_Disable_Name",
-        subtestname = "Info_1",
+        subtestname = "Info_Harvest",
         testname = "SOC",
         upperLimit = 1
+      },
+      {
+        allowedList = {
+          "0x00"
+        },
+        required = true,
+        subsubtestname = "Read-PMU_Fault1",
+        subtestname = "Temperature",
+        testname = "SOC"
+      },
+      {
+        allowedList = {
+          "0x00"
+        },
+        required = true,
+        subsubtestname = "Read-PMU_Fault2",
+        subtestname = "Temperature",
+        testname = "SOC"
+      },
+      {
+        allowedList = {
+          "41 44 46 55"
+        },
+        required = true,
+        subsubtestname = "Read-GPIO_PMU_TO_ACE_FORCE_DFU_BTN_3V3_H/L_State",
+        subtestname = "ForceDFU_ADFU",
+        testname = "USBC"
+      },
+      {
+        allowedList = {
+          "0x98 0x2F 0x86 0xBF"
+        },
+        required = true,
+        subsubtestname = "Compare-I2C_CRC1-Bin_CRC1",
+        subtestname = "OTPProgram",
+        testname = "USBC"
+      },
+      {
+        allowedList = {
+          "0x1E 0x28 0xF1 0x57",
+          "0xFF 0x2D 0x55 0x91",
+          "0x4D 0x1F 0xF3 0x33",
+          "0xAC 0x1A 0x57 0xF5",
+          "0xA6 0xB2 0xEA 0xA4",
+          "0x47 0xB7 0x4E 0x62",
+          "0x66 0x93 0xC1 0xD2",
+          "0x87 0x96 0x65 0x14"
+        },
+        required = true,
+        subsubtestname = "Compare-I2C_CRC2-Bin_CRC2",
+        subtestname = "OTPProgram",
+        testname = "USBC"
       }
     },
     mainActions = {
@@ -2475,11 +2637,20 @@ return  {
           PRODUCTION_SOC = {
             returnIdx = 15
           },
+          RFEM_HAS_ADDED = {
+            returnIdx = 21
+          },
           SITE = {
             returnIdx = 1
           },
+          WSKU_HAS_ADDED = {
+            returnIdx = 22
+          },
           accel_selftest_result = {
             returnIdx = 18
+          },
+          production_mode = {
+            returnIdx = 8
           }
         },
         testIdx = 2
@@ -2535,28 +2706,12 @@ return  {
             }
           }
         },
-        filename = "Tech/Fixture/GeneralAction_Reset_Initial.csv",
-        name = "RunGeneralAction_Reset_Initial",
+        filename = "Tech/Fixture/GeneralAction_Initial.csv",
+        name = "RunGeneralAction_Initial",
         plugins = {
           "FixturePlugin"
         },
         testIdx = 5
-      },
-      {
-        args = {
-          {
-            action = {
-              actionIdx = 1,
-              returnIdx = 1
-            }
-          }
-        },
-        filename = "Tech/Fixture/GeneralAction_Led_Inprogress_On.csv",
-        name = "RunGeneralAction_Led_Inprogress_On",
-        plugins = {
-          "FixturePlugin"
-        },
-        testIdx = 6
       },
       {
         args = {
@@ -2573,7 +2728,7 @@ return  {
           "FixturePlugin",
           "RunShellCommand"
         },
-        testIdx = 7
+        testIdx = 6
       },
       {
         args = {
@@ -2595,7 +2750,7 @@ return  {
             returnIdx = 1
           }
         },
-        testIdx = 8
+        testIdx = 7
       },
       {
         args = {
@@ -2617,7 +2772,7 @@ return  {
             returnIdx = 1
           }
         },
-        testIdx = 9
+        testIdx = 8
       },
       {
         args = {
@@ -2639,7 +2794,7 @@ return  {
             returnIdx = 1
           }
         },
-        testIdx = 10
+        testIdx = 9
       },
       {
         args = {
@@ -2656,7 +2811,7 @@ return  {
           "FixturePlugin",
           "RunShellCommand"
         },
-        testIdx = 11
+        testIdx = 10
       },
       {
         args = {
@@ -2698,7 +2853,7 @@ return  {
             returnIdx = 2
           }
         },
-        testIdx = 12
+        testIdx = 11
       },
       {
         args = {
@@ -2709,13 +2864,13 @@ return  {
             }
           }
         },
-        filename = "Tech/Power/Discharge_Initial_OTP.csv",
+        filename = "Tech/Power/Discharge_OTP.csv",
         name = "RunDischarge_Initial_OTP",
         plugins = {
           "FixturePlugin",
           "RunShellCommand"
         },
-        testIdx = 13
+        testIdx = 12
       },
       {
         args = {
@@ -2732,31 +2887,31 @@ return  {
           "FixturePlugin",
           "RunShellCommand"
         },
-        testIdx = 14
+        testIdx = 13
       },
       {
         args = {
           {
             action = {
-              actionIdx = 12,
+              actionIdx = 11,
               returnIdx = 11
             }
           },
           {
             action = {
-              actionIdx = 12,
+              actionIdx = 11,
               returnIdx = 9
             }
           },
           {
             action = {
-              actionIdx = 12,
+              actionIdx = 11,
               returnIdx = 7
             }
           },
           {
             action = {
-              actionIdx = 12,
+              actionIdx = 11,
               returnIdx = 12
             }
           },
@@ -2768,13 +2923,13 @@ return  {
           },
           {
             action = {
-              actionIdx = 12,
+              actionIdx = 11,
               returnIdx = 4
             }
           },
           {
             action = {
-              actionIdx = 12,
+              actionIdx = 11,
               returnIdx = 16
             }
           },
@@ -2800,7 +2955,7 @@ return  {
           "PListSerializationPlugin",
           "Utilities"
         },
-        testIdx = 15
+        testIdx = 14
       },
       {
         args = {
@@ -2811,13 +2966,13 @@ return  {
             }
           }
         },
-        filename = "Tech/Power/Discharge_Initial_FWDL.csv",
+        filename = "Tech/Power/Discharge_FWDL.csv",
         name = "RunDischarge_Initial_FWDL",
         plugins = {
           "FixturePlugin",
           "RunShellCommand"
         },
-        testIdx = 16
+        testIdx = 15
       },
       {
         args = {
@@ -2834,19 +2989,19 @@ return  {
           "FixturePlugin",
           "RunShellCommand"
         },
-        testIdx = 17
+        testIdx = 16
       },
       {
         args = {
           {
             action = {
-              actionIdx = 12,
+              actionIdx = 11,
               returnIdx = 9
             }
           },
           {
             action = {
-              actionIdx = 12,
+              actionIdx = 11,
               returnIdx = 10
             }
           },
@@ -2857,8 +3012,8 @@ return  {
             }
           }
         },
-        filename = "Tech/USBC/Info_ACE3_FWVersion.csv",
-        name = "RunInfo_ACE3_FWVersion",
+        filename = "Tech/USBC/Info_ACE3.csv",
+        name = "RunInfo_ACE3",
         plugins = {
           "SFC",
           "Regex",
@@ -2871,7 +3026,7 @@ return  {
           "SMTCommonPlugin",
           "PListSerializationPlugin"
         },
-        testIdx = 18
+        testIdx = 17
       },
       {
         args = {
@@ -2902,13 +3057,13 @@ return  {
           "InteractiveView",
           "RunShellCommand"
         },
-        testIdx = 19
+        testIdx = 18
       },
       {
         args = {
           {
             action = {
-              actionIdx = 19,
+              actionIdx = 18,
               returnIdx = 1
             }
           }
@@ -2919,7 +3074,7 @@ return  {
           "DCSD",
           "VariableTable"
         },
-        testIdx = 20
+        testIdx = 19
       },
       {
         filename = "Tech/SOC/Restore_NonUI_DCSD_2.csv",
@@ -2930,19 +3085,19 @@ return  {
           "InteractiveView",
           "VariableTable"
         },
-        testIdx = 21
+        testIdx = 20
       },
       {
         args = {
           {
             action = {
-              actionIdx = 21,
+              actionIdx = 20,
               returnIdx = 1
             }
           },
           {
             action = {
-              actionIdx = 12,
+              actionIdx = 11,
               returnIdx = 2
             }
           }
@@ -2952,7 +3107,7 @@ return  {
         plugins = {
           "RunShellCommand"
         },
-        testIdx = 22
+        testIdx = 21
       },
       {
         args = {
@@ -2963,13 +3118,13 @@ return  {
             }
           }
         },
-        filename = "Tech/Power/Discharge_Initial_Restore.csv",
-        name = "RunDischarge_Initial_Restore",
+        filename = "Tech/Power/Discharge_Restore.csv",
+        name = "RunDischarge_Restore",
         plugins = {
           "FixturePlugin",
           "RunShellCommand"
         },
-        testIdx = 23
+        testIdx = 22
       },
       {
         args = {
@@ -2998,13 +3153,13 @@ return  {
           "SMTCommonPlugin",
           "PListSerializationPlugin"
         },
-        testIdx = 24
+        testIdx = 23
       },
       {
         args = {
           {
             action = {
-              actionIdx = 12,
+              actionIdx = 11,
               returnIdx = 1
             }
           }
@@ -3025,13 +3180,13 @@ return  {
           "PListSerializationPlugin",
           "Utilities"
         },
-        testIdx = 25
+        testIdx = 24
       },
       {
         args = {
           {
             action = {
-              actionIdx = 12,
+              actionIdx = 11,
               returnIdx = 5
             }
           }
@@ -3052,7 +3207,7 @@ return  {
           "SMTCommonPlugin",
           "PListSerializationPlugin"
         },
-        testIdx = 26
+        testIdx = 25
       },
       {
         filename = "Tech/SOC/Temperature_1.csv",
@@ -3074,11 +3229,11 @@ return  {
           "InteractiveView",
           "RunShellCommand"
         },
-        testIdx = 27
+        testIdx = 26
       },
       {
-        filename = "Tech/DUTInfo/DiagsFW_Version.csv",
-        name = "RunDiagsFW_Version",
+        filename = "Tech/DUTInfo/DiagsFW.csv",
+        name = "RunDiagsFW",
         plugins = {
           "Dut",
           "ChannelPlugin",
@@ -3094,29 +3249,7 @@ return  {
           "PListSerializationPlugin",
           "RunShellCommand"
         },
-        testIdx = 28
-      },
-      {
-        filename = "Tech/Process/CB_Init.csv",
-        name = "RunCB_Init",
-        plugins = {
-          "Dut",
-          "Kis_dut",
-          "Kis_channelPlugin",
-          "ChannelPlugin",
-          "FixturePlugin",
-          "InteractiveView",
-          "SFC",
-          "Regex",
-          "StationInfo",
-          "FileOperation",
-          "VariableTable",
-          "RunShellCommand",
-          "TimeUtility",
-          "SMTCommonPlugin",
-          "PListSerializationPlugin"
-        },
-        testIdx = 29
+        testIdx = 27
       },
       {
         filename = "Tech/DUTInfo/Syscfg.csv",
@@ -3135,13 +3268,13 @@ return  {
           "SMTCommonPlugin",
           "PListSerializationPlugin"
         },
-        testIdx = 30
+        testIdx = 28
       },
       {
         args = {
           {
             action = {
-              actionIdx = 12,
+              actionIdx = 11,
               returnIdx = 6
             }
           }
@@ -3165,13 +3298,13 @@ return  {
             returnIdx = 3
           }
         },
-        testIdx = 31
+        testIdx = 29
       },
       {
         args = {
           {
             action = {
-              actionIdx = 12,
+              actionIdx = 11,
               returnIdx = 3
             }
           }
@@ -3195,7 +3328,7 @@ return  {
           "SMTCommonPlugin",
           "PListSerializationPlugin"
         },
-        testIdx = 32
+        testIdx = 30
       },
       {
         filename = "Tech/USBC/Info_RT13.csv",
@@ -3217,25 +3350,25 @@ return  {
           "SMTCommonPlugin",
           "PListSerializationPlugin"
         },
-        testIdx = 33
+        testIdx = 31
       },
       {
         args = {
           {
             action = {
-              actionIdx = 12,
+              actionIdx = 11,
               returnIdx = 18
             }
           },
           {
             action = {
-              actionIdx = 12,
+              actionIdx = 11,
               returnIdx = 19
             }
           },
           {
             action = {
-              actionIdx = 12,
+              actionIdx = 11,
               returnIdx = 20
             }
           }
@@ -3259,13 +3392,13 @@ return  {
           "SMTCommonPlugin",
           "PListSerializationPlugin"
         },
-        testIdx = 34
+        testIdx = 32
       },
       {
         args = {
           {
             action = {
-              actionIdx = 12,
+              actionIdx = 11,
               returnIdx = 1
             }
           }
@@ -3285,11 +3418,11 @@ return  {
           "RunShellCommand",
           "FixturePlugin"
         },
-        testIdx = 35
+        testIdx = 33
       },
       {
-        filename = "Tech/DUTInfo/Syscfg_List_1.csv",
-        name = "RunSyscfg_List_1",
+        filename = "Tech/DUTInfo/Syscfg_1.csv",
+        name = "RunSyscfg_1",
         plugins = {
           "Dut",
           "ChannelPlugin",
@@ -3304,13 +3437,13 @@ return  {
           "SMTCommonPlugin",
           "PListSerializationPlugin"
         },
-        testIdx = 36
+        testIdx = 34
       },
       {
         args = {
           {
             action = {
-              actionIdx = 12,
+              actionIdx = 11,
               returnIdx = 1
             }
           }
@@ -3334,7 +3467,7 @@ return  {
           "SMTCommonPlugin",
           "PListSerializationPlugin"
         },
-        testIdx = 37
+        testIdx = 35
       },
       {
         filename = "Tech/DUTInfo/RTOSFW.csv",
@@ -3355,13 +3488,13 @@ return  {
           "RunShellCommand",
           "Runtest"
         },
-        testIdx = 38
+        testIdx = 36
       },
       {
         args = {
           {
             action = {
-              actionIdx = 38,
+              actionIdx = 36,
               returnIdx = 1
             }
           }
@@ -3385,13 +3518,13 @@ return  {
           "SMTCommonPlugin",
           "PListSerializationPlugin"
         },
-        testIdx = 39
+        testIdx = 37
       },
       {
         args = {
           {
             action = {
-              actionIdx = 12,
+              actionIdx = 11,
               returnIdx = 1
             }
           }
@@ -3416,7 +3549,7 @@ return  {
           "PListSerializationPlugin",
           "Utilities"
         },
-        testIdx = 40
+        testIdx = 38
       },
       {
         filename = "Tech/DUTInfo/RBMFW.csv",
@@ -3437,13 +3570,13 @@ return  {
           "RunShellCommand",
           "Runtest"
         },
-        testIdx = 41
+        testIdx = 39
       },
       {
         args = {
           {
             action = {
-              actionIdx = 41,
+              actionIdx = 39,
               returnIdx = 1
             }
           }
@@ -3454,7 +3587,7 @@ return  {
           "Kis_dut",
           "Kis_channelPlugin"
         },
-        testIdx = 42
+        testIdx = 40
       },
       {
         args = {
@@ -3485,7 +3618,7 @@ return  {
           "PListSerializationPlugin",
           "Utilities"
         },
-        testIdx = 43
+        testIdx = 41
       },
       {
         filename = "Tech/Process/Transition_Diags_2.csv",
@@ -3508,7 +3641,7 @@ return  {
           "PListSerializationPlugin",
           "Utilities"
         },
-        testIdx = 44
+        testIdx = 42
       },
       {
         args = {
@@ -3537,7 +3670,7 @@ return  {
           "SMTCommonPlugin",
           "PListSerializationPlugin"
         },
-        testIdx = 45
+        testIdx = 43
       },
       {
         args = {
@@ -3566,7 +3699,7 @@ return  {
           "SMTCommonPlugin",
           "PListSerializationPlugin"
         },
-        testIdx = 46
+        testIdx = 44
       },
       {
         args = {
@@ -3590,14 +3723,8 @@ return  {
           },
           {
             action = {
-              actionIdx = 12,
+              actionIdx = 11,
               returnIdx = 5
-            }
-          },
-          {
-            action = {
-              actionIdx = 31,
-              returnIdx = 3
             }
           }
         },
@@ -3622,12 +3749,38 @@ return  {
         testConditions = {
           HAS_TWO_STORAGE_DEVICE = {
             returnIdx = 3
-          },
-          production_mode = {
-            returnIdx = 12
           }
         },
-        testIdx = 47
+        testIdx = 45
+      },
+      {
+        args = {
+          {
+            action = {
+              actionIdx = 29,
+              returnIdx = 3
+            }
+          }
+        },
+        filename = "Tech/SOC/Info_Harvest.csv",
+        name = "RunInfo_Harvest",
+        plugins = {
+          "Kis_dut",
+          "Kis_channelPlugin",
+          "Regex",
+          "Utilities",
+          "StationInfo",
+          "PListSerializationPlugin",
+          "SMTCommonPlugin",
+          "FileOperation",
+          "VariableTable",
+          "TimeUtility",
+          "FixturePlugin",
+          "InteractiveView",
+          "RunShellCommand",
+          "Mutex"
+        },
+        testIdx = 46
       },
       {
         filename = "Tech/DUTInfo/Presencecheck_Mogul.csv",
@@ -3648,7 +3801,7 @@ return  {
           "SMTCommonPlugin",
           "PListSerializationPlugin"
         },
-        testIdx = 48
+        testIdx = 47
       },
       {
         filename = "Tech/PMU/UnderVoltageWarning_Abbey.csv",
@@ -3666,7 +3819,7 @@ return  {
           "InteractiveView",
           "RunShellCommand"
         },
-        testIdx = 49
+        testIdx = 48
       },
       {
         filename = "Tech/PMU/UnderVoltageWarning_Club.csv",
@@ -3684,13 +3837,13 @@ return  {
           "InteractiveView",
           "RunShellCommand"
         },
-        testIdx = 50
+        testIdx = 49
       },
       {
         args = {
           {
             action = {
-              actionIdx = 47,
+              actionIdx = 45,
               returnIdx = 1
             }
           },
@@ -3702,31 +3855,25 @@ return  {
           },
           {
             action = {
-              actionIdx = 12,
+              actionIdx = 11,
               returnIdx = 23
             }
           },
           {
             action = {
-              actionIdx = 31,
+              actionIdx = 29,
               returnIdx = 3
             }
           },
           {
             action = {
-              actionIdx = 31,
-              returnIdx = 6
-            }
-          },
-          {
-            action = {
-              actionIdx = 31,
+              actionIdx = 29,
               returnIdx = 5
             }
           },
           {
             action = {
-              actionIdx = 47,
+              actionIdx = 45,
               returnIdx = 11
             }
           }
@@ -3748,7 +3895,7 @@ return  {
           "RunShellCommand",
           "Mutex"
         },
-        testIdx = 51
+        testIdx = 50
       },
       {
         filename = "Tech/NAND/Info_GBBTest_1.csv",
@@ -3767,7 +3914,7 @@ return  {
           "InteractiveView",
           "RunShellCommand"
         },
-        testIdx = 52
+        testIdx = 51
       },
       {
         args = {
@@ -3798,7 +3945,7 @@ return  {
           "InteractiveView",
           "RunShellCommand"
         },
-        testIdx = 53
+        testIdx = 52
       },
       {
         filename = "Tech/SOC/Info_SEP.csv",
@@ -3817,7 +3964,7 @@ return  {
           "InteractiveView",
           "RunShellCommand"
         },
-        testIdx = 54
+        testIdx = 53
       },
       {
         args = {
@@ -3845,7 +3992,7 @@ return  {
           "PListSerializationPlugin",
           "Mutex"
         },
-        testIdx = 55
+        testIdx = 54
       },
       {
         args = {
@@ -3873,7 +4020,7 @@ return  {
           "PListSerializationPlugin",
           "Mutex"
         },
-        testIdx = 56
+        testIdx = 55
       },
       {
         args = {
@@ -3901,7 +4048,7 @@ return  {
           "PListSerializationPlugin",
           "Mutex"
         },
-        testIdx = 57
+        testIdx = 56
       },
       {
         args = {
@@ -3929,7 +4076,7 @@ return  {
           "PListSerializationPlugin",
           "Mutex"
         },
-        testIdx = 58
+        testIdx = 57
       },
       {
         args = {
@@ -3960,7 +4107,7 @@ return  {
           "PListSerializationPlugin",
           "Mutex"
         },
-        testIdx = 59
+        testIdx = 58
       },
       {
         args = {
@@ -3972,7 +4119,7 @@ return  {
           },
           {
             action = {
-              actionIdx = 47,
+              actionIdx = 45,
               returnIdx = 12
             }
           }
@@ -3994,7 +4141,7 @@ return  {
           "PListSerializationPlugin",
           "Mutex"
         },
-        testIdx = 60
+        testIdx = 59
       },
       {
         args = {
@@ -4022,19 +4169,19 @@ return  {
           "PListSerializationPlugin",
           "Mutex"
         },
-        testIdx = 61
+        testIdx = 60
       },
       {
         args = {
           {
             action = {
-              actionIdx = 47,
+              actionIdx = 45,
               returnIdx = 3
             }
           }
         },
-        filename = "Tech/NAND/PCIeBIST_AEMToolsS6E.csv",
-        name = "RunPCIeBIST_AEMToolsS6E",
+        filename = "Tech/NAND/PCIeBIST_S6E.csv",
+        name = "RunPCIeBIST_S6E",
         plugins = {
           "Kis_dut",
           "Kis_channelPlugin",
@@ -4049,19 +4196,19 @@ return  {
           "InteractiveView",
           "RunShellCommand"
         },
-        testIdx = 62
+        testIdx = 61
       },
       {
         args = {
           {
             action = {
-              actionIdx = 47,
+              actionIdx = 45,
               returnIdx = 3
             }
           }
         },
-        filename = "Tech/NAND/PCIeBIST_AEMToolsANS4.csv",
-        name = "RunPCIeBIST_AEMToolsANS4",
+        filename = "Tech/NAND/PCIeBIST_ANS4.csv",
+        name = "RunPCIeBIST_ANS4",
         plugins = {
           "Kis_dut",
           "Kis_channelPlugin",
@@ -4074,11 +4221,30 @@ return  {
           "TimeUtility",
           "RunShellCommand"
         },
+        testIdx = 62
+      },
+      {
+        filename = "Tech/RF/Wifi_3nm.csv",
+        name = "RunWifi_3nm",
+        plugins = {
+          "Kis_dut",
+          "Kis_channelPlugin",
+          "Regex",
+          "Utilities",
+          "PListSerializationPlugin",
+          "SMTCommonPlugin",
+          "FileOperation",
+          "VariableTable",
+          "TimeUtility",
+          "FixturePlugin",
+          "InteractiveView",
+          "RunShellCommand"
+        },
         testIdx = 63
       },
       {
-        filename = "Tech/RF/Wifi_AEMToolsWifi3nm.csv",
-        name = "RunWifi_AEMToolsWifi3nm",
+        filename = "Tech/RF/Baseband_3nm.csv",
+        name = "RunBaseband_3nm",
         plugins = {
           "Kis_dut",
           "Kis_channelPlugin",
@@ -4096,8 +4262,8 @@ return  {
         testIdx = 64
       },
       {
-        filename = "Tech/RF/Baseband_AEMToolsBaseband3nm.csv",
-        name = "RunBaseband_AEMToolsBaseband3nm",
+        filename = "Tech/RF/Wifi_Proxima.csv",
+        name = "RunWifi_Proxima",
         plugins = {
           "Kis_dut",
           "Kis_channelPlugin",
@@ -4115,8 +4281,8 @@ return  {
         testIdx = 65
       },
       {
-        filename = "Tech/RF/Wifi_AEMToolsProxima.csv",
-        name = "RunWifi_AEMToolsProxima",
+        filename = "Tech/RF/Baseband_SinopeGen4.csv",
+        name = "RunBaseband_SinopeGen4",
         plugins = {
           "Kis_dut",
           "Kis_channelPlugin",
@@ -4132,25 +4298,6 @@ return  {
           "RunShellCommand"
         },
         testIdx = 66
-      },
-      {
-        filename = "Tech/RF/Baseband_AEMToolsSinopeGen4.csv",
-        name = "RunBaseband_AEMToolsSinopeGen4",
-        plugins = {
-          "Kis_dut",
-          "Kis_channelPlugin",
-          "Regex",
-          "Utilities",
-          "PListSerializationPlugin",
-          "SMTCommonPlugin",
-          "FileOperation",
-          "VariableTable",
-          "TimeUtility",
-          "FixturePlugin",
-          "InteractiveView",
-          "RunShellCommand"
-        },
-        testIdx = 67
       },
       {
         filename = "Tech/RF/Baseband.csv",
@@ -4170,7 +4317,7 @@ return  {
           "InteractiveView",
           "RunShellCommand"
         },
-        testIdx = 68
+        testIdx = 67
       },
       {
         filename = "Tech/RF/WIFI_BT.csv",
@@ -4190,7 +4337,7 @@ return  {
           "InteractiveView",
           "RunShellCommand"
         },
-        testIdx = 69
+        testIdx = 68
       },
       {
         filename = "Tech/RF/NFC.csv",
@@ -4210,7 +4357,7 @@ return  {
           "InteractiveView",
           "RunShellCommand"
         },
-        testIdx = 70
+        testIdx = 69
       },
       {
         filename = "Tech/DUTInfo/Syscfg_Mac.csv",
@@ -4231,7 +4378,7 @@ return  {
           "SMTCommonPlugin",
           "PListSerializationPlugin"
         },
-        testIdx = 71
+        testIdx = 70
       },
       {
         filename = "Tech/Touch/SmokeyTest_TouchShorts.csv",
@@ -4250,11 +4397,11 @@ return  {
           "InteractiveView",
           "RunShellCommand"
         },
-        testIdx = 72
+        testIdx = 71
       },
       {
-        filename = "Tech/Touch/SmokeyTest_TouchTiCC.csv",
-        name = "RunSmokeyTest_TouchTiCC",
+        filename = "Tech/Touch/SmokeyTest_TouchDFUIQMeas.csv",
+        name = "RunSmokeyTest_TouchDFUIQMeas",
         plugins = {
           "Kis_dut",
           "Kis_channelPlugin",
@@ -4269,7 +4416,7 @@ return  {
           "InteractiveView",
           "RunShellCommand"
         },
-        testIdx = 73
+        testIdx = 72
       },
       {
         filename = "Tech/Touch/SmokeyTest_TouchGeneralTest.csv",
@@ -4288,7 +4435,7 @@ return  {
           "InteractiveView",
           "RunShellCommand"
         },
-        testIdx = 74
+        testIdx = 73
       },
       {
         filename = "Tech/Touch/SmokeyTest_TouchGPIOTest.csv",
@@ -4307,13 +4454,70 @@ return  {
           "InteractiveView",
           "RunShellCommand"
         },
+        testIdx = 74
+      },
+      {
+        args = {
+          {
+            action = {
+              actionIdx = 45,
+              returnIdx = 4
+            }
+          },
+          {
+            action = {
+              actionIdx = 45,
+              returnIdx = 8
+            }
+          },
+          {
+            action = {
+              actionIdx = 11,
+              returnIdx = 5
+            }
+          },
+          {
+            action = {
+              actionIdx = 2,
+              returnIdx = 2
+            }
+          },
+          {
+            action = {
+              actionIdx = 1,
+              returnIdx = 1
+            }
+          }
+        },
+        filename = "Tech/Touch/SmokeyTest_TiCC.csv",
+        name = "RunSmokeyTest_TiCC",
+        plugins = {
+          "Dut",
+          "ChannelPlugin",
+          "Kis_dut",
+          "Kis_channelPlugin",
+          "Regex",
+          "FDR",
+          "USBFS",
+          "Utilities",
+          "PListSerializationPlugin",
+          "SMTCommonPlugin",
+          "FileOperation",
+          "VariableTable",
+          "TimeUtility",
+          "FixturePlugin",
+          "InteractiveView",
+          "RunShellCommand",
+          "StationInfo",
+          "Mutex"
+        },
         testIdx = 75
       },
       {
         args = {
           {
             action = {
-              actionIdx = 12,
+              actionIdx = 11,
               returnIdx = 2
             }
           }
@@ -4359,7 +4563,7 @@ return  {
         args = {
           {
             action = {
-              actionIdx = 12,
+              actionIdx = 11,
               returnIdx = 2
             }
           }
@@ -4403,6 +4607,62 @@ return  {
         testIdx = 79
       },
       {
+        args = {
+          {
+            action = {
+              actionIdx = 79,
+              returnIdx = 1
+            }
+          }
+        },
+        filename = "Tech/DUTInfo/Syscfg_RFEM.csv",
+        name = "RunSyscfg_RFEM",
+        plugins = {
+          "Kis_dut",
+          "Kis_channelPlugin",
+          "FileOperation",
+          "VariableTable",
+          "TimeUtility",
+          "SMTCommonPlugin",
+          "PListSerializationPlugin",
+          "RunShellCommand"
+        },
+        testIdx = 80
+      },
+      {
+        args = {
+          {
+            action = {
+              actionIdx = 2,
+              returnIdx = 2
+            }
+          },
+          {
+            action = {
+              actionIdx = 79,
+              returnIdx = 1
+            }
+          }
+        },
+        filename = "Tech/DUTInfo/Syscfg_WSKU.csv",
+        name = "RunSyscfg_WSKU",
+        plugins = {
+          "Kis_dut",
+          "Kis_channelPlugin",
+          "FixturePlugin",
+          "InteractiveView",
+          "Regex",
+          "StationInfo",
+          "FileOperation",
+          "VariableTable",
+          "TimeUtility",
+          "SMTCommonPlugin",
+          "PListSerializationPlugin",
+          "RunShellCommand"
+        },
+        testIdx = 81
+      },
+      {
         filename = "Tech/SOC/Temperature_2.csv",
         name = "RunTemperature_2",
         plugins = {
@@ -4417,7 +4677,7 @@ return  {
           "TimeUtility",
           "RunShellCommand"
         },
-        testIdx = 80
+        testIdx = 82
       },
       {
         filename = "Tech/Accel/SensorData_VendorInfor.csv",
@@ -4436,57 +4696,11 @@ return  {
           "InteractiveView",
           "RunShellCommand"
         },
-        testIdx = 81
+        testIdx = 83
       },
       {
         filename = "Tech/Accel/SensorData_AccelOnly.csv",
         name = "RunSensorData_AccelOnly",
-        plugins = {
-          "Kis_dut",
-          "Kis_channelPlugin",
-          "Regex",
-          "Utilities",
-          "PListSerializationPlugin",
-          "SMTCommonPlugin",
-          "FileOperation",
-          "VariableTable",
-          "TimeUtility",
-          "FixturePlugin",
-          "InteractiveView",
-          "RunShellCommand"
-        },
-        testIdx = 82
-      },
-      {
-        args = {
-          {
-            action = {
-              actionIdx = 82,
-              returnIdx = 3
-            }
-          }
-        },
-        filename = "Tech/Accel/SensorData_FS8g_ODR100HZ_Zup.csv",
-        name = "RunSensorData_FS8g_ODR100HZ_Zup",
-        plugins = {
-          "Kis_dut",
-          "Kis_channelPlugin",
-          "Regex",
-          "Utilities",
-          "PListSerializationPlugin",
-          "SMTCommonPlugin",
-          "FileOperation",
-          "VariableTable",
-          "TimeUtility",
-          "FixturePlugin",
-          "InteractiveView",
-          "RunShellCommand"
-        },
-        testIdx = 83
-      },
-      {
-        filename = "Tech/IMU/SensorData_GyroNormal.csv",
-        name = "RunSensorData_GyroNormal",
         plugins = {
           "Kis_dut",
           "Kis_channelPlugin",
@@ -4508,12 +4722,12 @@ return  {
           {
             action = {
               actionIdx = 84,
-              returnIdx = 1
+              returnIdx = 3
             }
           }
         },
-        filename = "Tech/IMU/SensorData_IDInfor.csv",
-        name = "RunSensorData_IDInfor",
+        filename = "Tech/Accel/SensorData_FS8g_ODR100HZ_Zup.csv",
+        name = "RunSensorData_FS8g_ODR100HZ_Zup",
         plugins = {
           "Kis_dut",
           "Kis_channelPlugin",
@@ -4531,16 +4745,8 @@ return  {
         testIdx = 85
       },
       {
-        args = {
-          {
-            action = {
-              actionIdx = 84,
-              returnIdx = 2
-            }
-          }
-        },
-        filename = "Tech/IMU/SensorData_FS8g_ODR200HZ_Zup.csv",
-        name = "RunSensorData_FS8g_ODR200HZ_Zup",
+        filename = "Tech/IMU/SensorData_GyroNormal.csv",
+        name = "RunSensorData_GyroNormal",
         plugins = {
           "Kis_dut",
           "Kis_channelPlugin",
@@ -4561,7 +4767,61 @@ return  {
         args = {
           {
             action = {
-              actionIdx = 84,
+              actionIdx = 86,
+              returnIdx = 1
+            }
+          }
+        },
+        filename = "Tech/IMU/SensorData_IDInfor.csv",
+        name = "RunSensorData_IDInfor",
+        plugins = {
+          "Kis_dut",
+          "Kis_channelPlugin",
+          "Regex",
+          "Utilities",
+          "PListSerializationPlugin",
+          "SMTCommonPlugin",
+          "FileOperation",
+          "VariableTable",
+          "TimeUtility",
+          "FixturePlugin",
+          "InteractiveView",
+          "RunShellCommand"
+        },
+        testIdx = 87
+      },
+      {
+        args = {
+          {
+            action = {
+              actionIdx = 86,
+              returnIdx = 2
+            }
+          }
+        },
+        filename = "Tech/IMU/SensorData_FS8g_ODR200HZ_Zup.csv",
+        name = "RunSensorData_FS8g_ODR200HZ_Zup",
+        plugins = {
+          "Kis_dut",
+          "Kis_channelPlugin",
+          "Regex",
+          "Utilities",
+          "PListSerializationPlugin",
+          "SMTCommonPlugin",
+          "FileOperation",
+          "VariableTable",
+          "TimeUtility",
+          "FixturePlugin",
+          "InteractiveView",
+          "RunShellCommand"
+        },
+        testIdx = 88
+      },
+      {
+        args = {
+          {
+            action = {
+              actionIdx = 86,
               returnIdx = 2
             }
           }
@@ -4582,7 +4842,7 @@ return  {
           "InteractiveView",
           "RunShellCommand"
         },
-        testIdx = 87
+        testIdx = 89
       },
       {
         filename = "Tech/PressureSensor/Registers.csv",
@@ -4601,7 +4861,7 @@ return  {
           "InteractiveView",
           "RunShellCommand"
         },
-        testIdx = 88
+        testIdx = 90
       },
       {
         filename = "Tech/PressureSensor/SensorData.csv",
@@ -4620,7 +4880,7 @@ return  {
           "InteractiveView",
           "RunShellCommand"
         },
-        testIdx = 89
+        testIdx = 91
       },
       {
         filename = "Tech/NAND/Info_GBBTest_2.csv",
@@ -4640,13 +4900,13 @@ return  {
           "RunShellCommand",
           "Mutex"
         },
-        testIdx = 90
+        testIdx = 92
       },
       {
         args = {
           {
             action = {
-              actionIdx = 90,
+              actionIdx = 92,
               returnIdx = 1
             }
           }
@@ -4665,39 +4925,6 @@ return  {
           "TimeUtility",
           "FixturePlugin",
           "InteractiveView",
-          "RunShellCommand"
-        },
-        testIdx = 91
-      },
-      {
-        filename = "Tech/DUTInfo/Syscfg_List_2.csv",
-        name = "RunSyscfg_List_2",
-        plugins = {
-          "Kis_dut",
-          "Kis_channelPlugin",
-          "FixturePlugin",
-          "InteractiveView",
-          "Regex",
-          "StationInfo",
-          "FileOperation",
-          "VariableTable",
-          "TimeUtility",
-          "SMTCommonPlugin",
-          "PListSerializationPlugin"
-        },
-        testIdx = 92
-      },
-      {
-        filename = "Tech/SOC/Temperature_3.csv",
-        name = "RunTemperature_3",
-        plugins = {
-          "Kis_dut",
-          "Kis_channelPlugin",
-          "PListSerializationPlugin",
-          "SMTCommonPlugin",
-          "FileOperation",
-          "VariableTable",
-          "TimeUtility",
           "RunShellCommand"
         },
         testIdx = 93
@@ -4738,23 +4965,60 @@ return  {
         testIdx = 95
       },
       {
-        filename = "Tech/USBC/Info_ECID.csv",
-        name = "RunInfo_ECID",
+        args = {
+          {
+            action = {
+              actionIdx = 45,
+              returnIdx = 3
+            }
+          }
+        },
+        filename = "Tech/DUTInfo/ECID.csv",
+        name = "RunECID",
         plugins = {
           "Kis_dut",
           "Kis_channelPlugin",
-          "SFC",
-          "Regex",
+          "FileOperation",
+          "VariableTable",
+          "TimeUtility",
+          "SMTCommonPlugin",
+          "PListSerializationPlugin",
+          "RunShellCommand"
+        },
+        testIdx = 96
+      },
+      {
+        filename = "Tech/DUTInfo/Syscfg_2.csv",
+        name = "RunSyscfg_2",
+        plugins = {
+          "Kis_dut",
+          "Kis_channelPlugin",
           "FixturePlugin",
+          "InteractiveView",
+          "Regex",
           "StationInfo",
           "FileOperation",
           "VariableTable",
-          "RunShellCommand",
           "TimeUtility",
           "SMTCommonPlugin",
           "PListSerializationPlugin"
         },
-        testIdx = 96
+        testIdx = 97
+      },
+      {
+        filename = "Tech/SOC/Temperature_3.csv",
+        name = "RunTemperature_3",
+        plugins = {
+          "Kis_dut",
+          "Kis_channelPlugin",
+          "PListSerializationPlugin",
+          "SMTCommonPlugin",
+          "FileOperation",
+          "VariableTable",
+          "TimeUtility",
+          "RunShellCommand"
+        },
+        testIdx = 98
       }
     },
     mainTests = {
@@ -4842,10 +5106,20 @@ return  {
             actionName = "RunInitialize",
             returnIdx = 11
           },
+          RFEM_HAS_ADDED = {
+            actionIdx = 2,
+            actionName = "RunInitialize",
+            returnIdx = 21
+          },
           SITE = {
             actionIdx = 2,
             actionName = "RunInitialize",
             returnIdx = 1
+          },
+          WSKU_HAS_ADDED = {
+            actionIdx = 2,
+            actionName = "RunInitialize",
+            returnIdx = 22
           },
           accel_selftest_result = {
             actionIdx = 2,
@@ -4957,7 +5231,7 @@ return  {
         SamplingGroup = "",
         StopOnFail = true,
         Technology = "Fixture",
-        TestParameters = "Reset_Initial",
+        TestParameters = "Initial",
         actions = {
           5
         },
@@ -4965,26 +5239,8 @@ return  {
           1,
           4
         },
-        fullName = "Fixture GeneralAction_Reset_Initial",
-        subTestName = "GeneralAction_Reset_Initial",
-        testName = "Fixture"
-      },
-      {
-        Conditions = "",
-        Coverage = "GeneralAction",
-        SamplingGroup = "",
-        StopOnFail = true,
-        Technology = "Fixture",
-        TestParameters = "Led_Inprogress_On",
-        actions = {
-          6
-        },
-        deps = {
-          1,
-          5
-        },
-        fullName = "Fixture GeneralAction_Led_Inprogress_On",
-        subTestName = "GeneralAction_Led_Inprogress_On",
+        fullName = "Fixture GeneralAction_Initial",
+        subTestName = "GeneralAction_Initial",
         testName = "Fixture"
       },
       {
@@ -4995,11 +5251,11 @@ return  {
         Technology = "Power",
         TestParameters = "Initial",
         actions = {
-          7
+          6
         },
         deps = {
           1,
-          6
+          5
         },
         fullName = "Power Discharge_Initial",
         subTestName = "Discharge_Initial",
@@ -5013,11 +5269,11 @@ return  {
         Technology = "Power",
         TestParameters = "Safety_VBAT0V8",
         actions = {
-          8
+          7
         },
         deps = {
           1,
-          7
+          6
         },
         fullName = "Power VoltageCheck_Safety_VBAT0V8",
         subTestName = "VoltageCheck_Safety_VBAT0V8",
@@ -5031,11 +5287,11 @@ return  {
         Technology = "Power",
         TestParameters = "Safety_VBUS1V2",
         actions = {
-          9
+          8
         },
         deps = {
           1,
-          8
+          7
         },
         fullName = "Power VoltageCheck_Safety_VBUS1V2",
         subTestName = "VoltageCheck_Safety_VBUS1V2",
@@ -5049,11 +5305,11 @@ return  {
         Technology = "Power",
         TestParameters = "Safety_VBAT4V2",
         actions = {
-          10
+          9
         },
         deps = {
           1,
-          9
+          8
         },
         fullName = "Power VoltageCheck_Safety_VBAT4V2",
         subTestName = "VoltageCheck_Safety_VBAT4V2",
@@ -5067,11 +5323,11 @@ return  {
         Technology = "Power",
         TestParameters = "OTP",
         actions = {
-          11
+          10
         },
         deps = {
           1,
-          10
+          9
         },
         fullName = "Power On_Seq_OTP",
         subTestName = "On_Seq_OTP",
@@ -5084,128 +5340,128 @@ return  {
         Technology = "USBC",
         TestParameters = "",
         actions = {
-          12
+          11
         },
         deps = {
           1,
           2,
           3,
-          11
+          10
         },
         fullName = "USBC OTPProgram",
         outputs = {
           Ace3LUN = {
-            actionIdx = 12,
+            actionIdx = 11,
             actionName = "RunOTPProgram",
             returnIdx = 16
           },
           Ace3LogPath = {
-            actionIdx = 12,
+            actionIdx = 11,
             actionName = "RunOTPProgram",
             returnIdx = 10
           },
           Ace3_CRC1_I2C = {
-            actionIdx = 12,
+            actionIdx = 11,
             actionName = "RunOTPProgram",
             returnIdx = 18
           },
           Ace3_CRC2_I2C = {
-            actionIdx = 12,
+            actionIdx = 11,
             actionName = "RunOTPProgram",
             returnIdx = 19
           },
           Ace3_CRC3_I2C = {
-            actionIdx = 12,
+            actionIdx = 11,
             actionName = "RunOTPProgram",
             returnIdx = 20
           },
           Ace3_ECID = {
-            actionIdx = 12,
+            actionIdx = 11,
             actionName = "RunOTPProgram",
             returnIdx = 21
           },
           Ace3_PREV = {
-            actionIdx = 12,
+            actionIdx = 11,
             actionName = "RunOTPProgram",
             returnIdx = 11
           },
           CFG_type = {
-            actionIdx = 12,
+            actionIdx = 11,
             actionName = "RunOTPProgram",
             returnIdx = 3
           },
           DUT_stage = {
-            actionIdx = 12,
+            actionIdx = 11,
             actionName = "RunOTPProgram",
             returnIdx = 4
           },
           Location_ID = {
-            actionIdx = 12,
+            actionIdx = 11,
             actionName = "RunOTPProgram",
             returnIdx = 1
           },
           SoC_CPRO = {
-            actionIdx = 12,
+            actionIdx = 11,
             actionName = "RunOTPProgram",
             returnIdx = 17
           },
           SoC_CSEC = {
-            actionIdx = 12,
+            actionIdx = 11,
             actionName = "RunOTPProgram",
             returnIdx = 12
           },
           boardRev = {
-            actionIdx = 12,
+            actionIdx = 11,
             actionName = "RunOTPProgram",
             returnIdx = 5
           },
           dataI2CBus = {
-            actionIdx = 12,
+            actionIdx = 11,
             actionName = "RunOTPProgram",
             returnIdx = 15
           },
           deviceAddress = {
-            actionIdx = 12,
+            actionIdx = 11,
             actionName = "RunOTPProgram",
             returnIdx = 9
           },
           dut_cfg = {
-            actionIdx = 12,
+            actionIdx = 11,
             actionName = "RunOTPProgram",
             returnIdx = 6
           },
           isProgramming = {
-            actionIdx = 12,
+            actionIdx = 11,
             actionName = "RunOTPProgram",
             returnIdx = 22
           },
           matchingRecord4CC = {
-            actionIdx = 12,
+            actionIdx = 11,
             actionName = "RunOTPProgram",
             returnIdx = 14
           },
           matchingRelationship = {
-            actionIdx = 12,
+            actionIdx = 11,
             actionName = "RunOTPProgram",
             returnIdx = 13
           },
           mlb_type = {
-            actionIdx = 12,
+            actionIdx = 11,
             actionName = "RunOTPProgram",
             returnIdx = 2
           },
           payloadFilepath = {
-            actionIdx = 12,
+            actionIdx = 11,
             actionName = "RunOTPProgram",
             returnIdx = 8
           },
           sfc_url = {
-            actionIdx = 12,
+            actionIdx = 11,
             actionName = "RunOTPProgram",
             returnIdx = 23
           },
           superBinaryFolder = {
-            actionIdx = 12,
+            actionIdx = 11,
             actionName = "RunOTPProgram",
             returnIdx = 7
           }
@@ -5219,16 +5475,16 @@ return  {
         SamplingGroup = "",
         StopOnFail = true,
         Technology = "Power",
-        TestParameters = "Initial_OTP",
+        TestParameters = "OTP",
         actions = {
-          13
+          12
         },
         deps = {
           1,
-          12
+          11
         },
-        fullName = "Power Discharge_Initial_OTP",
-        subTestName = "Discharge_Initial_OTP",
+        fullName = "Power Discharge_OTP",
+        subTestName = "Discharge_OTP",
         testName = "Power"
       },
       {
@@ -5239,11 +5495,11 @@ return  {
         Technology = "Power",
         TestParameters = "FWDL",
         actions = {
-          14
+          13
         },
         deps = {
           1,
-          13
+          12
         },
         fullName = "Power On_Seq_FWDL",
         subTestName = "On_Seq_FWDL",
@@ -5257,23 +5513,23 @@ return  {
         Technology = "USBC",
         TestParameters = "",
         actions = {
-          15
+          14
         },
         deps = {
           1,
           3,
-          12,
-          14
+          11,
+          13
         },
         fullName = "USBC FWDL_ACEFlash_SPI",
         outputs = {
           binSize = {
-            actionIdx = 15,
+            actionIdx = 14,
             actionName = "RunFWDL_ACEFlash_SPI",
             returnIdx = 2
           },
           hostMD5 = {
-            actionIdx = 15,
+            actionIdx = 14,
             actionName = "RunFWDL_ACEFlash_SPI",
             returnIdx = 1
           }
@@ -5287,16 +5543,16 @@ return  {
         SamplingGroup = "",
         StopOnFail = true,
         Technology = "Power",
-        TestParameters = "Initial_FWDL",
+        TestParameters = "FWDL",
         actions = {
-          16
+          15
         },
         deps = {
           1,
-          15
+          14
         },
-        fullName = "Power Discharge_Initial_FWDL",
-        subTestName = "Discharge_Initial_FWDL",
+        fullName = "Power Discharge_FWDL",
+        subTestName = "Discharge_FWDL",
         testName = "Power"
       },
       {
@@ -5306,11 +5562,11 @@ return  {
         Technology = "Power",
         TestParameters = "Restore",
         actions = {
-          17
+          16
         },
         deps = {
           1,
-          16
+          15
         },
         fullName = "Power On_Seq_Restore",
         subTestName = "On_Seq_Restore",
@@ -5318,28 +5574,28 @@ return  {
       },
       {
         Conditions = "",
-        Coverage = "Info_ACE3_FWVersion",
+        Coverage = "Info_ACE3",
         SamplingGroup = "",
         StopOnFail = true,
         Technology = "USBC",
         TestParameters = "",
         actions = {
-          18
+          17
         },
         deps = {
           1,
-          12,
-          17
+          11,
+          16
         },
-        fullName = "USBC Info_ACE3_FWVersion",
+        fullName = "USBC Info_ACE3",
         outputs = {
           Ace3FWVersion = {
-            actionIdx = 18,
-            actionName = "RunInfo_ACE3_FWVersion",
+            actionIdx = 17,
+            actionName = "RunInfo_ACE3",
             returnIdx = 1
           }
         },
-        subTestName = "Info_ACE3_FWVersion",
+        subTestName = "Info_ACE3",
         testName = "USBC"
       },
       {
@@ -5350,16 +5606,16 @@ return  {
         Technology = "SOC",
         TestParameters = "",
         actions = {
-          19
+          18
         },
         deps = {
           1,
-          18
+          17
         },
         fullName = "SOC Restore_DFUMode",
         outputs = {
           Location_ID = {
-            actionIdx = 19,
+            actionIdx = 18,
             actionName = "RunRestore_DFUMode",
             returnIdx = 1
           }
@@ -5375,11 +5631,11 @@ return  {
         Technology = "SOC",
         TestParameters = "",
         actions = {
-          20
+          19
         },
         deps = {
-          19,
-          19
+          18,
+          18
         },
         fullName = "SOC Restore_NonUI_DCSD_1",
         subTestName = "Restore_NonUI_DCSD_1",
@@ -5393,15 +5649,15 @@ return  {
         Technology = "SOC",
         TestParameters = "",
         actions = {
-          21
+          20
         },
         deps = {
-          19
+          18
         },
         fullName = "SOC Restore_NonUI_DCSD_2",
         outputs = {
           restore_uart_log = {
-            actionIdx = 21,
+            actionIdx = 20,
             actionName = "RunRestore_NonUI_DCSD_2",
             returnIdx = 1
           }
@@ -5416,23 +5672,23 @@ return  {
         Technology = "SOC",
         TestParameters = "",
         actions = {
-          22
+          21
         },
         deps = {
-          12,
+          11,
+          19,
           20,
-          21,
-          21
+          20
         },
         fullName = "SOC Restore_NonUI_DCSD_4",
         outputs = {
           LCRT = {
-            actionIdx = 22,
+            actionIdx = 21,
             actionName = "RunRestore_NonUI_DCSD_4",
             returnIdx = 1
           },
           SIK = {
-            actionIdx = 22,
+            actionIdx = 21,
             actionName = "RunRestore_NonUI_DCSD_4",
             returnIdx = 2
           }
@@ -5445,16 +5701,16 @@ return  {
         Coverage = "Discharge",
         SamplingGroup = "",
         Technology = "Power",
-        TestParameters = "Initial_Restore",
+        TestParameters = "Restore",
         actions = {
-          23
+          22
         },
         deps = {
           1,
-          22
+          21
         },
-        fullName = "Power Discharge_Initial_Restore",
-        subTestName = "Discharge_Initial_Restore",
+        fullName = "Power Discharge_Restore",
+        subTestName = "Discharge_Restore",
         testName = "Power"
       },
       {
@@ -5465,11 +5721,11 @@ return  {
         Technology = "Power",
         TestParameters = "Diags",
         actions = {
-          24
+          23
         },
         deps = {
           1,
-          23
+          22
         },
         fullName = "Power On_Seq_Diags",
         subTestName = "On_Seq_Diags",
@@ -5483,11 +5739,11 @@ return  {
         Technology = "Process",
         TestParameters = "",
         actions = {
-          25
+          24
         },
         deps = {
-          12,
-          24
+          11,
+          23
         },
         fullName = "Process Transition_Diags_1",
         subTestName = "Transition_Diags_1",
@@ -5500,16 +5756,16 @@ return  {
         Technology = "DUTInfo",
         TestParameters = "",
         actions = {
-          26
+          25
         },
         deps = {
-          12,
-          25
+          11,
+          24
         },
         fullName = "DUTInfo BoardRevision",
         outputs = {
           Board_REV_Compare = {
-            actionIdx = 26,
+            actionIdx = 25,
             actionName = "RunBoardRevision",
             returnIdx = 1
           }
@@ -5524,20 +5780,20 @@ return  {
         Technology = "SOC",
         TestParameters = "",
         actions = {
-          27
+          26
         },
         deps = {
-          26
+          25
         },
         fullName = "SOC Temperature_1",
         outputs = {
           THERMAL0_Instant = {
-            actionIdx = 27,
+            actionIdx = 26,
             actionName = "RunTemperature_1",
             returnIdx = 1
           },
           tem_value = {
-            actionIdx = 27,
+            actionIdx = 26,
             actionName = "RunTemperature_1",
             returnIdx = 2
           }
@@ -5547,7 +5803,35 @@ return  {
       },
       {
         Conditions = "",
-        Coverage = "DiagsFW_Version",
+        Coverage = "DiagsFW",
+        SamplingGroup = "",
+        Technology = "DUTInfo",
+        TestParameters = "",
+        actions = {
+          27
+        },
+        deps = {
+          26
+        },
+        fullName = "DUTInfo DiagsFW",
+        outputs = {
+          Diags_version = {
+            actionIdx = 27,
+            actionName = "RunDiagsFW",
+            returnIdx = 1
+          },
+          Version_Info = {
+            actionIdx = 27,
+            actionName = "RunDiagsFW",
+            returnIdx = 2
+          }
+        },
+        subTestName = "DiagsFW",
+        testName = "DUTInfo"
+      },
+      {
+        Conditions = "",
+        Coverage = "Syscfg",
         SamplingGroup = "",
         Technology = "DUTInfo",
         TestParameters = "",
@@ -5557,50 +5841,6 @@ return  {
         deps = {
           27
         },
-        fullName = "DUTInfo DiagsFW_Version",
-        outputs = {
-          Diags_version = {
-            actionIdx = 28,
-            actionName = "RunDiagsFW_Version",
-            returnIdx = 1
-          },
-          Version_Info = {
-            actionIdx = 28,
-            actionName = "RunDiagsFW_Version",
-            returnIdx = 2
-          }
-        },
-        subTestName = "DiagsFW_Version",
-        testName = "DUTInfo"
-      },
-      {
-        Conditions = "",
-        Coverage = "CB_Init",
-        SamplingGroup = "",
-        Technology = "Process",
-        TestParameters = "",
-        actions = {
-          29
-        },
-        deps = {
-          28
-        },
-        fullName = "Process CB_Init",
-        subTestName = "CB_Init",
-        testName = "Process"
-      },
-      {
-        Conditions = "",
-        Coverage = "Syscfg",
-        SamplingGroup = "",
-        Technology = "DUTInfo",
-        TestParameters = "",
-        actions = {
-          30
-        },
-        deps = {
-          29
-        },
         fullName = "DUTInfo Syscfg",
         subTestName = "Syscfg",
         testName = "DUTInfo"
@@ -5609,49 +5849,45 @@ return  {
         Conditions = "",
         Coverage = "Info_SBIN",
         SamplingGroup = "",
+        StopOnFail = true,
         Technology = "SOC",
         TestParameters = "",
         actions = {
-          31
+          29
         },
         deps = {
-          12,
-          30
+          11,
+          28
         },
         fullName = "SOC Info_SBIN",
         outputs = {
           MEMORY_SIZE = {
-            actionIdx = 31,
+            actionIdx = 29,
             actionName = "RunInfo_SBIN",
             returnIdx = 3
           },
           SBin_status = {
-            actionIdx = 31,
-            actionName = "RunInfo_SBIN",
-            returnIdx = 7
-          },
-          SbinKey = {
-            actionIdx = 31,
+            actionIdx = 29,
             actionName = "RunInfo_SBIN",
             returnIdx = 6
           },
-          binFuse = {
-            actionIdx = 31,
-            actionName = "RunInfo_SBIN",
-            returnIdx = 4
-          },
-          bin_fuse = {
-            actionIdx = 31,
+          SbinKey = {
+            actionIdx = 29,
             actionName = "RunInfo_SBIN",
             returnIdx = 5
           },
+          fuse_rev = {
+            actionIdx = 29,
+            actionName = "RunInfo_SBIN",
+            returnIdx = 4
+          },
           soc_info = {
-            actionIdx = 31,
+            actionIdx = 29,
             actionName = "RunInfo_SBIN",
             returnIdx = 1
           },
           soc_p_resp = {
-            actionIdx = 31,
+            actionIdx = 29,
             actionName = "RunInfo_SBIN",
             returnIdx = 2
           }
@@ -5666,21 +5902,21 @@ return  {
         Technology = "USBC",
         TestParameters = "",
         actions = {
-          32
+          30
         },
         deps = {
-          12,
-          31
+          11,
+          29
         },
         fullName = "USBC FWDL_ACE",
         outputs = {
           ace_resp = {
-            actionIdx = 32,
+            actionIdx = 30,
             actionName = "RunFWDL_ACE",
             returnIdx = 2
           },
           ace_ret = {
-            actionIdx = 32,
+            actionIdx = 30,
             actionName = "RunFWDL_ACE",
             returnIdx = 1
           }
@@ -5695,15 +5931,15 @@ return  {
         Technology = "USBC",
         TestParameters = "",
         actions = {
-          33
+          31
         },
         deps = {
-          32
+          30
         },
         fullName = "USBC Info_RT13",
         outputs = {
           rt13_ret = {
-            actionIdx = 33,
+            actionIdx = 31,
             actionName = "RunInfo_RT13",
             returnIdx = 1
           }
@@ -5718,11 +5954,11 @@ return  {
         Technology = "DUTInfo",
         TestParameters = "",
         actions = {
-          34
+          32
         },
         deps = {
-          12,
-          33
+          11,
+          31
         },
         fullName = "DUTInfo DiagsFW_CRC_Check",
         subTestName = "DiagsFW_CRC_Check",
@@ -5735,11 +5971,11 @@ return  {
         Technology = "SOC",
         TestParameters = "",
         actions = {
-          35
+          33
         },
         deps = {
-          12,
-          34
+          11,
+          32
         },
         fullName = "SOC Temperature",
         subTestName = "Temperature",
@@ -5747,18 +5983,18 @@ return  {
       },
       {
         Conditions = "",
-        Coverage = "Syscfg_List_1",
+        Coverage = "Syscfg_1",
         SamplingGroup = "",
         Technology = "DUTInfo",
         TestParameters = "",
         actions = {
-          36
+          34
         },
         deps = {
-          35
+          33
         },
-        fullName = "DUTInfo Syscfg_List_1",
-        subTestName = "Syscfg_List_1",
+        fullName = "DUTInfo Syscfg_1",
+        subTestName = "Syscfg_1",
         testName = "DUTInfo"
       },
       {
@@ -5768,11 +6004,11 @@ return  {
         Technology = "Process",
         TestParameters = "",
         actions = {
-          37
+          35
         },
         deps = {
-          12,
-          36
+          11,
+          34
         },
         fullName = "Process Transition_RTOS_1",
         subTestName = "Transition_RTOS_1",
@@ -5785,15 +6021,15 @@ return  {
         Technology = "DUTInfo",
         TestParameters = "",
         actions = {
-          38
+          36
         },
         deps = {
-          37
+          35
         },
         fullName = "DUTInfo RTOSFW",
         outputs = {
           RTOS_Version = {
-            actionIdx = 38,
+            actionIdx = 36,
             actionName = "RunRTOSFW",
             returnIdx = 1
           }
@@ -5808,10 +6044,10 @@ return  {
         Technology = "Process",
         TestParameters = "",
         actions = {
-          39
+          37
         },
         deps = {
-          38
+          36
         },
         fullName = "Process Transition_RTOS_2",
         subTestName = "Transition_RTOS_2",
@@ -5824,11 +6060,11 @@ return  {
         Technology = "Process",
         TestParameters = "",
         actions = {
-          40
+          38
         },
         deps = {
-          12,
-          39
+          11,
+          37
         },
         fullName = "Process Transition_RBM_1",
         subTestName = "Transition_RBM_1",
@@ -5841,15 +6077,15 @@ return  {
         Technology = "DUTInfo",
         TestParameters = "",
         actions = {
-          41
+          39
         },
         deps = {
-          40
+          38
         },
         fullName = "DUTInfo RBMFW",
         outputs = {
           RBM_Version = {
-            actionIdx = 41,
+            actionIdx = 39,
             actionName = "RunRBMFW",
             returnIdx = 1
           }
@@ -5864,10 +6100,10 @@ return  {
         Technology = "Process",
         TestParameters = "",
         actions = {
-          42
+          40
         },
         deps = {
-          41
+          39
         },
         fullName = "Process Transition_RBM_2",
         subTestName = "Transition_RBM_2",
@@ -5880,11 +6116,11 @@ return  {
         Technology = "Process",
         TestParameters = "",
         actions = {
-          43
+          41
         },
         deps = {
           1,
-          42
+          40
         },
         fullName = "Process Reset_Diags",
         subTestName = "Reset_Diags",
@@ -5897,10 +6133,10 @@ return  {
         Technology = "Process",
         TestParameters = "",
         actions = {
-          44
+          42
         },
         deps = {
-          43
+          41
         },
         fullName = "Process Transition_Diags_2",
         subTestName = "Transition_Diags_2",
@@ -5913,11 +6149,11 @@ return  {
         Technology = "DUTInfo",
         TestParameters = "MLBSN",
         actions = {
-          45
+          43
         },
         deps = {
           2,
-          44
+          42
         },
         fullName = "DUTInfo Syscfg_MLBSN",
         subTestName = "Syscfg_MLBSN",
@@ -5930,11 +6166,11 @@ return  {
         Technology = "DUTInfo",
         TestParameters = "MLBCFG",
         actions = {
-          46
+          44
         },
         deps = {
           2,
-          45
+          43
         },
         fullName = "DUTInfo Syscfg_MLBCFG",
         subTestName = "Syscfg_MLBCFG",
@@ -5947,74 +6183,73 @@ return  {
         Technology = "SOC",
         TestParameters = "",
         actions = {
-          47
+          45
         },
         deps = {
           1,
           2,
-          12,
-          31,
-          46
+          11,
+          44
         },
         fullName = "SOC Info_1",
         outputs = {
           BOARD_ID = {
-            actionIdx = 47,
+            actionIdx = 45,
             actionName = "RunInfo_1",
             returnIdx = 1
           },
           Chip_ID = {
-            actionIdx = 47,
+            actionIdx = 45,
             actionName = "RunInfo_1",
             returnIdx = 4
           },
           Chip_Ver = {
-            actionIdx = 47,
+            actionIdx = 45,
             actionName = "RunInfo_1",
             returnIdx = 5
           },
           DIE_ID = {
-            actionIdx = 47,
+            actionIdx = 45,
             actionName = "RunInfo_1",
             returnIdx = 6
           },
           ECID = {
-            actionIdx = 47,
+            actionIdx = 45,
             actionName = "RunInfo_1",
             returnIdx = 8
           },
           FUSE_ID = {
-            actionIdx = 47,
+            actionIdx = 45,
             actionName = "RunInfo_1",
             returnIdx = 7
           },
           HAS_TWO_STORAGE_DEVICE = {
-            actionIdx = 47,
+            actionIdx = 45,
             actionName = "RunInfo_1",
             returnIdx = 3
           },
           binning_revision = {
-            actionIdx = 47,
+            actionIdx = 45,
             actionName = "RunInfo_1",
             returnIdx = 9
           },
           fuse_rev = {
-            actionIdx = 47,
+            actionIdx = 45,
             actionName = "RunInfo_1",
             returnIdx = 11
           },
           mlb_type = {
-            actionIdx = 47,
+            actionIdx = 45,
             actionName = "RunInfo_1",
             returnIdx = 2
           },
           production_mode = {
-            actionIdx = 47,
+            actionIdx = 45,
             actionName = "RunInfo_1",
             returnIdx = 12
           },
           soc_p_resp = {
-            actionIdx = 47,
+            actionIdx = 45,
             actionName = "RunInfo_1",
             returnIdx = 10
           }
@@ -6024,15 +6259,32 @@ return  {
       },
       {
         Conditions = "",
+        Coverage = "Info_Harvest",
+        SamplingGroup = "",
+        Technology = "SOC",
+        TestParameters = "",
+        actions = {
+          46
+        },
+        deps = {
+          29,
+          45
+        },
+        fullName = "SOC Info_Harvest",
+        subTestName = "Info_Harvest",
+        testName = "SOC"
+      },
+      {
+        Conditions = "",
         Coverage = "Presencecheck_Mogul",
         SamplingGroup = "",
         Technology = "DUTInfo",
         TestParameters = "",
         actions = {
-          48
+          47
         },
         deps = {
-          47
+          46
         },
         fullName = "DUTInfo Presencecheck_Mogul",
         subTestName = "Presencecheck_Mogul",
@@ -6045,10 +6297,10 @@ return  {
         Technology = "PMU",
         TestParameters = "",
         actions = {
-          49
+          48
         },
         deps = {
-          48
+          47
         },
         fullName = "PMU UnderVoltageWarning_Abbey",
         subTestName = "UnderVoltageWarning_Abbey",
@@ -6061,10 +6313,10 @@ return  {
         Technology = "PMU",
         TestParameters = "",
         actions = {
-          50
+          49
         },
         deps = {
-          49
+          48
         },
         fullName = "PMU UnderVoltageWarning_Club",
         subTestName = "UnderVoltageWarning_Club",
@@ -6077,24 +6329,24 @@ return  {
         Technology = "NAND",
         TestParameters = "",
         actions = {
-          51
+          50
         },
         deps = {
           2,
-          12,
-          31,
-          47,
-          50
+          11,
+          29,
+          45,
+          49
         },
         fullName = "NAND Info_2",
         outputs = {
           NAND_Chip_ID = {
-            actionIdx = 51,
+            actionIdx = 50,
             actionName = "RunInfo_2",
             returnIdx = 2
           },
           NAND_Total_Controller_Count = {
-            actionIdx = 51,
+            actionIdx = 50,
             actionName = "RunInfo_2",
             returnIdx = 1
           }
@@ -6109,10 +6361,10 @@ return  {
         Technology = "NAND",
         TestParameters = "",
         actions = {
-          52
+          51
         },
         deps = {
-          51
+          50
         },
         fullName = "NAND Info_GBBTest_1",
         subTestName = "Info_GBBTest_1",
@@ -6122,14 +6374,15 @@ return  {
         Conditions = "",
         Coverage = "Reset",
         SamplingGroup = "",
+        StopOnFail = true,
         Technology = "Speaker",
         TestParameters = "",
         actions = {
-          53
+          52
         },
         deps = {
           1,
-          52
+          51
         },
         fullName = "Speaker Reset",
         subTestName = "Reset",
@@ -6142,10 +6395,10 @@ return  {
         Technology = "SOC",
         TestParameters = "",
         actions = {
-          54
+          53
         },
         deps = {
-          53
+          52
         },
         fullName = "SOC Info_SEP",
         subTestName = "Info_SEP",
@@ -6158,16 +6411,16 @@ return  {
         Technology = "USBC",
         TestParameters = "VBUS_To_PP5V0",
         actions = {
-          55
+          54
         },
         deps = {
           1,
-          54
+          53
         },
         fullName = "USBC LeakageCheck_VBUS_To_PP5V0",
         outputs = {
           ace_result = {
-            actionIdx = 55,
+            actionIdx = 54,
             actionName = "RunLeakageCheck_VBUS_To_PP5V0",
             returnIdx = 1
           }
@@ -6182,16 +6435,16 @@ return  {
         Technology = "USBC",
         TestParameters = "VBUS_To_PPHV",
         actions = {
-          56
+          55
         },
         deps = {
           1,
-          55
+          54
         },
         fullName = "USBC LeakageCheck_VBUS_To_PPHV",
         outputs = {
           ace_result = {
-            actionIdx = 56,
+            actionIdx = 55,
             actionName = "RunLeakageCheck_VBUS_To_PPHV",
             returnIdx = 1
           }
@@ -6206,21 +6459,21 @@ return  {
         Technology = "USBC",
         TestParameters = "VIN_3V3_To_VBUS",
         actions = {
-          57
+          56
         },
         deps = {
           1,
-          56
+          55
         },
         fullName = "USBC LeakageCheck_VIN_3V3_To_VBUS",
         outputs = {
           PP3V3_S2_ACE_Result = {
-            actionIdx = 57,
+            actionIdx = 56,
             actionName = "RunLeakageCheck_VIN_3V3_To_VBUS",
             returnIdx = 1
           },
           ace_result = {
-            actionIdx = 57,
+            actionIdx = 56,
             actionName = "RunLeakageCheck_VIN_3V3_To_VBUS",
             returnIdx = 2
           }
@@ -6235,21 +6488,21 @@ return  {
         Technology = "USBC",
         TestParameters = "VIN_LV_To_VOUT_LV",
         actions = {
-          58
+          57
         },
         deps = {
           1,
-          57
+          56
         },
         fullName = "USBC LeakageCheck_VIN_LV_To_VOUT_LV",
         outputs = {
           PP1V8_S2_ACE_Result = {
-            actionIdx = 58,
+            actionIdx = 57,
             actionName = "RunLeakageCheck_VIN_LV_To_VOUT_LV",
             returnIdx = 1
           },
           ace_result = {
-            actionIdx = 58,
+            actionIdx = 57,
             actionName = "RunLeakageCheck_VIN_LV_To_VOUT_LV",
             returnIdx = 2
           }
@@ -6264,16 +6517,16 @@ return  {
         Technology = "USBC",
         TestParameters = "CC1-2_To_PPCABLE-PP5V0",
         actions = {
-          59
+          58
         },
         deps = {
           1,
-          58
+          57
         },
         fullName = "USBC LeakageCheck_CC1-2_To_PPCABLE-PP5V0",
         outputs = {
           ace_result = {
-            actionIdx = 59,
+            actionIdx = 58,
             actionName = "RunLeakageCheck_CC1-2_To_PPCABLE-PP5V0",
             returnIdx = 1
           }
@@ -6288,17 +6541,17 @@ return  {
         Technology = "USBC",
         TestParameters = "PP5V0_To_VBUS",
         actions = {
-          60
+          59
         },
         deps = {
           1,
-          47,
-          59
+          45,
+          58
         },
         fullName = "USBC LeakageCheck_PP5V0_To_VBUS",
         outputs = {
           ace_result = {
-            actionIdx = 60,
+            actionIdx = 59,
             actionName = "RunLeakageCheck_PP5V0_To_VBUS",
             returnIdx = 1
           }
@@ -6313,16 +6566,16 @@ return  {
         Technology = "USBC",
         TestParameters = "PPHV_To_VBUS",
         actions = {
-          61
+          60
         },
         deps = {
           1,
-          60
+          59
         },
         fullName = "USBC LeakageCheck_PPHV_To_VBUS",
         outputs = {
           ace_result = {
-            actionIdx = 61,
+            actionIdx = 60,
             actionName = "RunLeakageCheck_PPHV_To_VBUS",
             returnIdx = 1
           }
@@ -6332,41 +6585,57 @@ return  {
       },
       {
         Conditions = "",
-        Coverage = "PCIeBIST_AEMToolsS6E",
+        Coverage = "PCIeBIST_S6E",
         SamplingGroup = "",
         Technology = "NAND",
         TestParameters = "",
         actions = {
-          62
-        },
-        deps = {
-          47,
           61
         },
-        fullName = "NAND PCIeBIST_AEMToolsS6E",
-        subTestName = "PCIeBIST_AEMToolsS6E",
+        deps = {
+          45,
+          60
+        },
+        fullName = "NAND PCIeBIST_S6E",
+        subTestName = "PCIeBIST_S6E",
         testName = "NAND"
       },
       {
         Conditions = "",
-        Coverage = "PCIeBIST_AEMToolsANS4",
+        Coverage = "PCIeBIST_ANS4",
         SamplingGroup = "",
         Technology = "NAND",
         TestParameters = "",
         actions = {
-          63
-        },
-        deps = {
-          47,
           62
         },
-        fullName = "NAND PCIeBIST_AEMToolsANS4",
-        subTestName = "PCIeBIST_AEMToolsANS4",
+        deps = {
+          45,
+          61
+        },
+        fullName = "NAND PCIeBIST_ANS4",
+        subTestName = "PCIeBIST_ANS4",
         testName = "NAND"
       },
       {
         Conditions = "",
-        Coverage = "Wifi_AEMToolsWifi3nm",
+        Coverage = "Wifi_3nm",
+        SamplingGroup = "",
+        Technology = "RF",
+        TestParameters = "",
+        actions = {
+          63
+        },
+        deps = {
+          62
+        },
+        fullName = "RF Wifi_3nm",
+        subTestName = "Wifi_3nm",
+        testName = "RF"
+      },
+      {
+        Conditions = "mlb_type==\"MLB_B\"",
+        Coverage = "Baseband_3nm",
         SamplingGroup = "",
         Technology = "RF",
         TestParameters = "",
@@ -6376,13 +6645,13 @@ return  {
         deps = {
           63
         },
-        fullName = "RF Wifi_AEMToolsWifi3nm",
-        subTestName = "Wifi_AEMToolsWifi3nm",
+        fullName = "RF Baseband_3nm",
+        subTestName = "Baseband_3nm",
         testName = "RF"
       },
       {
-        Conditions = "mlb_type==\"MLB_B\"",
-        Coverage = "Baseband_AEMToolsBaseband3nm",
+        Conditions = "",
+        Coverage = "Wifi_Proxima",
         SamplingGroup = "",
         Technology = "RF",
         TestParameters = "",
@@ -6392,13 +6661,13 @@ return  {
         deps = {
           64
         },
-        fullName = "RF Baseband_AEMToolsBaseband3nm",
-        subTestName = "Baseband_AEMToolsBaseband3nm",
+        fullName = "RF Wifi_Proxima",
+        subTestName = "Wifi_Proxima",
         testName = "RF"
       },
       {
-        Conditions = "",
-        Coverage = "Wifi_AEMToolsProxima",
+        Conditions = "mlb_type==\"MLB_B\"",
+        Coverage = "Baseband_SinopeGen4",
         SamplingGroup = "",
         Technology = "RF",
         TestParameters = "",
@@ -6408,24 +6677,8 @@ return  {
         deps = {
           65
         },
-        fullName = "RF Wifi_AEMToolsProxima",
-        subTestName = "Wifi_AEMToolsProxima",
-        testName = "RF"
-      },
-      {
-        Conditions = "mlb_type==\"MLB_B\"",
-        Coverage = "Baseband_AEMToolsSinopeGen4",
-        SamplingGroup = "",
-        Technology = "RF",
-        TestParameters = "",
-        actions = {
-          67
-        },
-        deps = {
-          66
-        },
-        fullName = "RF Baseband_AEMToolsSinopeGen4",
-        subTestName = "Baseband_AEMToolsSinopeGen4",
+        fullName = "RF Baseband_SinopeGen4",
+        subTestName = "Baseband_SinopeGen4",
         testName = "RF"
       },
       {
@@ -6435,35 +6688,35 @@ return  {
         Technology = "RF",
         TestParameters = "",
         actions = {
-          68
+          67
         },
         deps = {
-          67
+          66
         },
         fullName = "RF Baseband",
         outputs = {
           BB_FIRMWARE = {
-            actionIdx = 68,
+            actionIdx = 67,
             actionName = "RunBaseband",
             returnIdx = 4
           },
           BB_Load_Firmware_resp = {
-            actionIdx = 68,
+            actionIdx = 67,
             actionName = "RunBaseband",
             returnIdx = 2
           },
           BB_Properties_resp = {
-            actionIdx = 68,
+            actionIdx = 67,
             actionName = "RunBaseband",
             returnIdx = 3
           },
           BB_SNUM = {
-            actionIdx = 68,
+            actionIdx = 67,
             actionName = "RunBaseband",
             returnIdx = 5
           },
           Load_Status = {
-            actionIdx = 68,
+            actionIdx = 67,
             actionName = "RunBaseband",
             returnIdx = 1
           }
@@ -6478,10 +6731,10 @@ return  {
         Technology = "RF",
         TestParameters = "",
         actions = {
-          69
+          68
         },
         deps = {
-          68
+          67
         },
         fullName = "RF WIFI_BT",
         subTestName = "WIFI_BT",
@@ -6494,20 +6747,20 @@ return  {
         Technology = "RF",
         TestParameters = "",
         actions = {
-          70
+          69
         },
         deps = {
-          69
+          68
         },
         fullName = "RF NFC",
         outputs = {
           SH_FIRMWARE = {
-            actionIdx = 70,
+            actionIdx = 69,
             actionName = "RunNFC",
             returnIdx = 2
           },
           SH_Properties_resp = {
-            actionIdx = 70,
+            actionIdx = 69,
             actionName = "RunNFC",
             returnIdx = 1
           }
@@ -6522,10 +6775,10 @@ return  {
         Technology = "DUTInfo",
         TestParameters = "",
         actions = {
-          71
+          70
         },
         deps = {
-          70
+          69
         },
         fullName = "DUTInfo Syscfg_Mac",
         subTestName = "Syscfg_Mac",
@@ -6535,13 +6788,14 @@ return  {
         Conditions = "",
         Coverage = "SmokeyTest",
         SamplingGroup = "",
+        StopOnFail = true,
         Technology = "Touch",
         TestParameters = "TouchShorts",
         actions = {
-          72
+          71
         },
         deps = {
-          71
+          70
         },
         fullName = "Touch SmokeyTest_TouchShorts",
         subTestName = "SmokeyTest_TouchShorts",
@@ -6552,15 +6806,15 @@ return  {
         Coverage = "SmokeyTest",
         SamplingGroup = "",
         Technology = "Touch",
-        TestParameters = "TouchTiCC",
+        TestParameters = "TouchDFUIQMeas",
         actions = {
-          73
-        },
-        deps = {
           72
         },
-        fullName = "Touch SmokeyTest_TouchTiCC",
-        subTestName = "SmokeyTest_TouchTiCC",
+        deps = {
+          71
+        },
+        fullName = "Touch SmokeyTest_TouchDFUIQMeas",
+        subTestName = "SmokeyTest_TouchDFUIQMeas",
         testName = "Touch"
       },
       {
@@ -6570,20 +6824,20 @@ return  {
         Technology = "Touch",
         TestParameters = "TouchGeneralTest",
         actions = {
-          74
+          73
         },
         deps = {
-          73
+          72
         },
         fullName = "Touch SmokeyTest_TouchGeneralTest",
         outputs = {
           Grape_Properties_resp = {
-            actionIdx = 74,
+            actionIdx = 73,
             actionName = "RunSmokeyTest_TouchGeneralTest",
             returnIdx = 1
           },
           TOUCH_FIRMWARE = {
-            actionIdx = 74,
+            actionIdx = 73,
             actionName = "RunSmokeyTest_TouchGeneralTest",
             returnIdx = 2
           }
@@ -6598,13 +6852,50 @@ return  {
         Technology = "Touch",
         TestParameters = "TouchGPIOTest",
         actions = {
-          75
+          74
         },
         deps = {
-          74
+          73
         },
         fullName = "Touch SmokeyTest_TouchGPIOTest",
         subTestName = "SmokeyTest_TouchGPIOTest",
+        testName = "Touch"
+      },
+      {
+        Conditions = "",
+        Coverage = "SmokeyTest_TiCC",
+        SamplingGroup = "",
+        Technology = "Touch",
+        TestParameters = "",
+        actions = {
+          75
+        },
+        deps = {
+          1,
+          2,
+          11,
+          45,
+          74
+        },
+        fullName = "Touch SmokeyTest_TiCC",
+        outputs = {
+          TiCC_SN = {
+            actionIdx = 75,
+            actionName = "RunSmokeyTest_TiCC",
+            returnIdx = 1
+          },
+          TiCC_Ver = {
+            actionIdx = 75,
+            actionName = "RunSmokeyTest_TiCC",
+            returnIdx = 2
+          },
+          crc32_key = {
+            actionIdx = 75,
+            actionName = "RunSmokeyTest_TiCC",
+            returnIdx = 3
+          }
+        },
+        subTestName = "SmokeyTest_TiCC",
         testName = "Touch"
       },
       {
@@ -6617,7 +6908,7 @@ return  {
           76
         },
         deps = {
-          12,
+          11,
           75
         },
         fullName = "PMU GPIOCheck_4",
@@ -6650,7 +6941,7 @@ return  {
           78
         },
         deps = {
-          12,
+          11,
           77
         },
         fullName = "PMU GPIOCheck_6",
@@ -6682,25 +6973,103 @@ return  {
       },
       {
         Conditions = "",
-        Coverage = "Temperature_2",
+        Coverage = "Syscfg",
         SamplingGroup = "",
-        Technology = "SOC",
-        TestParameters = "",
+        Technology = "DUTInfo",
+        TestParameters = "RFEM",
         actions = {
           80
         },
         deps = {
           79
         },
+        fullName = "DUTInfo Syscfg_RFEM",
+        outputs = {
+          RFEM_HAS_ADDED = {
+            actionIdx = 80,
+            actionName = "RunSyscfg_RFEM",
+            returnIdx = 2
+          },
+          RFEM_print_resp = {
+            actionIdx = 80,
+            actionName = "RunSyscfg_RFEM",
+            returnIdx = 3
+          },
+          RFEM_print_value = {
+            actionIdx = 80,
+            actionName = "RunSyscfg_RFEM",
+            returnIdx = 4
+          },
+          RFEM_target = {
+            actionIdx = 80,
+            actionName = "RunSyscfg_RFEM",
+            returnIdx = 1
+          }
+        },
+        subTestName = "Syscfg_RFEM",
+        testName = "DUTInfo"
+      },
+      {
+        Conditions = "mlb_type==\"MLB_B\"",
+        Coverage = "Syscfg",
+        SamplingGroup = "",
+        Technology = "DUTInfo",
+        TestParameters = "WSKU",
+        actions = {
+          81
+        },
+        deps = {
+          2,
+          79,
+          80
+        },
+        fullName = "DUTInfo Syscfg_WSKU",
+        outputs = {
+          WSKU_HAS_ADDED = {
+            actionIdx = 81,
+            actionName = "RunSyscfg_WSKU",
+            returnIdx = 2
+          },
+          WSKU_print_resp = {
+            actionIdx = 81,
+            actionName = "RunSyscfg_WSKU",
+            returnIdx = 3
+          },
+          WSKU_print_value = {
+            actionIdx = 81,
+            actionName = "RunSyscfg_WSKU",
+            returnIdx = 4
+          },
+          WSKU_target = {
+            actionIdx = 81,
+            actionName = "RunSyscfg_WSKU",
+            returnIdx = 1
+          }
+        },
+        subTestName = "Syscfg_WSKU",
+        testName = "DUTInfo"
+      },
+      {
+        Conditions = "",
+        Coverage = "Temperature_2",
+        SamplingGroup = "",
+        Technology = "SOC",
+        TestParameters = "",
+        actions = {
+          82
+        },
+        deps = {
+          81
+        },
         fullName = "SOC Temperature_2",
         outputs = {
           THERMAL0_Instant = {
-            actionIdx = 80,
+            actionIdx = 82,
             actionName = "RunTemperature_2",
             returnIdx = 1
           },
           tem_value = {
-            actionIdx = 80,
+            actionIdx = 82,
             actionName = "RunTemperature_2",
             returnIdx = 2
           }
@@ -6715,15 +7084,15 @@ return  {
         Technology = "Accel",
         TestParameters = "",
         actions = {
-          81
+          83
         },
         deps = {
-          80
+          82
         },
         fullName = "Accel SensorData_VendorInfor",
         outputs = {
           listsensors_resp = {
-            actionIdx = 81,
+            actionIdx = 83,
             actionName = "RunSensorData_VendorInfor",
             returnIdx = 1
           }
@@ -6738,25 +7107,25 @@ return  {
         Technology = "Accel",
         TestParameters = "",
         actions = {
-          82
+          84
         },
         deps = {
-          81
+          83
         },
         fullName = "Accel SensorData_AccelOnly",
         outputs = {
           accel_only_test_resp = {
-            actionIdx = 82,
+            actionIdx = 84,
             actionName = "RunSensorData_AccelOnly",
             returnIdx = 1
           },
           accel_only_test_sec_resp = {
-            actionIdx = 82,
+            actionIdx = 84,
             actionName = "RunSensorData_AccelOnly",
             returnIdx = 3
           },
           accel_selftest_result = {
-            actionIdx = 82,
+            actionIdx = 84,
             actionName = "RunSensorData_AccelOnly",
             returnIdx = 2
           }
@@ -6771,10 +7140,10 @@ return  {
         Technology = "Accel",
         TestParameters = "",
         actions = {
-          83
+          85
         },
         deps = {
-          82
+          84
         },
         fullName = "Accel SensorData_FS8g_ODR100HZ_Zup",
         subTestName = "SensorData_FS8g_ODR100HZ_Zup",
@@ -6787,20 +7156,20 @@ return  {
         Technology = "IMU",
         TestParameters = "",
         actions = {
-          84
+          86
         },
         deps = {
-          83
+          85
         },
         fullName = "IMU SensorData_GyroNormal",
         outputs = {
           accel_gyro_normal_test_resp = {
-            actionIdx = 84,
+            actionIdx = 86,
             actionName = "RunSensorData_GyroNormal",
             returnIdx = 1
           },
           accel_gyro_test_resp = {
-            actionIdx = 84,
+            actionIdx = 86,
             actionName = "RunSensorData_GyroNormal",
             returnIdx = 2
           }
@@ -6815,10 +7184,10 @@ return  {
         Technology = "IMU",
         TestParameters = "",
         actions = {
-          85
+          87
         },
         deps = {
-          84
+          86
         },
         fullName = "IMU SensorData_IDInfor",
         subTestName = "SensorData_IDInfor",
@@ -6831,11 +7200,11 @@ return  {
         Technology = "IMU",
         TestParameters = "",
         actions = {
-          86
+          88
         },
         deps = {
-          84,
-          85
+          86,
+          87
         },
         fullName = "IMU SensorData_FS8g_ODR200HZ_Zup",
         subTestName = "SensorData_FS8g_ODR200HZ_Zup",
@@ -6848,11 +7217,11 @@ return  {
         Technology = "IMU",
         TestParameters = "",
         actions = {
-          87
+          89
         },
         deps = {
-          84,
-          86
+          86,
+          88
         },
         fullName = "IMU SensorData_FS2000dps_ODR200HZ",
         subTestName = "SensorData_FS2000dps_ODR200HZ",
@@ -6865,10 +7234,10 @@ return  {
         Technology = "PressureSensor",
         TestParameters = "",
         actions = {
-          88
+          90
         },
         deps = {
-          87
+          89
         },
         fullName = "PressureSensor Registers",
         subTestName = "Registers",
@@ -6881,10 +7250,10 @@ return  {
         Technology = "PressureSensor",
         TestParameters = "",
         actions = {
-          89
+          91
         },
         deps = {
-          88
+          90
         },
         fullName = "PressureSensor SensorData",
         subTestName = "SensorData",
@@ -6897,15 +7266,15 @@ return  {
         Technology = "NAND",
         TestParameters = "",
         actions = {
-          90
+          92
         },
         deps = {
-          89
+          91
         },
         fullName = "NAND Info_GBBTest_2",
         outputs = {
           GBB_Test_resp = {
-            actionIdx = 90,
+            actionIdx = 92,
             actionName = "RunInfo_GBBTest_2",
             returnIdx = 1
           }
@@ -6920,58 +7289,14 @@ return  {
         Technology = "NAND",
         TestParameters = "",
         actions = {
-          91
-        },
-        deps = {
-          90
-        },
-        fullName = "NAND Info_ANS_HealthTest",
-        subTestName = "Info_ANS_HealthTest",
-        testName = "NAND"
-      },
-      {
-        Conditions = "",
-        Coverage = "Syscfg_List_2",
-        SamplingGroup = "",
-        Technology = "DUTInfo",
-        TestParameters = "",
-        actions = {
-          92
-        },
-        deps = {
-          91
-        },
-        fullName = "DUTInfo Syscfg_List_2",
-        subTestName = "Syscfg_List_2",
-        testName = "DUTInfo"
-      },
-      {
-        Conditions = "",
-        Coverage = "Temperature_3",
-        SamplingGroup = "",
-        Technology = "SOC",
-        TestParameters = "",
-        actions = {
           93
         },
         deps = {
           92
         },
-        fullName = "SOC Temperature_3",
-        outputs = {
-          THERMAL0_Instant = {
-            actionIdx = 93,
-            actionName = "RunTemperature_3",
-            returnIdx = 1
-          },
-          tem_value = {
-            actionIdx = 93,
-            actionName = "RunTemperature_3",
-            returnIdx = 2
-          }
-        },
-        subTestName = "Temperature_3",
-        testName = "SOC"
+        fullName = "NAND Info_ANS_HealthTest",
+        subTestName = "Info_ANS_HealthTest",
+        testName = "NAND"
       },
       {
         Conditions = "",
@@ -7014,26 +7339,64 @@ return  {
       },
       {
         Conditions = "",
-        Coverage = "Info_ECID",
+        Coverage = "ECID",
         SamplingGroup = "",
-        Technology = "USBC",
+        Technology = "DUTInfo",
         TestParameters = "",
         actions = {
           96
         },
         deps = {
+          45,
           95
         },
-        fullName = "USBC Info_ECID",
+        fullName = "DUTInfo ECID",
+        subTestName = "ECID",
+        testName = "DUTInfo"
+      },
+      {
+        Conditions = "",
+        Coverage = "Syscfg_2",
+        SamplingGroup = "",
+        Technology = "DUTInfo",
+        TestParameters = "",
+        actions = {
+          97
+        },
+        deps = {
+          96
+        },
+        fullName = "DUTInfo Syscfg_2",
+        subTestName = "Syscfg_2",
+        testName = "DUTInfo"
+      },
+      {
+        Conditions = "",
+        Coverage = "Temperature_3",
+        SamplingGroup = "",
+        Technology = "SOC",
+        TestParameters = "",
+        actions = {
+          98
+        },
+        deps = {
+          97
+        },
+        fullName = "SOC Temperature_3",
         outputs = {
-          acetngr = {
-            actionIdx = 96,
-            actionName = "RunInfo_ECID",
+          THERMAL0_Instant = {
+            actionIdx = 98,
+            actionName = "RunTemperature_3",
             returnIdx = 1
+          },
+          tem_value = {
+            actionIdx = 98,
+            actionName = "RunTemperature_3",
+            returnIdx = 2
           }
         },
-        subTestName = "Info_ECID",
-        testName = "USBC"
+        subTestName = "Temperature_3",
+        testName = "SOC"
       }
     },
     samplings = {
@@ -7049,8 +7412,8 @@ return  {
             }
           }
         },
-        filename = "Tech/Power/Discharge_Initial_End.csv",
-        name = "RunDischarge_Initial_End",
+        filename = "Tech/Power/Discharge_End.csv",
+        name = "RunDischarge_End",
         plugins = {
           "Dut",
           "Kis_dut",
@@ -7076,7 +7439,7 @@ return  {
             }
           }
         },
-        filename = "Tech/Fixture/GeneralAction_Reset_Initial.csv",
+        filename = "Tech/Fixture/GeneralAction_4.csv",
         name = "RunGeneralAction_4",
         plugins = {
           "FixturePlugin",
@@ -7169,12 +7532,12 @@ return  {
         Coverage = "Discharge",
         SamplingGroup = "",
         Technology = "Power",
-        TestParameters = "Initial_End",
+        TestParameters = "End",
         actions = {
           1
         },
-        fullName = "Power Discharge_Initial_End",
-        subTestName = "Discharge_Initial_End",
+        fullName = "Power Discharge_End",
+        subTestName = "Discharge_End",
         testName = "Power"
       },
       {

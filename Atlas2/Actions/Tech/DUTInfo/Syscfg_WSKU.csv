@@ -1,8 +1,8 @@
 Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
 Parameters,,MLB_Num,,,,,,,
 ,,smokey_WDFU_resp,,,,,,,
-Tech/Common>parseWithRegexString,"{subsubtestname=""Read-WSKU""}",WSKU_HAS_ADDED,,,,,,,"check RFEM already have or not;  only fresh board need to write the RFEM key"
-,"+{expect=""WSKU has already been added""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-WSKU""}",WSKU_target,,,,,,,"check RFEM already have or not;  only fresh board need to write the RFEM key"
+,"+{pattern=""WSKU has already been added""}",WSKU_HAS_ADDED,,,,,,,
 ,"+{Input=smokey_WDFU_resp}",,,,,,,,
 ,"+{record=""false""}",,,,,,,,
 Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Read-WSKU_Print""}",WSKU_print_resp,,,,,,,"Read WSKU key with command syscfg print WSKU"
@@ -24,17 +24,19 @@ Tech/Common>parseWithRegexString,"{subsubtestname=""Compare-Value_Read_and_Write
 Tech/DUTInfo>getByteLen,"{subsubtestname=""Read-Key_Length""}",,,,,,,,"check WSKU key length; mush be 16byte"
 ,"+{Input=WSKU_print_value}",,,,,,,,
 ,"+{ByteLen=""16""}",,,,,,,,
-,"+{record=""false""}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
 Tech/Common>parseWithRegexString,"{subsubtestname=""Read-Version""}",,,,,,,,"frist 4byte mush be 0x00000001"
+,"+{attribute=""WSKUVersion""}",,,,,,,,
 ,"+{pattern=""([0-9A-Fx]+) [0-9A-Fx]+ [0-9A-Fx]+""}",,,,,,,,
 ,"+{target=""0x00000001""}",,,,,,,,
 ,"+{Input=WSKU_print_value}",,,,,,,,
-,"+{record=""false""}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
 Tech/Common>parseWithRegexString,"{subsubtestname=""Read-Value""}",,,,,,,,"second 4byte mush be 0x00000000"
+,"+{attribute=""WSKUValue""}",,,,,,,,
 ,"+{pattern=""[0-9A-Fx]+ ([0-9A-Fx]+) [0-9A-Fx]+""}",,,,,,,,
 ,"+{target=""0x00000000""}",,,,,,,,
 ,"+{Input=WSKU_print_value}",,,,,,,,
-,"+{record=""false""}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
 Tech/Compare>versionCompare,"{subsubtestname=""Compare-WSKU""}",,,,,,,,"WSKU check with Versioncompare file"
 ,"+{comparekey=""WSKU""}",,,,,,,,
 ,"+{compareFunc=""wskuVersionCompare""}",,,,,,,,
