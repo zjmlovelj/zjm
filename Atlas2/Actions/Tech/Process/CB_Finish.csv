@@ -1,6 +1,6 @@
 Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
 Tech/Process>finishCB,"{subsubtestname=""Finish_Process_Control""}",,,,,,,,"Finish_Process_Control"
-,"+{dutPluginName=""Dut""}",,,,,,,,
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
 ,"+{record=""false""}",,,,,,,,
 Tech/Common>parseWithRegexString,"{subsubtestname=""Read-DFU_CB_Check""}",,,,,,,,"Check write DFU CB result"
 ,"+{attribute=""DFU_CB_Check""}",,,,,,,,

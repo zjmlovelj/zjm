@@ -435,9 +435,9 @@ function Common.parseWithRegexString(paraTab)
         if paraTab.Check_Storage == "YES" then
             if ret == nil or string.gsub(ret," ","") == "" then
                 ret = "No_match"
-                resultFlag = false
+                resultFlag = true
                 result = "FALSE"
-                helper.flowLogFinish(true, paraTab, ret, failureMsg)
+                helper.flowLogFinish(resultFlag, paraTab, ret, failureMsg)
                 return result
             end
         end

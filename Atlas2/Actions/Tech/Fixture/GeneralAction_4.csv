@@ -1,6 +1,6 @@
 Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
 Parameters,,slotNum,,,,,,,
-Tech/Fixture>sendFixtureCommand,"{subsubtestname=""Reset-Fixture_Initial""}",,,,,,,,"reset the fixture to default setting"
+Tech/Fixture>sendFixtureCommand,"{subsubtestname=""Reset-Fixture""}",,,,,,,,"reset the fixture to default setting"
 ,"+{Commands=""relay_switch""}",,,,,,,,
 ,"+{args=""reset;""}",,,,,,,,
 ,"+{slotNum=slotNum}",,,,,,,,

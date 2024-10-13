@@ -1,5 +1,5 @@
 Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
-Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Break_Pulse_CMD""}",,,,,,,,"list syscfg before test"
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-List_CMD""}",,,,,,,,"list syscfg before test"
 ,"+{dutPluginName=""Kis_dut""}",,,,,,,,
 ,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
 ,"+{Timeout=""50""}",,,,,,,,

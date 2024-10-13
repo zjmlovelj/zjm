@@ -1,33 +1,5 @@
 
-Coverage_Version = "0.0.9"
-
-*****************************************************************
-
-script Ver: 0.0.9
-change date: 20240729
-SW engineer: Jianming Zhang
-
-1. update ace fw version expect from 3.27.0.4.0 to 3.38.0.5.0.
-*****************************************************************
-
-*****************************************************************
-
-script Ver: 0.0.8
-change date: 20240729
-SW engineer: Jianming Zhang
-
-1. Change port from kis to uart commucation for PresenCheck block and enter diags.
-*****************************************************************
-
-*****************************************************************
-
-script Ver: 0.0.7
-change date: 20240726
-SW engineer: Jianming Zhang
-
-1. Split Ace hang commands and add command parameter for PresenCheck block.
-*****************************************************************
-
+Coverage_Version = "0.0.6.0_CommonDOE"
 *****************************************************************
 
 script Ver: 0.0.6.0_CommonDOE

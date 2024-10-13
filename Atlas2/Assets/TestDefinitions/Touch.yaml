@@ -22,11 +22,11 @@
 
 -   technology: Touch
     coverage: SmokeyTest
-    testParameters: TouchTiCC
+    testParameters: TouchDFUIQMeas
     sequence:
         actions:
-            - RunSmokeyTest_TouchTiCC:
-                filename: Tech/Touch/SmokeyTest_TouchTiCC.csv
+            - RunSmokeyTest_TouchDFUIQMeas:
+                filename: Tech/Touch/SmokeyTest_TouchDFUIQMeas.csv
                 plugins:
                     - Kis_dut
                     - Kis_channelPlugin
@@ -131,6 +131,8 @@
                     - FixturePlugin
                     - InteractiveView
                     - RunShellCommand
+                    - StationInfo
+                    - Mutex
 
 -   technology: Touch
     coverage: GPIOCheck_SPI_ConnectivityTest

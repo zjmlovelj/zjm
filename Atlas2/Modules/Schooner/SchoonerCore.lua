@@ -810,6 +810,9 @@ function M.orderTests(dag,
             -- order to the choice test; otherwise order to the test itself.
             -- like if T1 --> T2, and T2 has condition,
             -- T1 --> T2_choice_test ==> T2 (==> is choice path, not ordianry ordering.
+            -- also, needs to order T1 or T1' choiceTest --> T2.
+            -- Without this, when T1 is cancelled, T2 becomes a dangling test and
+            -- loses its dependency on T1 (like in rdar://130158214)
             local currentTestResolvable =
             currentTestDef.resolvableStart or currentTestDef.resolvable
             local depsTestResolvable = testDef.resolvable
@@ -821,6 +824,7 @@ function M.orderTests(dag,
                 helpers.debugPrint('weak ordering: ' .. M.fullName(testDef) ..
                                    ' -> ' .. M.fullName(currentTestDef))
                 dag.orderTest(false, depsTestResolvable, currentTestResolvable)
+                dag.orderTest(testDef.resolvableStart, currentTestResolvable)
             else
                 dag.orderTest(depsTestResolvable, currentTestResolvable)
             end

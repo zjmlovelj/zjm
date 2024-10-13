@@ -1,20 +1,20 @@
-OS Version:  LuckKita23A20570m
-Diags:       Midas-2297.0.487.22
-BBFW:        INITIUM1-1.50.16-1
-BBlib:       v8.181-J8xx-Proto1-I
+OS Version:  LuckKita23A20570r
+Diags:       Midas-2297.0.487.32
+BBFW:        INITIUM25-1.50.15-18
+BBlib:       v8.181-J8xx-Proto1-K
 GrapeFW:     1.1.4
 
 
-RTOS:        PeRtosFactoryTests_H17G-1.1.9 (RELEASE)
+RTOS:        V2.2.18375.C31-g7f310ba (RELEASE)
 RBMVersionList:
-svn_83947-2-g88c413793d4M (Hidra_binHarvesting) - SHA_ 88c413793d4 
+release_85771 (master) 
 
-A0_RTOS_MD5:	afc838de0dc40de08255806b4ae4e011
-A0_RBM_MD5:		29774db01da0f7323c5e1eed6aa3570c
+A0_RTOS_MD5:	6ebc4942dcd468c4ca820b71aeebae2d
+A0_RBM_MD5:		bd04d2f82ee1757ad3f7e99ca9f4418c
 B0_RTOS_MD5:	8cbb078be104de5ceca605d355e898b0
 B0_RBM_MD5:		4296f206c886a47ac791aabe226ac69c
 B1_RTOS_MD5:	6ed6013f6de60042d0316a69b957940e
 B1_RBM_MD5:		4296f206c886a47ac791aabe226ac69c
 
-BT FW: 
-230.2359000000000000.1230|23.0.0.0|date:2024 8 21
+BT FW:
+230.2359000000100001.32_23.0.0.0_date_2024 8 28

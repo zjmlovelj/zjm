@@ -7,7 +7,7 @@ Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-AEMToolsSinopeGen4_CMD""}",,
 ,"+{Commands=""smokey --run --clean AEMToolsSinopeGen4 DisplayBehavior=NoDisplay ""SerialNumberSource='MLB#'""""}",,,,,,,,
 ,"+{expect=""Set Pass""}",,,,,,,,
 ,"+{record=""false""}",,,,,,,,
-Tech/DUTCmd>copyToHost,"{subsubtestname=""Get-AEMToolsSinopeGen4_File""}",,,,,,,,
+Tech/DUTCmd>copyToHost,"{subsubtestname=""Get-AEMToolsSinopeGen4_File""}",,,,,,,,"catch SinopeGen4_Result_Files"
 ,"+{dutPluginName=""Kis_dut""}",,,,,,,,
 ,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
 ,"+{filePath=""nandfs:\\AppleInternal\\Diags\\Logs\\Smokey\\AEMToolsSinopeGen4\\""}",,,,,,,,

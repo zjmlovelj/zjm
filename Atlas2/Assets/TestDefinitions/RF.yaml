@@ -1,11 +1,11 @@
 
 -   technology: RF
-    coverage: Wifi_AEMToolsWifi3nm
+    coverage: Wifi_3nm
     testParameters: '*'
     sequence:
         actions:
-            - RunWifi_AEMToolsWifi3nm:
-                filename: Tech/RF/Wifi_AEMToolsWifi3nm.csv
+            - RunWifi_3nm:
+                filename: Tech/RF/Wifi_3nm.csv
                 plugins:
                     - Kis_dut
                     - Kis_channelPlugin
@@ -23,12 +23,12 @@
 
 
 -   technology: RF
-    coverage: Baseband_AEMToolsBaseband3nm
+    coverage: Baseband_3nm
     testParameters: '*'
     sequence:
         actions:
-            - RunBaseband_AEMToolsBaseband3nm:
-                filename: Tech/RF/Baseband_AEMToolsBaseband3nm.csv
+            - RunBaseband_3nm:
+                filename: Tech/RF/Baseband_3nm.csv
                 plugins:
                     - Kis_dut
                     - Kis_channelPlugin
@@ -46,12 +46,12 @@
 
 
 -   technology: RF
-    coverage: Wifi_AEMToolsProxima
+    coverage: Wifi_Proxima
     testParameters: '*'
     sequence:
         actions:
-            - RunWifi_AEMToolsProxima:
-                filename: Tech/RF/Wifi_AEMToolsProxima.csv
+            - RunWifi_Proxima:
+                filename: Tech/RF/Wifi_Proxima.csv
                 plugins:
                     - Kis_dut
                     - Kis_channelPlugin
@@ -68,12 +68,12 @@
 
 
 -   technology: RF
-    coverage: Baseband_AEMToolsSinopeGen4
+    coverage: Baseband_SinopeGen4
     testParameters: '*'
     sequence:
         actions:
-            - RunBaseband_AEMToolsSinopeGen4:
-                filename: Tech/RF/Baseband_AEMToolsSinopeGen4.csv
+            - RunBaseband_SinopeGen4:
+                filename: Tech/RF/Baseband_SinopeGen4.csv
                 plugins:
                     - Kis_dut
                     - Kis_channelPlugin

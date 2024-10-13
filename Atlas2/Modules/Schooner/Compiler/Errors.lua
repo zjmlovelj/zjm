@@ -254,11 +254,12 @@ function M:coverageNotTable()
     self:error(M.coverageNotTableBrf, 'Coverage is not a valid table')
 end
 
-M.conditionMissingIdentifierBrf = 'Undefined Condition Variable.'
-function M:conditionMissingIdentifier(detailInfo, identifier)
-    self:error(M.conditionMissingIdentifierBrf,
-               detailInfo .. " contains condition variable \"" .. identifier ..
-               "\", which is not defined in the condition table.")
+M.undefinedConditionVariableBrf = 'Undefined Condition Variable.'
+function M:undefinedConditionVariable(name, usedLocations)
+    local msg = 'Condition variable ' .. name .. ' not found in ' ..
+                'Condition table, but is used in [' ..
+                pl.stringx.join(', ', usedLocations) .. ']'
+    self:error(M.undefinedConditionVariableBrf, msg)
 end
 
 M.dependencyBadFormatBrf = 'Dependency bad format'
@@ -720,6 +721,31 @@ function M:emptyStationVersion(plistPath)
                plistPath .. ' and modify StationVersion')
 end
 
+M.missGroupArgsKeyBrf = 'Missing GroupArgs in plist.'
+function M:missGroupArgsKeyKey(plistPath)
+    self:warning(M.missGroupArgsKeyBrf,
+                 'Please check plist file: ' .. plistPath ..
+                 ' and add GroupArgs')
+end
+
+M.emptyStationModeBrf = 'Empty StationMode in plist.'
+function M:emptyStationMode(plistPath)
+    self:warning(M.emptyStationModeBrf,
+                 'Please check plist file: ' .. plistPath ..
+                 ' and modify GroupArgs')
+end
+
+M.invalidStationModeBrf = 'Invalid StationMode in plist.'
+function M:invalidStationMode(plistPath, modes, modeInPlist)
+    self:warning(M.invalidStationModeBrf,
+                 'Invalid Mode: The mode `' .. modeInPlist ..
+                 '` specified in the plist file is not valid for the current ' ..
+                 'overlay. The currently supported modes are: ' ..
+                 helper.dump(modes) .. '. ' ..
+                 'Please modify the StationMode in the plist file located at ' ..
+                 plistPath .. ' and try again.')
+end
+
 M.missingInputsBrf = 'Missing inputs key inside test definition block'
 function M:missingInputs(msg)
     self:error(M.missingInputsBrf, msg .. '. Did you mispell the inputs key?')
@@ -1002,6 +1028,11 @@ M.intMissingRowBrf = 'Missing row'
 function M:internalMissingRow(testIdx, tableName)
     self:internalError(M.missingRowBrf,
                        'row ' .. testIdx .. ' not found in ' .. tableName)
+end
+
+M.internalUnsupportedKeyBrf = 'Unsupported Key'
+function M:internalUnsupportedKey(key)
+    self:internalError(M.internalUnsupportedKeyBrf, key)
 end
 
 M.intBadDataTypeBrf = 'Bad data type'

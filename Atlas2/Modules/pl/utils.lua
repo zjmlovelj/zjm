@@ -23,7 +23,7 @@ local operators
 local _function_factories = {}
 
 
-local utils = { _VERSION = "1.13.1" }
+local utils = { _VERSION = "1.14.0" }
 for k, v in pairs(compat) do utils[k] = v  end
 
 --- Some standard patterns
@@ -141,7 +141,11 @@ end
 -- @param value1 Value returned if cond is truthy
 -- @param value2 Value returned if cond is falsy
 function utils.choose(cond, value1, value2)
-    return cond and value1 or value2
+    if cond then
+        return value1
+    else
+        return value2
+    end
 end
 
 --- convert an array of values to strings.
@@ -297,7 +301,7 @@ end
 -- non-existing values, and/or converting strings/identifiers to other values.
 --
 -- Calling on the object does the same, but returns a soft error; `nil + err`, if
--- the call is succesful (the key exists), it will return the value.
+-- the call is successful (the key exists), it will return the value.
 --
 -- When calling with varargs or an array the values will be equal to the keys.
 -- The enum object is read-only.
@@ -325,7 +329,7 @@ end
 --   },
 --
 --   some_method = function(self)
---     return self.ERR.OUT_OF_BOUNDS
+--     return nil, self.ERR.OUT_OF_BOUNDS
 --   end,
 -- }
 --
@@ -691,7 +695,7 @@ end
 -- @param s The input string
 -- @param re optional A Lua string pattern; defaults to '%s+'
 -- @param plain optional If truthy don't use Lua patterns
--- @param n optional maximum number of elements (if there are more, the last will remian un-split)
+-- @param n optional maximum number of elements (if there are more, the last will remain un-split)
 -- @return a list-like table
 -- @raise error if s is not a string
 -- @see splitv
@@ -745,8 +749,8 @@ end
 -- This is useful if you have a function which is relatively expensive,
 -- but you don't know in advance what values will be required, so
 -- building a table upfront is wasteful/impossible.
--- @param func a function of at least one argument
--- @return a function with at least one argument, which is used as the key.
+-- @param func a function that takes exactly one argument (which later serves as the cache key) and returns a single value
+-- @return a function taking one argument and returning a single value either from the cache or by running the original input function
 function utils.memoize(func)
     local cache = {}
     return function(k)

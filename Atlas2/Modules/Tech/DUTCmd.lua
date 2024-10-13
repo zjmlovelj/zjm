@@ -3,11 +3,7 @@ local DUTCmd = {}
 local Log = require("Tech/logging")
 local comFunc = require("Tech/CommonFunc")
 local helper = require("Tech/SMTLoggingHelper")
-local utils = require("Tech/utils")
-local securityUtils = require("ALE/SecurityUtils")
 local fileUtils = require("ALE/FileUtils")
-local DFUCommon = require("Tech/DFUCommon")
-local Record = require("Tech/record")
 local DiagsTriage = require("DiagsTriage/DiagsTriage")
 local pListSerialization = require ("Serialization.PListSerialization")
 local configTable = pListSerialization.LoadFromFile(string.gsub(Atlas.assetsPath, 'Assets', "Config/project_config.plist"))
@@ -364,11 +360,20 @@ function DUTCmd.sendCmdAndParse(paraTab)
                    WDFUTable[name] = true          --remove duplicate values
                 end  
             end
-        end    
-        for value in patternsResponse do
-            if value == nil or string.gsub(value, " ", "") == "" then
+        end
+        for value1,value2,value3,value4,value5,value6 in patternsResponse do
+            if value1 == nil or string.gsub(value1, " ", "") == "" then
                 resultFlag = false
             end
+            if value1 and value2 and value3 and value4 and value5 and value6 then
+                response = value1 .. " " .. value2 .." " .. value3 .." " ..
+                           value4 .. " " .. value5 .. " " .. value6
+            elseif value1 and value2 and value3 and value4 and value5 then
+                response = value1 .." " .. value2 .." " .. value3 .." " ..
+                           value4 .." " .. value5                 
+            else 
+                response = value1
+            end    
         end 
         if not resultFlag then msg = msg .. " have fail value or pattern not match" end   
     end

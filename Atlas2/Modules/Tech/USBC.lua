@@ -8,6 +8,7 @@ local helper = require("Tech/SMTLoggingHelper")
 local utils = require("Tech/utils")
 local compare = require("Tech/Compare")
 local pListSerialization = require("Serialization/PListSerialization")
+local mutex = require("mutex")
 
 local OTP_NEED_PROGRAM = false
 
@@ -19,7 +20,7 @@ Input : string,number,number
 Output : result(number)
 -----------------------------------------------------------------------------------]]
 
-function USBC.bytesToHexStr(filePath, start_bit, bit_length)
+function USBC.bytesToHexStr(filePath, start_bit, bit_length, byteFormat)
 
     local function __readbinFile(path)
         local f = assert(io.open(path, "rb"))
@@ -42,11 +43,8 @@ function USBC.bytesToHexStr(filePath, start_bit, bit_length)
     end
     for i = start_bit + 1, start_bit + bit_length do
         local charcode = tonumber(string.byte(content, i, i))
-        local hexstr = string.format("0x%02X ", charcode)
+        local hexstr = string.format(byteFormat, charcode)
         result = result .. hexstr
-    end
-    if #result > 0 then
-        result = string.sub(result, 0, #result - 1)
     end
 
     return result
@@ -83,18 +81,29 @@ Output : result(number)
 function USBC.getOTPWords(start_bit, bit_length, file_name)
     local OTP_PATH = "/Users/gdlocal/Library/Atlas2/supportFiles/customer/OTP_FW/"
     local path = OTP_PATH .. file_name
+    local result = ""
 
     if not tonumber(start_bit) and not tonumber(bit_length) then
-        return USBC.bytesToHexStr(path, -1, -1)
+        result = USBC.bytesToHexStr(path, -1, -1, "0x%02X ")     
+        if #result > 0 then
+            result = string.sub(result, 1, #result - 1)
+        end
+        return result
     end
+
     if not tonumber(start_bit) then
         start_bit = 0
     end
+
     if not tonumber(bit_length) then
         bit_length = 4
     end
 
-    local result = USBC.bytesToHexStr(path, tonumber(start_bit), tonumber(bit_length))
+    result = USBC.bytesToHexStr(path, tonumber(start_bit), tonumber(bit_length), "0x%02X ")
+
+    if #result > 0 then
+        result = string.sub(result, 1, #result - 1)
+    end
     -- return result
     return string.upper(result)
 end
@@ -710,6 +719,7 @@ Output : string
 -----------------------------------------------------------------------------------]]
 
 function USBC.checkRT13FWVersion(paraTab)
+    helper.flowLogStart(paraTab)
     local expect = paraTab.expect
     local data = paraTab.Input
     local flag = false
@@ -739,9 +749,9 @@ function USBC.checkRT13FWVersion(paraTab)
     end
 
     if flag then
-        helper.createRecord(flag, paraTab)
+        helper.flowLogFinish(flag, paraTab)
     else
-        helper.createRecord(flag, paraTab, failureMsg, nil, nil, flag)
+        helper.flowLogFinish(flag, paraTab, result, failureMsg)
         if paraTab.fa_sof == "YES" then
             helper.reportFailure(failureMsg)
         end

@@ -606,13 +606,9 @@ function VersionCompare.RevMD5Compare(paraTab)
     local product_A = string.lower(Product)
     local Product_B = "j"..tostring(tonumber((string.gsub(Product, "J", ""))) + 1 )
     local rtos_md5 = VersionCompare.getVersions()[ChipRev .. "_RTOS_MD5"]
-    helper.LogInfo("rtos_md51$$$$: ", rtos_md5)
     local rbm_md5 = VersionCompare.getVersions()[ChipRev .. "_RBM_MD5"]
-    helper.LogInfo("rtos_md52$$$: ", rtos_md5)
     local rtos_md5_list = comFunc.splitString(rtos_md5, ";")
-    helper.LogInfo("rtos_md5_list$$$$: ", rtos_md5_list)
     local rbm_md5_list = comFunc.splitString(rbm_md5, ";")
-    helper.LogInfo("rbm_md5_list$$$$: ", rbm_md5_list)
     local path = "/Users/gdlocal/RestorePackage/CurrentBundle/Restore/FactoryTests/"
     local resultFlag = true
     local failureMsg = nil

@@ -1,5 +1,5 @@
 {
-  "DylibVersion" : "Lib_MIX8.2_v24.08.21",
+  "DylibVersion" : "Lib_MIX8.2_v24.08.22",
   "vender" : "Suncode",
   "IBAT_OCP_Fault_Flag" : "io_control.get(bit10)",
   "VBAT_OVP_Fault_Flag" : "io_control.get(bit11)",
@@ -17,6 +17,8 @@
   "serial_number" : "eeprom.read_string(0,19)",
   "get_safety_status" : "safety.get_all_safety_status()",
   "get_xavier_serial_number": "xavier_sc.read_serial_number()",
+  "get_xavier_version":"xavier_sc.fw_version()",
+
 
   "Fixture_Fan_Speed_Set" : "fan.speed_set",
   "Fixture_Fan_Speed_Get" : "fan.speed_get",
@@ -84,7 +86,7 @@
       "io_control.set(bit40=0)",
       "batt.volt_set(0)",
       "delay:0.03",
-      "io_control.set(bit30=1)",
+      "io_control.set(bit30=1;bit104=1;bit102=0)",
       "delay:0.3"
     ]
   }, 
@@ -361,6 +363,12 @@
     ]
   },
 
+  "VBATT_OVP_1V5" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(3,1500)"
+    ]
+  },
+
   "ppvcc_high_discharge" : {
     "connect" : [
       "io_control.set(bit44=1)"
@@ -417,9 +425,10 @@
     "off" : [
       "io_control.set(bit8=0)",
       "delay:0.2",
-      "io_control.set(bit105=1;bit41=0;bit42=1;bit26=0;bit22=0;bit2=1)",
+      "io_control.set(bit2=1)",
+      "io_control.set(bit41=0;bit42=1;bit26=0;bit22=0)",
       "delay:0.5",
-      "io_control.set(bit2=0)"
+      "io_control.set(bit2=0;bit105=1)"
     ],
     "on" : [
       "io_control.set(bit105=0)",
@@ -565,22 +574,22 @@
       "delay:0.3",
       "io_control.set(bit30=1;bit42=1;bit43=1)",
       "batt.volt_set(0)",
-      "io_control.set(bit104=1;bit40=0;bit102=0;bit1=1)",      
+      "io_control.set(bit40=0;bit1=1)",      
       "delay:0.5",
-      "io_control.set(bit1=0)"
+      "io_control.set(bit104=1;bit102=0;bit1=0)"
     ],
     "on" : [
       "io_control.set(bit104=1;bit102=0)",
       "io_control.set(bit30=0)",
-      "delay:0.1",
+      "delay:0.02",
       "batt.volt_set(4200)",
-      "delay:0.2",
-      "io_control.set(bit40=1)",
       "delay:0.3",
+      "io_control.set(bit40=1)",
+      "Delay:0.1",
       "io_control.set(bit104=0)",
       "delay:0.1",
       "io_control.set(bit102=1)",     
-      "delay:0.2"
+      "Delay:0.5"
     ]
   },
   "vbatt_step" : {
@@ -594,22 +603,22 @@
       "delay:0.3",
       "io_control.set(bit30=1;bit42=1;bit43=1)",
       "batt.volt_set(0)",
-      "io_control.set(bit104=1;bit40=0;bit102=0;bit1=1)",      
+      "io_control.set(bit40=0;bit1=1)",      
       "delay:0.5",
-      "io_control.set(bit1=0)"
+      "io_control.set(bit104=1;bit102=0;bit1=0)"
     ],
     "on" : [
       "io_control.set(bit104=1;bit102=0)",
       "io_control.set(bit30=0)",
-      "delay:0.1",
+      "delay:0.02",
       "batt.volt_set(4200)",
       "delay:0.2",
       "io_control.set(bit40=1)",
-      "delay:0.3",
+      "delay:0.1",
       "io_control.set(bit104=0)",
       "delay:0.1",
       "io_control.set(bit102=1)",     
-      "delay:0.2"
+      "Delay:0.5"
     ]
   },
   "vbatt_reset" : {
@@ -627,9 +636,9 @@
       "delay:0.3",
       "io_control.set(bit30=1;bit42=1;bit43=1)",
       "batt.volt_set(0)",
-      "io_control.set(bit104=1;bit40=0;bit102=0;bit1=1)",      
+      "io_control.set(bit40=0;bit1=1)",      
       "delay:0.5",
-      "io_control.set(bit1=0)"
+      "io_control.set(bit104=1;bit102=0;bit1=0)"
     ]
   },
   
@@ -667,9 +676,9 @@
     "delay:0.3",
     "io_control.set(bit1=1;bit30=1;bit42=1;bit43=1)",
     "batt.volt_set(0)",
-    "io_control.set(bit40=0;bit102=0)",
+    "io_control.set(bit40=0)",
     "delay:0.5",
-    "io_control.set(bit1=0;bit104=1)",
+    "io_control.set(bit1=0;bit104=1;bit102=0)",
     "delay:3",
     "reset_all.reset()",
     "io_control.set(bit24=1)",
@@ -705,9 +714,9 @@
     "delay:0.3",
     "io_control.set(bit30=1;bit42=1;bit43=1)",
     "batt.volt_set(0)",
-    "io_control.set(bit40=0;bit102=0;bit1=1)",      
+    "io_control.set(bit40=0;bit1=1)",      
     "delay:0.5",
-    "io_control.set(bit104=1;bit105=1;bit1=0;bit2=0)",
+    "io_control.set(bit104=1;bit105=1;bit102=0;bit1=0;bit2=0)",
     "reset_all.reset()"
   ],
 
@@ -882,7 +891,8 @@
   ],
 
   "force_iboot_on" : [
-    "io_control.set(bit30=0;bit42=0;bit43=0;bit25=0)",    
+    "io_control.set(bit30=0;bit42=0;bit43=0;bit25=0)", 
+    "io_control.set(bit104=1;bit102=0)",   
     "mcp47fe.output_volt_dc(4,2000)",
     "mcp47fe.output_volt_dc(6,3000)",
     "mcp47fe.output_volt_dc(3,4600)",

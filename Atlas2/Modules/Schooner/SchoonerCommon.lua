@@ -22,10 +22,16 @@ common.TEARDOWN_ACTIONS = common.TEARDOWN .. common.ACTIONS
 common.MODE = 'mode'
 common.PRODUCT = 'product'
 common.STATION_TYPE = 'stationType'
+
+common.Column = {
+    Product = 'Product',
+    StationType = 'StationType',
+    Mode = 'Mode'
+}
 common.ALL_FILTERS = {
-    ['Product'] = common.PRODUCT,
-    ['StationType'] = common.STATION_TYPE,
-    ['Mode'] = common.MODE
+    [common.Column.Product] = common.PRODUCT,
+    [common.Column.StationType] = common.STATION_TYPE,
+    [common.Column.Mode] = common.MODE
 }
 -- End: Coverage/limit filters
 
@@ -208,6 +214,22 @@ common.operatorMap = {
     ['<='] = 'LE',
     ['('] = 'LP',
     [')'] = 'RP'
+}
+
+-- Key meanings:
+-- Tests - conditions/Product/StationType used in Main.csv
+-- TestInputs - conditions used in yaml test block inputs key
+-- TestConditions - conditions used in yaml test block conditions key (e.g. generating test conditions)
+-- Limits - Product/StationType in Limits.csv
+-- LimitRequired - conditions used in Required column
+-- LimitConditions - conditions used in Conditions column of Limits.csv
+common.conditionUsage = {
+    Tests = true,
+    TestInputs = true,
+    TestConditions = true,
+    Limits = true,
+    LimitRequired = true,
+    LimitConditions = true
 }
 
 return common

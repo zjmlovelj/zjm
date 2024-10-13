@@ -9,7 +9,7 @@ Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Test_Mode_Enable_CMD""}",,,,
 Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Read-Test_mode_Club""}",,,,,,,,"check club test mode state"
 ,"+{dutPluginName=""Kis_dut""}",,,,,,,,
 ,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
-,"+{pattern=""0xFE05%s*=>%s*0x0(%w)""}",,,,,,,,
+,"+{pattern=""0xFE05%s*=>%s*(0x%w+)""}",,,,,,,,
 ,"+{Timeout=""10""}",,,,,,,,
 ,"+{Commands=""reg read 0xfe05 01""}",,,,,,,,
 ,"+{isparametric=""YES""}",,,,,,,,

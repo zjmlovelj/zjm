@@ -216,7 +216,7 @@
                     - PListSerializationPlugin
 
 -   technology: USBC
-    coverage: Info_ACE3_FWVersion
+    coverage: Info_ACE3
     testParameters: '*'
     inputs:
         deviceAddress: 'find.output("USBC","OTPProgram","","deviceAddress")'
@@ -224,11 +224,11 @@
         slotNum: 'find.output("Fixture","Channel","","slotNum")'
     outputs:
         Ace3FWVersion:
-            lookup: [RunInfo_ACE3_FWVersion, 1]
+            lookup: [RunInfo_ACE3, 1]
     sequence:
         actions:
-            - RunInfo_ACE3_FWVersion:
-                filename: Tech/USBC/Info_ACE3_FWVersion.csv
+            - RunInfo_ACE3:
+                filename: Tech/USBC/Info_ACE3.csv
                 args:
                     - lookup: [inputs, deviceAddress]
                     - lookup: [inputs, Ace3LogPath]
@@ -575,27 +575,4 @@
                     - PListSerializationPlugin 
                     - InteractiveView 
                                      
--   technology: USBC
-    coverage: Info_ECID
-    testParameters: '*'
-    outputs:
-        acetngr:
-            lookup: [RunInfo_ECID, 1]
-    sequence:
-        actions:
-            - RunInfo_ECID:
-                filename: Tech/USBC/Info_ECID.csv
-                plugins:
-                    - Kis_dut
-                    - Kis_channelPlugin
-                    - SFC
-                    - Regex
-                    - FixturePlugin
-                    - StationInfo
-                    - FileOperation
-                    - VariableTable
-                    - RunShellCommand
-                    - TimeUtility
-                    - SMTCommonPlugin
-                    - PListSerializationPlugin
 

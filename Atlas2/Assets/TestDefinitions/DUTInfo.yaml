@@ -11,7 +11,7 @@
         RFEM_print_resp:
             lookup: [RunSyscfg_RFEM, 3]
         RFEM_print_value:
-            lookup: [RunSyscfg_RFEM, 4]
+            lookup: [RunSyscfg_RFEM, 4]    
     sequence:
         actions:
             - RunSyscfg_RFEM:
@@ -66,12 +66,12 @@
                     
                     
 -   technology: DUTInfo
-    coverage: Syscfg_List_1
+    coverage: Syscfg_1
     testParameters: '*'
     sequence:
         actions:
-            - RunSyscfg_List_1:
-                filename: Tech/DUTInfo/Syscfg_List_1.csv
+            - RunSyscfg_1:
+                filename: Tech/DUTInfo/Syscfg_1.csv
                 plugins:
                     - Dut
                     - ChannelPlugin
@@ -87,17 +87,17 @@
                     - PListSerializationPlugin
 
 -   technology: DUTInfo
-    coverage: DiagsFW_Version
+    coverage: DiagsFW
     testParameters: '*'
     outputs:
         Diags_version:
-            lookup: [RunDiagsFW_Version, 1]
+            lookup: [RunDiagsFW, 1]
         Version_Info:
-            lookup: [RunDiagsFW_Version, 2]
+            lookup: [RunDiagsFW, 2]
     sequence:
         actions:
-            - RunDiagsFW_Version:
-                filename: Tech/DUTInfo/DiagsFW_Version.csv
+            - RunDiagsFW:
+                filename: Tech/DUTInfo/DiagsFW.csv
                 plugins:
                     - Dut
                     - ChannelPlugin
@@ -270,12 +270,12 @@
 
 
 -   technology: DUTInfo
-    coverage: Syscfg_List_2
+    coverage: Syscfg_2
     testParameters: '*'
     sequence:
         actions:
-            - RunSyscfg_List_2:
-                filename: Tech/DUTInfo/Syscfg_List_2.csv
+            - RunSyscfg_2:
+                filename: Tech/DUTInfo/Syscfg_2.csv
                 plugins:
                     - Kis_dut
                     - Kis_channelPlugin
@@ -373,5 +373,25 @@
                     - SMTCommonPlugin
                     - PListSerializationPlugin 
                     
-
+                    
+-   technology: DUTInfo
+    coverage: ECID
+    testParameters: '*'
+    inputs:
+        HAS_TWO_STORAGE_DEVICE: 'find.output("SOC","Info_1","","HAS_TWO_STORAGE_DEVICE")'
+    sequence:
+        actions:
+            - RunECID:
+                filename: Tech/DUTInfo/ECID.csv
+                args:
+                     - lookup: [inputs, HAS_TWO_STORAGE_DEVICE]
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+                    - RunShellCommand
 
