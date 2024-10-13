@@ -1,0 +1,21 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Parameters,,slotNum,,,,,,,
+Tech/Restore>supplyAceProvisioningPower,"{subsubtestname=""Set-Ace_Provisioning_Power""}",,,,,,,,"check restore device log and supply 14v VBUS_prot on and off"
+,"+{OnSignal=""AppleTypeCRetimer updater loop done""}",,,,,,,,
+,"+{OffSignal=""provision finished""}",,,,,,,,
+,"+{Timeout=""1200""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>delay,"{subsubtestname=""Delay-1000ms""}",,,,,,,,"delay 1000ms"
+,"+{delay=""1000""}",,,,,,,,
+,"+{unit=""ms""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Fixture>sendFixtureCommand,"{subsubtestname=""Set-PDVBUS_5V""}",,,,,,,,"Set PDVBUS to 5V"
+,"+{Commands=""relay_switch""}",,,,,,,,
+,"+{args=""pdvbus;on""}",,,,,,,,
+,"+{slotNum=slotNum}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Fixture>sendFixtureCommand,"{subsubtestname=""Disconnect-GPIO_FORCE_DFU""}",,,,,,,,"disconnect GPIO_FORCE_DFU"
+,"+{Commands=""relay_switch""}",,,,,,,,
+,"+{args=""GPIO_FORCE_DFU;disconnect""}",,,,,,,,
+,"+{slotNum=slotNum}",,,,,,,,
+,"+{record=""false""}",,,,,,,,

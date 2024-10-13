@@ -1,0 +1,6 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Tech/Fixture>uploadFixtureInfo,"{subsubtestname=""Get-Fixture_ID""}",fixtureID,,,,,,,"print fixture SN"
+,"+{actionFunc=""get_serial_number""}",,,,,,,,
+,"+{reportFunc=""fixtureID""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Returns,fixtureID,,,,,,,,

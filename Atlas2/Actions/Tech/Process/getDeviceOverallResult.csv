@@ -1,0 +1,6 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Parameters,,overallStatus,,,,,,,
+Tech/Process>getDeviceOverallResult,"{overallStatus=overallStatus}",testfail,,,,,,,
+,,Poison,,,,,,,
+Returns,testfail,,,,,,,,
+,Poison,,,,,,,,

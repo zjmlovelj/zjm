@@ -1,0 +1,8 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-CB_Initial_CMD""}",,,,,,,,"send cb init"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{expect=""OK""}",,,,,,,,
+,"+{Timeout=""3""}",,,,,,,,
+,"+{Commands=""cbinit""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,

@@ -1,0 +1,30 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Parameters,,accel_only_test_sec_resp,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-accel_only_average_x""}",,,,,,,,"Read accel only average x"
+,"+{pattern=""average%: X = (-?[0-9.]+)""}",,,,,,,,
+,"+{Input=accel_only_test_sec_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-accel_only_average_y""}",,,,,,,,"Read accel only average y"
+,"+{pattern=""average%: X = %-?[0-9.]+, Y = (-?[0-9.]+)""}",,,,,,,,
+,"+{Input=accel_only_test_sec_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-accel_only_average_z""}",,,,,,,,"Read accel only average z"
+,"+{pattern=""average%: X = %-?[0-9.]+, Y = %-?[0-9.]+, Z = (-?[0-9.]+)""}",,,,,,,,
+,"+{Input=accel_only_test_sec_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-accel_only_std_x""}",,,,,,,,"Read accel only std x"
+,"+{pattern=""std%-dev%: X = (-?[0-9.]+)""}",,,,,,,,
+,"+{Input=accel_only_test_sec_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-accel_only_std_y""}",,,,,,,,"Read accel only std y"
+,"+{pattern=""std%-dev%: X = %-?[0-9.]+, Y = (-?[0-9.]+)""}",,,,,,,,
+,"+{Input=accel_only_test_sec_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-accel_only_std_z""}",,,,,,,,"Read accel only std z"
+,"+{pattern=""std%-dev%: X = %-?[0-9.]+, Y = %-?[0-9.]+, Z = (-?[0-9.]+)""}",,,,,,,,
+,"+{Input=accel_only_test_sec_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-accel_only_odr""}",,,,,,,,"Read accel only odr"
+,"+{pattern=""calculated odr: (-?[0-9.]+)Hz""}",,,,,,,,
+,"+{Input=accel_only_test_sec_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,

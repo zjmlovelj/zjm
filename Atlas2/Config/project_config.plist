@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>isDiagsTriageCheck</key>
+	<string>YES</string>
+	<key>EnableUSBCMD</key>
+	<string>io_control.set(bit39=1)</string>
+	<key>DisableUSBCMD</key>
+	<string>io_control.set(bit39=0)</string>
+	<key>USBFSTool</key>
+	<string>/usr/local/bin/usbfs</string>
+</dict>
+</plist>

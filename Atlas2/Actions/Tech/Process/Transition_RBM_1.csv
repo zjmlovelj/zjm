@@ -1,0 +1,20 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Parameters,,Location_ID,,,,,,,
+Tech/Common>detectKisUSBPort,"{subsubtestname=""Check-KIS_USB_Connected""}",,,,,,,,"check KIS USB connect or not"
+,"+{Commands=""ls /dev/cu.kis*""}",,,,,,,,
+,"+{Location_ID=Location_ID}",,,,,,,,
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{Timeout=""30""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/EnterEnv>enterEnv,"{subsubtestname=""Send-Enter_iBoot_CMD""}",,,,,,,,"catch key word to check if enter recoverymode"
+,"+{dutPlugin=""Kis_dut""}",,,,,,,,
+,"+{channelPlugin=""Kis_channelPlugin""}",,,,,,,,
+,"+{Commands=""iboot""}",,,,,,,,
+,"+{Timeout=""60""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/EnterEnv>enterEnv,"{subsubtestname=""Send-Enter_RBM_CMD""}",,,,,,,,"Enter RBM Mode"
+,"+{dutPlugin=""Kis_dut""}",,,,,,,,
+,"+{channelPlugin=""Kis_channelPlugin""}",,,,,,,,
+,"+{Commands=""rbm""}",,,,,,,,
+,"+{Timeout=""60""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,

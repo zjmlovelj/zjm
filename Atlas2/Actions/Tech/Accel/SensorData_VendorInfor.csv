@@ -1,0 +1,24 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Sensors_List_CMD""}",listsensors_resp,,,,,,,"Read sensor list"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{Timeout=""10""}",,,,,,,,
+,"+{Commands=""sensor --listsensors""}",,,,,,,,
+,"+{expect=""OK""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-accel_vendor""}",,,,,,,,"Read accel vendor"
+,"+{attribute=""Accel_Vendor""}",,,,,,,,
+,"+{pattern=""Name: accel%s+Description:%s+(%w+)%s+""}",,,,,,,,
+,"+{Input=listsensors_resp}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-Gyro_Vendor""}",,,,,,,,"Read gyro vendor"
+,"+{attribute=""Gyro_Vendor""}",,,,,,,,
+,"+{pattern=""Name: gyro%s+Description:%s+(%w+)%s+""}",,,,,,,,
+,"+{Input=listsensors_resp}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-Inertial_Type""}",,,,,,,,"Read inertial type"
+,"+{attribute=""Inertial_Type""}",,,,,,,,
+,"+{pattern=""Name: accel%s+Description:%s+([%s%w]+)%s+Accelerometer""}",,,,,,,,
+,"+{Input=listsensors_resp}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Returns,listsensors_resp,,,,,,,,

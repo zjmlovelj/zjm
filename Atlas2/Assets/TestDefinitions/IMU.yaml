@@ -1,0 +1,143 @@
+-   technology: IMU
+    coverage: SensorData_GyroNormal
+    testParameters: '*'
+    outputs:
+        accel_gyro_normal_test_resp:
+            lookup: [RunSensorData_GyroNormal, 1]
+        accel_gyro_test_resp:
+            lookup: [RunSensorData_GyroNormal, 2]
+    sequence:
+        actions:
+            - RunSensorData_GyroNormal:
+                filename: Tech/IMU/SensorData_GyroNormal.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+
+-   technology: IMU
+    coverage: SensorData_IDInfor
+    testParameters: '*'
+    inputs:
+        accel_gyro_normal_test_resp: 'find.output("IMU","SensorData_GyroNormal","","accel_gyro_normal_test_resp")'
+    sequence:
+        actions:
+            - RunSensorData_IDInfor:
+                filename: Tech/IMU/SensorData_IDInfor.csv
+                args:
+                    - lookup: [inputs, accel_gyro_normal_test_resp]
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+
+-   technology: IMU
+    coverage: SensorData_FS2000dps_ODR200HZ
+    testParameters: '*'
+    inputs:
+        accel_gyro_test_resp: 'find.output("IMU","SensorData_GyroNormal","","accel_gyro_test_resp")'
+    sequence:
+        actions:
+            - RunSensorData_FS2000dps_ODR200HZ:
+                filename: Tech/IMU/SensorData_FS2000dps_ODR200HZ.csv
+                args:
+                    - lookup: [inputs, accel_gyro_test_resp]
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+
+
+-   technology: IMU
+    coverage: SensorData_FS8g_ODR200HZ_Zup
+    testParameters: '*'
+    inputs:
+        accel_gyro_test_resp: 'find.output("IMU","SensorData_GyroNormal","","accel_gyro_test_resp")'
+    sequence:
+        actions:
+            - RunSensorData_FS8g_ODR200HZ_Zup:
+                filename: Tech/IMU/SensorData_FS8g_ODR200HZ_Zup.csv
+                args:
+                    - lookup: [inputs, accel_gyro_test_resp]
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand                    
+
+-   technology: IMU
+    coverage: AEMTools_Baseband_AEMTool_RC
+    testParameters: '*'
+    sequence:
+        actions:
+            - RunAEMTools_Baseband_AEMTool_RC:
+                filename: Tech/IMU/AEMTools_Baseband_AEMTool_RC.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+
+-   technology: IMU
+    coverage: AEMTools_Baseband_AEMTool_RC3V4
+    testParameters: '*'
+    sequence:
+        actions:
+            - RunAEMTools_Baseband_AEMTool_RC3V4:
+                filename: Tech/IMU/AEMTools_Baseband_AEMTool_RC3V4.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand                                       

@@ -1,0 +1,11 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Parameters,,MLB_Num,,,,,,,
+Tech/Compare>writeAndCompareInfo,"{subsubtestname=""Send-CFG_Write_CMD""}",,,,,,,,"compare write and read CFG"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{attribute=""MLB_CFG""}",,,,,,,,
+,"+{sfc_key=""mlb_cfg""}",,,,,,,,
+,"+{InnerCall=""YES""}",,,,,,,,
+,"+{MLB_Num=MLB_Num}",,,,,,,,
+,"+{type=""CFG""}",,,,,,,,
+,"+{expect=""Finish!""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,

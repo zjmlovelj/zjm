@@ -1,0 +1,26 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Smokey_Run_CMD""}",smokey_WDFU_resp,,,,,,,"Run WDFU Smokey command and parse the response"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{hangTimeout=""90""}",,,,,,,,
+,"+{Timeout=""1000""}",,,,,,,,
+,"+{Commands=""Smokey WDFU --run --clean DisplayBehavior=NoDisplay""}",,,,,,,,
+,"+{patterns=""dfu results:%s+(%S+)%s+=%s+(%S+)%s([%S+]?[%S+]?[%S+]?[%S+]?[%S+]?[%S+]?)%s+%[min,%s+max%]%s+=%s+%[([+-]?%S*),([+-]?%S*)%]%s+(%w*)%s+""}",,,,,,,,
+,"+{expect=""Passed""}",,,,,,,,
+,"+{NotDiagsTriage=""YES""}",,,,,,,,
+,"+{errorCheck=""NO""}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Compare-BBLib_Version""}",,,,,,,,"Compare BBLib version read and local "
+,"+{attribute=""BBLib_VERSION""}",,,,,,,,
+,"+{comparekey=""BBlib""}",,,,,,,,
+,"+{pattern=""%[BBLOG%]:%s+BBLib%s+(%S+)""}",,,,,,,,
+,"+{Input=smokey_WDFU_resp}",,,,,,,,
+,"+{Timeout=""20""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Disable_UART_CMD""}",,,,,,,,"disable uart"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{Commands=""consolesinkctrl --sink uart --dis""}",,,,,,,,
+,"+{Timeout=""10""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Returns,smokey_WDFU_resp,,,,,,,,

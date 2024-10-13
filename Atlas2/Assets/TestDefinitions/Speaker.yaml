@@ -1,0 +1,28 @@
+-   technology: Speaker
+    coverage: Reset
+    testParameters: '*'
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    sequence:
+        actions:
+            - RunReset:
+                filename: Tech/Speaker/Reset.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - Dut
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - ChannelPlugin
+                    - SFC
+                    - Regex
+                    - Utilities
+                    - DCSD
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand

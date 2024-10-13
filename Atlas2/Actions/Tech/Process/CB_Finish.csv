@@ -1,0 +1,9 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Tech/Process>finishCB,"{subsubtestname=""Finish_Process_Control""}",,,,,,,,"Finish_Process_Control"
+,"+{dutPluginName=""Dut""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-DFU_CB_Check""}",,,,,,,,"Check write DFU CB result"
+,"+{attribute=""DFU_CB_Check""}",,,,,,,,
+,"+{pattern=""0x00%s*Passed""}",,,,,,,,
+,"+{log_device=""uart""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,

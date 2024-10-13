@@ -1,0 +1,33 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Gyro_Init_CMD""}",accel_gyro_normal_test_resp,,,,,,,gyro init and read gyro info
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{Timeout=""10""}",,,,,,,,
+,"+{Commands=""sensor --sel gyro --init;wait 200;sensor --sel gyro --get""}",,,,,,,,
+,"+{expect=""OK""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Gyro_Conntest_CMD""}",,,,,,,,exectest gyro Conntest
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{Timeout=""10""}",,,,,,,,
+,"+{Commands=""wait 20;sensor --sel gyro --conntest;sensor --sel gyro --turnoff;wait 20""}",,,,,,,,
+,"+{expect=""PASS""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Gyro_Connectivity_CMD""}",,,,,,,,exectest gyro connectivity
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{targetindex=""5""}",,,,,,,,
+,"+{Timeout=""10""}",,,,,,,,
+,"+{Commands=""sensor --sel accel,gyro --init;wait 200;sensor --sel gyro --exectest selftest;sensor --sel accel,gyro --turnoff;wait 20""}",,,,,,,,
+,"+{expect=""OK""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Gyro_Selftest_CMD""}",accel_gyro_test_resp,,,,,,,exectest gyro selftest
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{targetindex=""7""}",,,,,,,,
+,"+{Timeout=""30""}",,,,,,,,
+,"+{Commands=""sensor --sel accel,gyro --init;wait 200;sensor --sel accel --set rate 200;sensor --sel gyro --set rate 200;sensor --sel accel --set dynamic_range 32;sensor --sel gyro --set dynamic_range 2000;sensor --sel accel,gyro --sample 500ms --stats;sensorreg -s gyro --dump;sensor --sel accel,gyro --turnoff""}",,,,,,,,
+,"+{expect=""OK""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Returns,accel_gyro_normal_test_resp,,,,,,,,
+,accel_gyro_test_resp,,,,,,,,

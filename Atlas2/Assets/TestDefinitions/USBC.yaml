@@ -1,0 +1,601 @@
+-   technology: USBC
+    coverage: OTPProgram
+    testParameters: '*'
+    inputs:
+        MLB_Num: 'find.output("Fixture","Initialize","","MLB_Num")'
+        Project: 'find.output("Fixture","SoftwareCheck","","Project")'
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    outputs:
+        Location_ID:
+            lookup: [RunOTPProgram, 1]
+        mlb_type:
+            lookup: [RunOTPProgram, 2]
+        CFG_type:
+            lookup: [RunOTPProgram, 3]
+        DUT_stage:
+            lookup: [RunOTPProgram, 4]
+        boardRev:
+            lookup: [RunOTPProgram, 5]
+        dut_cfg:
+            lookup: [RunOTPProgram, 6]
+        superBinaryFolder:
+            lookup: [RunOTPProgram, 7]
+        payloadFilepath:
+            lookup: [RunOTPProgram, 8]
+        deviceAddress:
+            lookup: [RunOTPProgram, 9]
+        Ace3LogPath:
+            lookup: [RunOTPProgram, 10]
+        Ace3_PREV:
+            lookup: [RunOTPProgram, 11]
+        SoC_CSEC:
+            lookup: [RunOTPProgram, 12]
+        matchingRelationship:
+            lookup: [RunOTPProgram, 13]
+        matchingRecord4CC:
+            lookup: [RunOTPProgram, 14]
+        dataI2CBus:
+            lookup: [RunOTPProgram, 15]
+        Ace3LUN:
+            lookup: [RunOTPProgram, 16]
+        SoC_CPRO:
+            lookup: [RunOTPProgram, 17]     
+        Ace3_CRC1_I2C:
+            lookup: [RunOTPProgram, 18]
+        Ace3_CRC2_I2C:
+            lookup: [RunOTPProgram, 19]
+        Ace3_CRC3_I2C:
+            lookup: [RunOTPProgram, 20]
+        Ace3_ECID:
+            lookup: [RunOTPProgram, 21]
+        isProgramming:
+            lookup: [RunOTPProgram, 22]
+        sfc_url:
+            lookup: [RunOTPProgram, 23]  
+    conditions:
+        mlb_type:
+            lookup: [RunOTPProgram, 2]         
+    sequence:
+        actions:
+            - RunOTPProgram:
+                filename: Tech/USBC/OTPProgram.csv
+                args:
+                    - lookup: [inputs, MLB_Num]
+                    - lookup: [inputs, Project]
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - SFC
+                    - Regex
+                    - FixturePlugin
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+
+
+-   technology: USBC
+    coverage: FWDL_ACEFlash_SPI
+    testParameters: '*'
+    inputs:
+        Ace3_PREV: 'find.output("USBC","OTPProgram","","Ace3_PREV")'
+        deviceAddress: 'find.output("USBC","OTPProgram","","deviceAddress")'
+        superBinaryFolder: 'find.output("USBC","OTPProgram","","superBinaryFolder")'
+        SoC_CSEC: 'find.output("USBC","OTPProgram","","SoC_CSEC")'
+        Project: 'find.output("Fixture","SoftwareCheck","","Project")'
+        DUT_stage: 'find.output("USBC","OTPProgram","","DUT_stage")'
+        Ace3LUN: 'find.output("USBC","OTPProgram","","Ace3LUN")'
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    outputs:
+        hostMD5:
+            lookup: [RunFWDL_ACEFlash_SPI, 1]
+        binSize:
+            lookup: [RunFWDL_ACEFlash_SPI, 2]
+    sequence:
+        actions:
+            - RunFWDL_ACEFlash_SPI:
+                filename: Tech/USBC/FWDL_ACEFlash_SPI.csv
+                args:
+                    - lookup: [inputs, Ace3_PREV]
+                    - lookup: [inputs, deviceAddress]
+                    - lookup: [inputs, superBinaryFolder]
+                    - lookup: [inputs, SoC_CSEC]
+                    - lookup: [inputs, Project]
+                    - lookup: [inputs, DUT_stage]
+                    - lookup: [inputs, Ace3LUN]
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - SFC
+                    - Regex
+                    - FixturePlugin
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+                    - Utilities
+
+                    
+-   technology: USBC
+    coverage: ForceDFU_VDM_Finger
+    testParameters: '*'
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    sequence:
+        actions:
+            - RunForceDFU_VDM_Finger:
+                filename: Tech/USBC/ForceDFU_VDM_Finger.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - SFC
+                    - Regex
+                    - FixturePlugin
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin 
+
+-   technology: USBC
+    coverage: FWDL_ACE
+    testParameters: '*'
+    inputs:
+        CFG_type: 'find.output("USBC","OTPProgram","","CFG_type")'
+    outputs:
+        ace_ret:
+            lookup: [RunFWDL_ACE, 1]
+        ace_resp:
+            lookup: [RunFWDL_ACE, 2]
+    sequence:
+        actions:
+            - RunFWDL_ACE:
+                filename: Tech/USBC/FWDL_ACE.csv
+                args:
+                    - lookup: [inputs, CFG_type]
+                plugins:
+                    - Dut
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - ChannelPlugin
+                    - FixturePlugin
+                    - InteractiveView
+                    - SFC
+                    - Regex
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+
+
+
+
+-   technology: USBC
+    coverage: OTPCheck_CRC
+    testParameters: '*'
+    inputs:
+        Ace3_CRC1_I2C: 'find.output("USBC","OTPProgram","","Ace3_CRC1_I2C")'
+        Ace3_CRC2_I2C: 'find.output("USBC","OTPProgram","","Ace3_CRC2_I2C")'
+        Ace3_CRC3_I2C: 'find.output("USBC","OTPProgram","","Ace3_CRC3_I2C")'
+        Ace3_ECID: 'find.output("USBC","OTPProgram","","Ace3_ECID")'
+        Ace3_UUID: 'find.output("USBC","OTPProgram","","Ace3_UUID")'
+    sequence:
+        actions:
+            - RunOTPCheck_CRC:
+                filename: Tech/USBC/OTPCheck_CRC.csv
+                args:
+                    - lookup: [inputs, Ace3_CRC1_I2C]
+                    - lookup: [inputs, Ace3_CRC2_I2C]
+                    - lookup: [inputs, Ace3_CRC3_I2C]
+                    - lookup: [inputs, Ace3_ECID]
+                    - lookup: [inputs, Ace3_UUID]
+                plugins:
+                    - Dut
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - ChannelPlugin
+                    - FixturePlugin
+                    - InteractiveView
+                    - SFC
+                    - Regex
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+
+-   technology: USBC
+    coverage: Info_ACE3_FWVersion
+    testParameters: '*'
+    inputs:
+        deviceAddress: 'find.output("USBC","OTPProgram","","deviceAddress")'
+        Ace3LogPath: 'find.output("USBC","OTPProgram","","Ace3LogPath")'
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    outputs:
+        Ace3FWVersion:
+            lookup: [RunInfo_ACE3_FWVersion, 1]
+    sequence:
+        actions:
+            - RunInfo_ACE3_FWVersion:
+                filename: Tech/USBC/Info_ACE3_FWVersion.csv
+                args:
+                    - lookup: [inputs, deviceAddress]
+                    - lookup: [inputs, Ace3LogPath]
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - SFC
+                    - Regex
+                    - FixturePlugin
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+
+-   technology: USBC
+    coverage: Info_RT13
+    testParameters: '*'
+    outputs:
+        rt13_ret:
+            lookup: [RunInfo_RT13, 1]
+    sequence:
+        actions:
+            - RunInfo_RT13:
+                filename: Tech/USBC/Info_RT13.csv
+                plugins:
+                    - Dut
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - ChannelPlugin
+                    - FixturePlugin
+                    - InteractiveView
+                    - SFC
+                    - Regex
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+
+
+
+-   technology: USBC
+    coverage: LeakageCheck
+    testParameters: 'VBUS_To_PP5V0'
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    outputs:
+        ace_result:
+            lookup: [RunLeakageCheck_VBUS_To_PP5V0, 1]
+    sequence:
+        actions:
+            - RunLeakageCheck_VBUS_To_PP5V0:
+                filename: Tech/USBC/LeakageCheck_VBUS_To_PP5V0.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - SFC
+                    - Regex
+                    - FixturePlugin
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+                    - Mutex
+
+-   technology: USBC
+    coverage: LeakageCheck
+    testParameters: 'VBUS_To_PPHV'
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    outputs:
+        ace_result:
+            lookup: [RunLeakageCheck_VBUS_To_PPHV, 1]
+    sequence:
+        actions:
+            - RunLeakageCheck_VBUS_To_PPHV:
+                filename: Tech/USBC/LeakageCheck_VBUS_To_PPHV.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - SFC
+                    - Regex
+                    - FixturePlugin
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+                    - Mutex                   
+
+-   technology: USBC
+    coverage: LeakageCheck
+    testParameters: 'VIN_3V3_To_VBUS'
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    outputs:
+        PP3V3_S2_ACE_Result:
+            lookup: [RunLeakageCheck_VIN_3V3_To_VBUS, 1]
+        ace_result:
+            lookup: [RunLeakageCheck_VIN_3V3_To_VBUS, 2]
+    sequence:
+        actions:
+            - RunLeakageCheck_VIN_3V3_To_VBUS:
+                filename: Tech/USBC/LeakageCheck_VIN_3V3_To_VBUS.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - SFC
+                    - Regex
+                    - FixturePlugin
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+                    - Mutex
+
+
+-   technology: USBC
+    coverage: LeakageCheck
+    testParameters: 'VIN_LV_To_VOUT_LV'
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    outputs:
+        PP1V8_S2_ACE_Result:
+            lookup: [RunLeakageCheck_VIN_LV_To_VOUT_LV, 1]
+        ace_result:
+            lookup: [RunLeakageCheck_VIN_LV_To_VOUT_LV, 2]
+    sequence:
+        actions:
+            - RunLeakageCheck_VIN_LV_To_VOUT_LV:
+                filename: Tech/USBC/LeakageCheck_VIN_LV_To_VOUT_LV.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - SFC
+                    - Regex
+                    - FixturePlugin
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+                    - Mutex
+
+
+-   technology: USBC
+    coverage: LeakageCheck
+    testParameters: 'CC1-2_To_PPCABLE-PP5V0'
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+        PRODUCTION_SOC: 'conditions["PRODUCTION_SOC"]'
+    outputs:
+        ace_result:
+            lookup: [RunLeakageCheck_CC1-2_To_PPCABLE-PP5V0, 1]
+    sequence:
+        actions:
+            - RunLeakageCheck_CC1-2_To_PPCABLE-PP5V0:
+                filename: Tech/USBC/LeakageCheck_CC1-2_To_PPCABLE-PP5V0.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                    - lookup: [inputs, PRODUCTION_SOC]
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - SFC
+                    - Regex
+                    - FixturePlugin
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+                    - Mutex
+
+-   technology: USBC
+    coverage: LeakageCheck
+    testParameters: 'PP5V0_To_VBUS'
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+        production_mode: 'find.output("SOC","Info_1","","production_mode")' 
+    outputs:
+        ace_result:
+            lookup: [RunLeakageCheck_PP5V0_To_VBUS, 1]
+    sequence:
+        actions:
+            - RunLeakageCheck_PP5V0_To_VBUS:
+                filename: Tech/USBC/LeakageCheck_PP5V0_To_VBUS.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                    - lookup: [inputs, production_mode]
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - SFC
+                    - Regex
+                    - FixturePlugin
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+                    - Mutex
+
+-   technology: USBC
+    coverage: LeakageCheck
+    testParameters: 'PPHV_To_VBUS'
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    outputs:
+        ace_result:
+            lookup: [RunLeakageCheck_PPHV_To_VBUS, 1]
+    sequence:
+        actions:
+            - RunLeakageCheck_PPHV_To_VBUS:
+                filename: Tech/USBC/LeakageCheck_PPHV_To_VBUS.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - SFC
+                    - Regex
+                    - FixturePlugin
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+                    - Mutex                      
+
+-   technology: USBC
+    coverage: Info_AceTRNG
+    testParameters: '*'
+    outputs:
+        acetngr:
+            lookup: [RunInfo_AceTRNG, 1]
+    sequence:
+        actions:
+            - RunInfo_AceTRNG:
+                filename: Tech/USBC/Info_AceTRNG.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - SFC
+                    - Regex
+                    - FixturePlugin
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+
+-   technology: USBC
+    coverage: ForceDFU_ADFU
+    testParameters: '*'
+    sequence:
+        actions:
+            - RunForceDFU_ADFU:
+                filename: Tech/USBC/ForceDFU_ADFU.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - FileOperation
+                    - FixturePlugin
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+
+
+                    
+-   technology: USBC
+    coverage: PresenceCheck
+    testParameters: '*'
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+        ACE3_Responsive_Status_1: 'conditions["ACE3_Responsive_Status_1"]'
+        ACE3_Responsive_Status_2: 'conditions["ACE3_Responsive_Status_2"]'
+        ACE3_Responsive_Status_3: 'conditions["ACE3_Responsive_Status_3"]'
+    outputs:
+        delayTimes:
+            lookup: [RunPresenceCheck, 1]
+        loopCount:
+            lookup: [RunPresenceCheck, 2]
+        ACE3_Responsive_Status_1:
+            lookup: [RunPresenceCheck, 3]
+        ACE3_Responsive_Status_2:
+            lookup: [RunPresenceCheck, 4]
+        ACE3_Responsive_Status_3:
+            lookup: [RunPresenceCheck, 5]       
+    sequence:
+        actions:
+            - RunPresenceCheck:
+                filename: Tech/USBC/PresenceCheck.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                    - lookup: [inputs, ACE3_Responsive_Status_1]
+                    - lookup: [inputs, ACE3_Responsive_Status_2]
+                    - lookup: [inputs, ACE3_Responsive_Status_3]
+                plugins:
+                    - Dut
+                    - ChannelPlugin
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - FixturePlugin
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin 
+                    - InteractiveView 
+                                     
+-   technology: USBC
+    coverage: Info_ECID
+    testParameters: '*'
+    outputs:
+        acetngr:
+            lookup: [RunInfo_ECID, 1]
+    sequence:
+        actions:
+            - RunInfo_ECID:
+                filename: Tech/USBC/Info_ECID.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - SFC
+                    - Regex
+                    - FixturePlugin
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+

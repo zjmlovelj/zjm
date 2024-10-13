@@ -1,0 +1,7 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Script_Run_CMD""}",,,,,,,,"NAND Debug Test Begin"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{Timeout=""15""}",,,,,,,,
+,"+{Commands=""upy nandfs:\AppleInternal\Diags\Python\lib\test\nand.py -d""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,

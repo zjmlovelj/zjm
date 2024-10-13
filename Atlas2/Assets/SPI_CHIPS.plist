@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>0X13,0XEF,0X4014</key>
+	<string>w25q128</string>
+	<key>0X14,0XC2,0X2814</key>
+	<string>mx25v16</string>
+	<key>0X14,0XC2,0X2314</key>
+	<string>mx25v16</string>
+	<key>0X13,0XC8,0X4014</key>
+	<string>gd25xxx</string>
+	<key>0X13,0XC8,0X6014</key>
+	<string>gd25xxx</string>
+	<key>0X45,0X1F,0X4508</key>
+	<string>at25xxx</string>
+</dict>
+</plist>

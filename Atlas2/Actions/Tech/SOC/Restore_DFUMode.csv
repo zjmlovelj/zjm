@@ -1,0 +1,29 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Parameters,,slotNum,,,,,,,
+Tech/DFUCommon>getLocationID,"{subsubtestname=""Get-USB_locationID""}",Location_ID,,,,,,,"restore_dfu_mode_check and get the usb location id"
+,"+{Commands=""system_profiler SPUSBDataType""}",,,,,,,,
+,"+{pattern=""Debug USB:[\s\S]+?Location ID: 0x0?(\S+)""}",,,,,,,,
+,"+{flagIndex=""-2""}",,,,,,,,
+,"+{Timeout=""10""}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>delay,"{subsubtestname=""Delay-1000ms""}",,,,,,,,"delay 1000ms"
+,"+{delay=""1000""}",,,,,,,,
+,"+{unit=""ms""}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>detectKisUSBPort,"{subsubtestname=""Check-KIS_USB_Connected""}",,,,,,,,"check KIS USB connect or not"
+,"+{Commands=""ls /dev/cu.kis*""}",,,,,,,,
+,"+{Location_ID=Location_ID}",,,,,,,,
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{Timeout=""30""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Fixture>sendFixtureCommand,"{subsubtestname=""Set-VBATT_OCP-6A""}",,,,,,,,"Set VBATT OCP to 6A"
+,"+{Commands=""relay_switch""}",,,,,,,,
+,"+{args=""VBATT_OCP_6A;SET""}",,,,,,,,
+,"+{slotNum=slotNum}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Fixture>sendFixtureCommand,"{subsubtestname=""Disconnect-GPIO_FORCE_DFU-1V2""}",,,,,,,,"disconnect GPIO FORCE DFU"
+,"+{Commands=""relay_switch""}",,,,,,,,
+,"+{args=""GPIO_FORCE_DFU;disconnect""}",,,,,,,,
+,"+{slotNum=slotNum}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Returns,Location_ID,,,,,,,,

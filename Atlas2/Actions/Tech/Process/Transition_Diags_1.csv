@@ -1,0 +1,30 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Parameters,,Location_ID,,,,,,,
+Tech/Common>delay,"{subsubtestname=""Delay-1000ms""}",,,,,,,,"delay 1000ms"
+,"+{delay=""1000""}",,,,,,,,
+,"+{unit=""ms""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>detectKisUSBPort,"{subsubtestname=""Check-KIS_USB_Connected""}",,,,,,,,"check KIS USB connect or not"
+,"+{Commands=""ls /dev/cu.kis*""}",,,,,,,,
+,"+{Location_ID=Location_ID}",,,,,,,,
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{Timeout=""30""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/EnterEnv>enterEnv,"{subsubtestname=""Read-Iboot_State""}",,,,,,,,"catch key word to check if enter recoverymode"
+,"+{dutPlugin=""Kis_dut""}",,,,,,,,
+,"+{channelPlugin=""Kis_channelPlugin""}",,,,,,,,
+,"+{Commands=""iboot""}",,,,,,,,
+,"+{Timeout=""60""}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/EnterEnv>enterEnv,"{subsubtestname=""Send-Enter_Diag_CMD""}",,,,,,,,"enter diags mode"
+,"+{dutPlugin=""Kis_dut""}",,,,,,,,
+,"+{channelPlugin=""Kis_channelPlugin""}",,,,,,,,
+,"+{Commands=""diags""}",,,,,,,,
+,"+{Timeout=""60""}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Cancel_Uart_CMD""}",,,,,,,,"cancel uart out put"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{Commands=""consolesinkctrl --sink uart --dis""}",,,,,,,,
+,"+{Timeout=""10""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,

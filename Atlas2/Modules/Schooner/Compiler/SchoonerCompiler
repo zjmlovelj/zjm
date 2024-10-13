@@ -1,0 +1,3 @@
+#!/bin/sh
+
+AtlasLua ~/Library/Atlas2/Modules/Schooner/Compiler/BuildSchoonerSequence.lua $@

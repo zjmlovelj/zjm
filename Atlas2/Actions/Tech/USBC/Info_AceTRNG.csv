@@ -1,0 +1,23 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Ace_TRNG_CMD""}",acetngr,,,,,,,"Run VerifyAceTRNG"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{expect=""Passed""}",,,,,,,,
+,"+{hangTimeout=""100""}",,,,,,,,
+,"+{Timeout=""100""}",,,,,,,,
+,"+{Commands=""smokey --run VerifyAceTRNG DisplayBehavior=NoDisplay ResultsBehavior=NoFile LogBehavior=ConsoleOnly ""SerialNumberSource='MLB#'""""}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Get-BNCt""}",,,,,,,,"check BNCt"
+,"+{pattern=""%[ATC0%]%s+BNCt:%s+(.-)%s*%[ATC0%] trng_status""}",,,,,,,,
+,"+{attribute=""BNCt""}",,,,,,,,
+,"+{Input=acetngr}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Get-Trng_Status""}",,,,,,,,"check trng_status"
+,"+{pattern=""trng_status%:%s+(%w+)%s+""}",,,,,,,,
+,"+{Input=acetngr}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Get-SHA256_Match""}",,,,,,,,"check SHA256_match"
+,"+{pattern=""SHA256_match:%s+(%w+)%s+""}",,,,,,,,
+,"+{Input=acetngr}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Returns,acetngr,,,,,,,,

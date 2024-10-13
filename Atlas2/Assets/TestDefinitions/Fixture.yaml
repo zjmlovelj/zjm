@@ -1,0 +1,229 @@
+-   technology: Fixture
+    coverage: Channel
+    testParameters: '*'
+    outputs:
+        slotNum:
+            lookup: [RunChannel, 1]
+    sequence:
+        actions:
+            - RunChannel:
+                filename: Tech/Fixture/Channel.csv
+
+-   technology: Fixture
+    coverage: Initialize
+    testParameters: '*'
+    outputs:
+        SITE:
+            lookup: [RunInitialize, 1]   
+        MLB_Num:
+            lookup: [RunInitialize, 2]
+        otp_program_words_flag:
+            lookup: [RunInitialize, 3]
+        otp_customer_Data_size:
+            lookup: [RunInitialize, 4]
+        otp_program_keydata_Size:
+            lookup: [RunInitialize, 5]
+        otp_key_Data_flag:
+            lookup: [RunInitialize, 6]
+        otp_key_Data_value:
+            lookup: [RunInitialize, 7]
+        production_mode:
+            lookup: [RunInitialize, 8]
+        otp_check_crc_flag:
+            lookup: [RunInitialize, 9]
+        CFG_type:
+            lookup: [RunInitialize, 10]
+        Project:
+            lookup: [RunInitialize, 11]       
+        ACE3_Responsive_Status_1:
+            lookup: [RunInitialize, 12]
+        ACE3_Responsive_Status_2:
+            lookup: [RunInitialize, 13]
+        ACE3_Responsive_Status_3:
+            lookup: [RunInitialize, 14]
+        PRODUCTION_SOC:
+            lookup: [RunInitialize, 15]
+        Production_Mode_SFC:
+            lookup: [RunInitialize, 16]
+        otp_program_flag:
+            lookup: [RunInitialize, 17]
+        accel_selftest_result:
+            lookup: [RunInitialize, 18]   
+        HAS_TWO_STORAGE_DEVICE:
+            lookup: [RunInitialize, 19]  
+        MEMORY_SIZE:
+            lookup: [RunInitialize, 20]  
+    conditions:
+        SITE:
+            lookup: [RunInitialize, 1]
+        ACE3_Responsive_Status_1:
+            lookup: [RunInitialize, 12]
+        ACE3_Responsive_Status_2:
+            lookup: [RunInitialize, 13]
+        ACE3_Responsive_Status_3:
+            lookup: [RunInitialize, 14]
+        PRODUCTION_SOC:
+            lookup: [RunInitialize, 15]  
+        accel_selftest_result:
+            lookup: [RunInitialize, 18]                     
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    sequence:
+        actions:
+            - RunInitialize:
+                filename: Tech/Init/Init.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+                    - StationInfo
+
+-   technology: Fixture
+    coverage: SoftwareCheck
+    testParameters: '*'
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    outputs:
+        user:
+            lookup: [RunSoftwareCheck, 1]
+        Project:
+            lookup: [RunSoftwareCheck, 2]
+    conditions:        
+        user:
+            lookup: [RunSoftwareCheck, 1]
+        Project:
+            lookup: [RunSoftwareCheck, 2]            
+    sequence:
+        actions:
+            - RunSoftwareCheck:
+                filename: Tech/Fixture/SoftwareCheck.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - FixturePlugin
+                    - StationInfo
+                    
+
+-   technology: Fixture
+    coverage: HardwareCheck
+    testParameters: '*'
+    outputs:
+        fixtureID:
+            lookup: [RunHardwareCheck, 1]
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    sequence:
+        actions:
+            - RunHardwareCheck:
+                filename: Tech/Fixture/HardwareCheck.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - FixturePlugin
+                    - StationInfo                    
+
+                    
+-   technology: Fixture
+    coverage: GeneralAction
+    testParameters: 'Reset_Initial'
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    sequence:
+        actions:
+            - RunGeneralAction_Reset_Initial:
+                filename: Tech/Fixture/GeneralAction_Reset_Initial.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - FixturePlugin
+
+-   technology: Fixture
+    coverage: GeneralAction
+    testParameters: 'Led_Inprogress_On'
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    sequence:
+        actions:
+            - RunGeneralAction_Led_Inprogress_On:
+                filename: Tech/Fixture/GeneralAction_Led_Inprogress_On.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - FixturePlugin
+
+                    
+-   technology: Fixture
+    coverage: GeneralAction_4
+    testParameters: '*'
+    inputs:
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+    sequence:
+        actions:
+            - RunGeneralAction_4:
+                filename: Tech/Fixture/GeneralAction_Reset_Initial.csv
+                args:
+                    - lookup: [inputs, slotNum]
+                plugins:
+                    - FixturePlugin
+                    - StationInfo
+                    - RunShellCommand
+
+
+-   technology: Fixture
+    coverage: GeneralAction_6
+    testParameters: '*'
+    inputs:
+        MLB_Num: 'find.output("Fixture","Initialize","","MLB_Num")'
+        slotNum: 'find.output("Fixture","Channel","","slotNum")'
+        testfail: 'conditions["testfail"]'
+    sequence:
+        actions:
+            - RunGeneralAction_6:
+                filename: Tech/Fixture/GeneralAction.csv
+                args:
+                    - lookup: [inputs, MLB_Num]
+                    - lookup: [inputs, slotNum]
+                    - lookup: [inputs, testfail]
+                plugins:
+                    - FixturePlugin
+                    - StationInfo
+                    - RunShellCommand
+
+
+-   technology: Fixture
+    coverage: UOPCheck_Poison
+    testParameters: '*'
+    inputs:
+        MLB_Num: 'find.output("Fixture","Initialize","","MLB_Num")'
+        fixtureID: 'find.output("Fixture","HardwareCheck","","fixtureID")'
+    sequence:
+        actions:
+            - RunUOPCheck_Poison:
+                filename: Tech/Fixture/UOPCheck_Poison.csv
+                args:
+                    - lookup: [inputs, MLB_Num]
+                    - lookup: [inputs, fixtureID]
+                plugins:
+                    - StationInfo
+                    - RunShellCommand
+                    - InteractiveView
+
+-   technology: Fixture
+    coverage: GeneralAction_Flow_Log
+    testParameters: '*'
+    inputs:
+        MLB_Num: 'find.output("Fixture","Initialize","","MLB_Num")'
+    sequence:
+        actions:
+            - RunGeneralAction_Flow_Log:
+                filename: Tech/Fixture/GeneralAction_Flow_Log.csv
+                args:
+                    - lookup: [inputs, MLB_Num]
+                plugins:
+                    - StationInfo
+                    - RunShellCommand
+
+
+                                        

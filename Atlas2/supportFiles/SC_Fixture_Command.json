@@ -1,0 +1,1017 @@
+{
+  "DylibVersion" : "Lib_MIX8.2_v24.08.21",
+  "vender" : "Suncode",
+  "IBAT_OCP_Fault_Flag" : "io_control.get(bit10)",
+  "VBAT_OVP_Fault_Flag" : "io_control.get(bit11)",
+  "VBAT_UVP_Fault_Flag" : "io_control.get(bit12)",
+  "VBUS_OVP_Fault_Flag" : "io_control.get(bit13)",
+  "VBUS_OCP_Fault_Flag" : "io_control.get(bit14)",
+  "VBUS_UVP_Fault_Flag" : "io_control.get(bit15)",
+  "PPVCCMAIN_UVP_Fault_Flag" : "io_control.get(bit16)",
+  "Safety_Trigger_Fault_Flag" : "ocp_status.get_level()",
+
+  "Fixture_Slots" : "4",
+
+  "Fixture_UUT_Detect" : "uut_detect.read_Volt",
+  "Fixture_Status" : "fixturecontrol.get_fixture_status()",
+  "serial_number" : "eeprom.read_string(0,19)",
+  "get_safety_status" : "safety.get_all_safety_status()",
+  "get_xavier_serial_number": "xavier_sc.read_serial_number()",
+
+  "Fixture_Fan_Speed_Set" : "fan.speed_set",
+  "Fixture_Fan_Speed_Get" : "fan.speed_get",
+  "Fixture_Fan_Speed_Set_IO" : "io_control.set(bit29=1)",
+  "Fixture_Fan_Speed_Off_IO" : "io_control.set(bit29=0)",
+  
+  
+  "power_led_red" : "io_control.set(bit49=0;bit50=1;bit51=1)",
+  "power_led_green" : "io_control.set(bit49=1;bit50=0;bit51=1)",
+  "power_led_blue" : "io_control.set(bit49=1;bit50=1;bit51=0)",
+  "power_led_off" : "io_control.set(bit49=1;bit50=1;bit51=1)",
+
+  "uut1_led_red" : "io_control.set(bit52=0;bit53=1;bit54=1)",
+  "uut1_led_green" : "io_control.set(bit52=1;bit53=0;bit54=1)",
+  "uut1_led_blue" : "io_control.set(bit52=1;bit53=1;bit54=0)",
+  "uut1_led_off" : "io_control.set(bit52=1;bit53=1;bit54=1)",
+
+  "uut2_led_red" : "io_control.set(bit55=0;bit56=1;bit57=1)",
+  "uut2_led_green" : "io_control.set(bit55=1;bit56=0;bit57=1)",
+  "uut2_led_blue" : "io_control.set(bit55=1;bit56=1;bit57=0)",
+  "uut2_led_off" : "io_control.set(bit55=1;bit56=1;bit57=1)",
+
+  "uut3_led_red" : "io_control.set(bit65=0;bit66=1;bit67=1)",
+  "uut3_led_green" : "io_control.set(bit65=1;bit66=0;bit67=1)",
+  "uut3_led_blue" : "io_control.set(bit65=1;bit66=1;bit67=0)",
+  "uut3_led_off" : "io_control.set(bit65=1;bit66=1;bit67=1)",
+
+  "uut4_led_red" : "io_control.set(bit68=0;bit69=1;bit70=1)",
+  "uut4_led_green" : "io_control.set(bit68=1;bit69=0;bit70=1)",
+  "uut4_led_blue" : "io_control.set(bit68=1;bit69=1;bit70=0)",
+  "uut4_led_off" : "io_control.set(bit68=1;bit69=1;bit70=1)",
+
+  
+  "Fixture_Open" : [
+    "fixturecontrol.release()"
+  ],
+  "Fixture_Close" : [
+    "fixturecontrol.press()"
+  ],
+  "Fixture_Control_Port" : {
+    "UUT0" : "169.254.1.32:7801",
+    "UUT1" : "169.254.1.32:7802",
+    "UUT2" : "169.254.1.32:7803",
+    "UUT3" : "169.254.1.32:7804"
+  },
+  
+  "Fixture_HW_Log" : {
+    "UUT1" : "/Users/gdlocal/Library/Logs/Atlas/active/group1-slot1/user/fixture.log",
+    "UUT2" : "/Users/gdlocal/Library/Logs/Atlas/active/group1-slot2/user/fixture.log",
+    "UUT3" : "/Users/gdlocal/Library/Logs/Atlas/active/group1-slot3/user/fixture.log",
+    "UUT4" : "/Users/gdlocal/Library/Logs/Atlas/active/group1-slot4/user/fixture.log",
+    "default" : "/Users/gdlocal/Library/Logs/Atlas/active/fixtureCommon.log"
+  },
+
+  "VBATT_UVP_0V8" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(2,800)"
+    ]
+  },
+
+  "BATT_TO_0V" : {
+    "ON" : [
+      "io_control.set(bit7=0;bit9=0)",
+      "delay:0.3",
+      "io_control.set(bit40=0)",
+      "batt.volt_set(0)",
+      "delay:0.03",
+      "io_control.set(bit30=1)",
+      "delay:0.3"
+    ]
+  }, 
+
+  "VBATT_UVP_3V" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(2,3000)"
+    ]
+  },
+
+  "VBATT_UVP_3V6" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(2,3600)"
+    ]
+  },
+
+  "GPIO_FORCE_DFU" : {
+    "connect" : [
+      "io_control.set(bit32=1)",
+      "delay:0.3"
+    ],
+    "disconnect" : [
+      "io_control.set(bit32=0)"
+    ]
+  },
+
+  "GPIO_1V2_ACE2RT13_FORCE_DFU" : {
+    "connect" : [
+      "io_control.set(bit36=1)"
+    ],
+    "OFF" : [
+      "io_control.set(bit36=0)"
+    ],
+    "ON" : [
+      "io_control.set(bit36=1)"
+    ],
+    "disconnect" : [
+      "io_control.set(bit36=0)"
+    ]
+  },
+
+  "ACE_TO_PARROT_RESET_L" : {
+    "connect" : [
+      "io_control.set(bit35=1)",
+      "delay:0.3"
+    ],
+    "disconnect" : [
+      "io_control.set(bit35=0)"
+    ]
+  },
+
+  "GPIO_Ace2SOC_Dock_Connect" : {
+    "connect" : [
+      "io_control.set(bit27=1)",
+      "delay:0.3"
+    ],
+    "disconnect" : [
+      "io_control.set(bit27=0)"
+    ]
+  },
+
+  "USB_SOC" : {
+    "connect" : [
+      "io_control.set(bit39=1)"
+    ],
+    "disconnect" : [
+      "io_control.set(bit39=0)"
+    ]
+  },
+
+  "USB_Kis" : {
+    "connect" : [
+      "io_control.set(bit46=1)"
+    ],
+    "disconnect" : [
+      "io_control.set(bit46=0)"
+    ]
+  },
+
+  "USB_TOP" : {
+    "connect" : [
+      "io_control.set(bit99=1;bit98=0)"
+    ],
+    "disconnect" : [
+      "io_control.set(bit99=0;bit98=0)"
+    ]
+  },
+
+  "USB_BOT" : {
+    "connect" : [
+      "io_control.set(bit101=1;bit100=0)"
+    ],
+    "disconnect" : [
+      "io_control.set(bit101=0;bit100=0)"
+    ]
+  },
+
+  "UART_TX" : {
+    "connect" : [
+      "io_control.set(bit34=1)"
+    ],
+    "disconnect" : [
+      "io_control.set(bit34=0)"
+    ]
+  },
+
+  "ace_hrest" : {
+    "connect" : [
+      "io_control.set(bit18=1)"
+    ],
+    "disconnect" : [
+      "io_control.set(bit18=0)"
+    ]
+  },
+
+  "ON_OFF_Button_press" : {
+    "SET":[
+    "io_control.set(bit38=1)",
+    "delay:0.5",
+    "io_control.set(bit38=0)",
+    "delay:0.2"
+    ]
+  },
+
+  "VOL_UP_BUTTON_PRES" : {
+    "connect" : [
+      "io_control.set(bit5=1)"
+    ],
+    "disconnect" : [
+      "io_control.set(bit5=0)"
+    ]
+  },
+
+  "VOL_DOWN_BUTTON_PRES" : {
+    "connect" : [
+      "io_control.set(bit6=1)"
+    ],
+    "disconnect" : [
+      "io_control.set(bit6=0)"
+    ]
+  },
+
+  "GPIO_ACE2BOOST_EN" : {
+    "connect" : [
+      "io_control.set(bit37=1)"
+    ],
+    "disconnect" : [
+      "io_control.set(bit37=0)"
+    ]
+  },
+
+  "ACE_FORCE_DFU_BTN" : {
+    "connect" : [
+      "io_control.set(bit36=1)"
+    ],
+    "disconnect" : [
+      "io_control.set(bit36=0)"
+    ]
+  },
+
+  "PD_C_CC1_TO_ACE_CC2" : {
+    "connect" : [
+      "io_control.set(bit103=1)"
+    ],
+    "disconnect" : [
+      "io_control.set(bit103=0)"
+    ]
+  },
+
+  "PD_C_CC1_TO_5K1" : {
+    "connect" : [
+      "io_control.set(bit33=1)"
+    ],
+    "disconnect" : [
+      "io_control.set(bit33=0)"
+    ]
+  },
+
+  "ACE3I2C" : {
+    "connect" : [
+      "io_control.set(bit48=1)",
+      "delay:0.5"
+    ],
+    "disconnect" : [
+      "io_control.set(bit48=0)",
+      "delay:0.5"
+    ]
+  },
+
+  "VBATT_UVP_2V" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(2,2000)"
+    ]
+  },
+
+  "VBUS_UVP_CTRL" : {
+    "OFF" : [
+      "io_control.set(bit8=0)",
+      "delay:0.05"
+    ],
+    "ON" : [
+      "io_control.set(bit8=1)"
+    ]
+  },
+
+  "VBATT_UVP_CTRL" : {
+    "OFF" : [
+      "io_control.set(bit7=0)",
+      "delay:0.05"
+    ],
+    "ON" : [
+      "io_control.set(bit7=1)"
+    ]
+  },
+  
+  "VCCMAIN_UVP_CTRL" : {
+    "connect" : [
+      "io_control.set(bit9=1)"
+    ],
+    "OFF" : [
+      "io_control.set(bit9=0)",
+      "delay:0.05"
+    ],
+    "ON" : [
+      "io_control.set(bit9=1)"
+    ],
+    "disconnect" : [
+      "io_control.set(bit9=0)",
+      "delay:0.05"
+    ]
+  },
+
+  "PPVBUS_PROT" : [
+    "adc.read_volt(CH7)",
+    "delay:0.03"
+  ],
+  "PPVBAT" : [
+    "adc.read_volt(CH0)",
+    "delay:0.03"
+  ],
+  "PPVBUS" : [
+    "adc.read_volt(CH1)",
+    "delay:0.03"
+  ],
+  "IBAT" : [
+    "adc.read_volt(CH3)",
+    "delay:0.03"
+  ],
+
+   "FORCE_DFU_1V2" : [
+    "ads.read_volt(CH0)",
+    "delay:0.03"
+  ],
+
+  "SOC_TO_ACE_DFU_STATUS" : [
+    "ads.read_volt(CH1)",
+    "delay:0.03"
+  ],
+  
+  "ACE_CC1" : [
+    "ads.read_volt(CH3)",
+    "delay:0.03"
+  ],
+
+  "ACE_CC2" : [
+    "ads.read_volt(CH4)",
+    "delay:0.03"
+  ],
+
+
+  "VBATT_OVP_4V6" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(3,4600)"
+    ]
+  },
+
+  "ppvcc_high_discharge" : {
+    "connect" : [
+      "io_control.set(bit44=1)"
+    ],
+    "disconnect" : [
+      "io_control.set(bit44=0)"
+    ]
+  },
+
+  "VBUS_UVP_NORMAL" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(5,2000)"
+    ]
+  },
+
+  "VBATT_OCP_6A" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(1,1500)",
+      "delay:0.03"
+    ]
+  },
+
+  "VBUS_OCP_3A5" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(4,1750)",
+      "delay:0.01"
+    ]
+  },
+
+  "VBATT_OCP_8A5" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(1,2200)",
+      "delay:0.03"
+    ]
+  },
+
+  "ppvbus_1V2" : {
+    "off" : [
+      "io_control.set(bit8=0)",
+      "delay:0.1",
+      "io_control.set(bit105=1)",
+      "io_control.set(bit3=0)",
+      "io_control.set(bit42=1)",
+      "delay:0.2"
+    ],
+    "on" : [
+      "io_control.set(bit105=0)",
+      "io_control.set(bit3=1)",
+      "delay:0.3"
+    ]
+  },
+
+  "pdvbus" : {
+    "off" : [
+      "io_control.set(bit8=0)",
+      "delay:0.2",
+      "io_control.set(bit105=1;bit41=0;bit42=1;bit26=0;bit22=0;bit2=1)",
+      "delay:0.5",
+      "io_control.set(bit2=0)"
+    ],
+    "on" : [
+      "io_control.set(bit105=0)",
+      "delay:0.1",
+      "io_control.set(bit2=0;bit41=1;bit23=0;bit42=0;bit26=1)",
+      "delay:0.2",
+      "io_control.set(bit22=1;bit107=0)",
+      "delay:0.5"
+    ]
+  },
+  
+  "ppvbus5v" : {
+    "off" : [
+      "io_control.set(bit8=0)",
+      "delay:0.1",
+      "io_control.set(bit3=0)",
+      "io_control.set(bit42=1)",
+      "delay:0.2"
+    ],
+    "on" : [
+      "io_control.set(bit3=1)",
+      "delay:0.3"
+    ]
+  },
+
+  "ppvbus14v" : {
+    "off" : [
+      "io_control.set(bit41=0;bit21=0)"
+    ],
+    "on" : [
+      "io_control.set(bit2=0;bit22=0;bit26=0;bit20=0;bit41=1)",
+      "io_control.set(bit21=1)"
+    ]
+  },
+  
+  "VCCMAIN_UVP_2V" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(7,2000)"
+    ]
+  },
+  
+  "VCCMAIN_UVP_NORMAL" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(7,2000)"
+    ]
+  },
+
+  "VBATT_OCP_MIDDLE_8A" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(1,2000)",
+      "delay:0.03"
+    ]
+  },
+
+  "vbatt_discharge" : {
+    "connect" : [
+      "io_control.set(bit30=1)"
+    ],
+    "disconnect" : [
+      "io_control.set(bit30=0)"
+    ]
+  },
+
+  "vbus_discharge" : {
+    "connect" : [
+      "io_control.set(bit42=1)"
+    ],
+    "disconnect" : [
+      "io_control.set(bit42=0)"
+    ]
+  },
+  
+  "ace_spi_to_zynq" : {
+    "connect" : [
+      "io_control.set(bit28=1)"
+    ],
+    "disconnect" : [
+      "io_control.set(bit28=0)"
+    ]
+  },
+
+  "ppvbatt_reload" : {
+    "connect" : [
+      "io_control.set(bit1=1)"
+    ],
+    "disconnect" : [
+      "io_control.set(bit1=0)"
+    ]
+  },
+
+  "VBATT_OCP_8A" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(1,2000)",
+      "delay:0.03"
+    ]
+  },
+
+  "VBATT_UVP_NORMAL" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(2,2000)"
+    ]
+  },
+  "VBUS_OVP_6V" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(6,3000)"
+    ]
+  },
+  
+  "VBUS_UVP_4V" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(5,3200)"
+    ]
+  },
+  
+  "VBATT_OCP_5A" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(1,1250)",
+      "delay:0.03"
+    ]
+  },
+
+  "VBUS_UVP_3V" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(5,2400)"
+    ]
+  },
+
+  "VBATT_OCP_12A" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(1,3100)",
+      "delay:0.03"
+    ]
+  },
+
+  "vbatt" : {
+    "off" : [
+      "io_control.set(bit7=0;bit8=0;bit9=0)",
+      "delay:0.3",
+      "batt.volt_set(2800)",
+      "batt.volt_set(2500)",
+      "delay:1",
+      "batt.volt_set(2300)",
+      "delay:0.3",
+      "io_control.set(bit30=1;bit42=1;bit43=1)",
+      "batt.volt_set(0)",
+      "io_control.set(bit104=1;bit40=0;bit102=0;bit1=1)",      
+      "delay:0.5",
+      "io_control.set(bit1=0)"
+    ],
+    "on" : [
+      "io_control.set(bit104=1;bit102=0)",
+      "io_control.set(bit30=0)",
+      "delay:0.1",
+      "batt.volt_set(4200)",
+      "delay:0.2",
+      "io_control.set(bit40=1)",
+      "delay:0.3",
+      "io_control.set(bit104=0)",
+      "delay:0.1",
+      "io_control.set(bit102=1)",     
+      "delay:0.2"
+    ]
+  },
+  "vbatt_step" : {
+    "off" : [
+      "io_control.set(bit7=0;bit8=0;bit9=0)",
+      "delay:0.3",
+      "batt.volt_set(2800)",
+      "batt.volt_set(2500)",
+      "delay:1",
+      "batt.volt_set(2300)",
+      "delay:0.3",
+      "io_control.set(bit30=1;bit42=1;bit43=1)",
+      "batt.volt_set(0)",
+      "io_control.set(bit104=1;bit40=0;bit102=0;bit1=1)",      
+      "delay:0.5",
+      "io_control.set(bit1=0)"
+    ],
+    "on" : [
+      "io_control.set(bit104=1;bit102=0)",
+      "io_control.set(bit30=0)",
+      "delay:0.1",
+      "batt.volt_set(4200)",
+      "delay:0.2",
+      "io_control.set(bit40=1)",
+      "delay:0.3",
+      "io_control.set(bit104=0)",
+      "delay:0.1",
+      "io_control.set(bit102=1)",     
+      "delay:0.2"
+    ]
+  },
+  "vbatt_reset" : {
+    "on" : [
+      "io_control.set(bit7=0;bit8=0;bit9=0)",
+      "delay:0.2",
+      "io_control.set(bit26=0;bit22=0;bit42=1)",
+      "delay:0.3",
+      "uart_test.send_shutdown()",
+      "delay:5",
+      "batt.volt_set(2800)",
+      "batt.volt_set(2500)",
+      "delay:1",
+      "batt.volt_set(2300)",
+      "delay:0.3",
+      "io_control.set(bit30=1;bit42=1;bit43=1)",
+      "batt.volt_set(0)",
+      "io_control.set(bit104=1;bit40=0;bit102=0;bit1=1)",      
+      "delay:0.5",
+      "io_control.set(bit1=0)"
+    ]
+  },
+  
+  "ace_programmer_id" : "ace_fwdl.programmer_id(w25q128)",
+  "ace_programmer_erase" : "ace_fwdl.programmer_erase(ch1,w25q128)",
+  "ace_programmer_only" : "ace_fwdl.programmer_only(ch1,w25q128,\/tmp\/Fixture1\/ch1\/BINFILE)",
+  "ace_program_readverify" : "ace_fwdl.programmer_readverify(ch1,w25q128,\/tmp\/Fixture1\/ch1\/ACE_FW,0x00000000,size)",
+
+  "init" : [
+    "io_control.set(bit24=1)",
+    "delay:0.05",
+    "io_control.set(bit40=0)",
+    "batt.volt_set(0)",
+    "reset_all.reset()",
+    "io_control.set(bit24=0)",
+    "io_control.set(bit2=0;bit1=0)",
+    "io_control.set(bit49=0;bit50=1;bit51=1)",
+    "io_control.set(bit52=1;bit53=1;bit54=1)",
+    "io_control.set(bit55=1;bit56=1;bit57=1)",
+    "io_control.set(bit65=1;bit66=1;bit67=1)",
+    "io_control.set(bit68=1;bit69=1;bit70=1)",
+    "io_control.set(bit27=0;bit28=0;bit29=1)",
+    "io_control.set(bit94=0;bit95=0;bit96=0)"
+  ],
+
+  "dut_power_on" : [
+    "io_control.set(bit7=0;bit8=0;bit9=0;bit25=0)",
+    "delay:0.1",
+    "io_control.set(bit26=0;bit22=0;bit42=1)",
+    "delay:0.3",
+    "batt.volt_set(2800)",
+    "batt.volt_set(2500)",
+    "delay:1",
+    "batt.volt_set(2300)",
+    "delay:0.3",
+    "io_control.set(bit1=1;bit30=1;bit42=1;bit43=1)",
+    "batt.volt_set(0)",
+    "io_control.set(bit40=0;bit102=0)",
+    "delay:0.5",
+    "io_control.set(bit1=0;bit104=1)",
+    "delay:3",
+    "reset_all.reset()",
+    "io_control.set(bit24=1)",
+    "delay:0.5",
+    "io_control.set(bit24=0)",
+    "delay:0.5",
+    "batt.volt_set(4200)",
+    "delay:0.2",
+    "io_control.set(bit40=1)",
+    "delay:0.3",
+    "io_control.set(bit104=0)",
+    "delay:0.1",
+    "io_control.set(bit102=1)",     
+    "delay:0.5",
+    "io_control.set(bit105=0;bit39=0;bit34=1;bit26=1)",
+    "delay:0.5",
+    "io_control.set(bit22=1)",
+    "delay:1",
+    "io_control.set(bit25=1)",
+    "delay:0.5",
+    "io_control.set(bit7=1;bit9=1)"
+  ],
+
+  "dut_power_off" : [
+    "io_control.set(bit7=0;bit8=0;bit9=0;bit25=0)",
+    "delay:0.1",
+    "io_control.set(bit26=0;bit2=1;bit22=0;bit42=1)",
+    "delay:0.1",
+    "batt.volt_set(2800)",
+    "batt.volt_set(2500)",
+    "delay:1",
+    "batt.volt_set(2300)",
+    "delay:0.3",
+    "io_control.set(bit30=1;bit42=1;bit43=1)",
+    "batt.volt_set(0)",
+    "io_control.set(bit40=0;bit102=0;bit1=1)",      
+    "delay:0.5",
+    "io_control.set(bit104=1;bit105=1;bit1=0;bit2=0)",
+    "reset_all.reset()"
+  ],
+
+  "reset" : [
+    "io_control.set(bit24=1)",
+    "delay:0.2",
+    "io_control.set(bit40=0)",
+    "batt.volt_set(0)",
+    "reset_all.reset()",
+    "io_control.set(bit24=0)",
+    "delay:0.2",
+    "io_control.set(bit2=0;bit1=0)",
+    "io_control.set(bit49=0;bit50=1;bit51=1)",
+    "io_control.set(bit27=0;bit28=0;bit29=1)",
+    "io_control.set(bit94=0;bit95=0;bit96=0)"
+  ],
+
+  "VBUS_UVP_1V" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(5,800)"
+    ]
+  },
+
+  "VBATT_OCP_3A" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(1,1000)",
+      "delay:0.03"
+    ]
+  },
+  
+  "BATT_0V8" : {
+    "ON" : [
+      "io_control.set(bit104=1;bit102=0)",
+      "batt.volt_set(800)",
+      "delay:0.03",
+      "io_control.set(bit30=0)",
+      "io_control.set(bit40=1)",
+      "delay:0.3",
+      "io_control.set(bit104=0)",
+       "delay:0.1",
+      "io_control.set(bit102=1)",     
+      "delay:0.2"
+    ]
+  },
+  
+  "VBATT_UVP_0V6" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(2,600)"
+    ]
+  },
+  
+
+  "vbatt_on_and_set_ocp3A" : [
+    "io_control.set(bit30=0)",
+    "delay:0.05",
+    "batt.volt_set(4200)",
+    "delay:0.1",
+    "io_control.set(bit40=1)",
+    "delay:0.1",
+    "io_control.set(bit104=0;bit102=1)",
+    "delay:0.2",
+    "mcp47fe.output_volt_dc(1,750)",
+    "delay:0.05"
+  ],
+
+  "ppvbus_reload" : {
+    "connect" : [
+      "io_control.set(bit2=1)"
+    ],
+    "disconnect" : [
+      "io_control.set(bit2=0)"
+    ]
+  },
+  "VBUS_OCP_4A" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(4,2000)",
+      "delay:0.01"
+    ]
+  },
+  
+
+  "VBUS_OCP_3A" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(4,1500)",
+      "delay:0.01"
+    ]
+  },
+  
+  "VBUS_OCP_1A" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(4,500)",
+      "delay:0.01"
+    ]
+  },
+
+  "VCCMAIN_UVP_0V6" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(7,400)"
+    ]
+  },
+
+  "VCCMAIN_UVP_3V" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(7,3000)"
+    ]
+  },
+
+  "VCCMAIN_UVP_3V5" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(7,3500)"
+    ]
+  },
+
+  "ppvcc_main_discharge" : {
+    "connect" : [
+      "io_control.set(bit43=1)"
+    ],
+    "disconnect" : [
+      "io_control.set(bit43=0)"
+    ]
+  },
+  "VBATT_OCP_16A" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(1,4000)",
+      "delay:0.03"
+    ]
+  },
+
+  "VBATT_OCP_15A" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(1,3750)",
+      "delay:0.03"
+    ]
+  },
+
+  "VBATT_OCP_5A5" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(1,1380)",
+      "delay:0.03"
+    ]
+  },
+  
+  "VCCMAIN_UVP_0V8" : {
+    "SET" : [
+      "mcp47fe.output_volt_dc(7,800)"
+    ]
+  },
+
+  "advdmCC" : {
+    "connect" : [
+      "io_control.set(bit36=1)"
+    ],
+    "disconnect" : [
+      "io_control.set(bit36=0)"
+    ]
+  },
+  "SIB_OCP_RESET" : [
+    "io_control.set(bit24=1)",
+    "delay:0.6",
+    "io_control.set(bit24=0)",
+    "delay:0.2"
+  ],
+
+   "dfu_reset" : [
+    "io_control.set(bit24=1)",
+    "delay:0.2",
+    "io_control.set(bit18=0;bit19=0;bit20=0;bit21=0;bit22=0;bit23=0;bit24=0;bit25=0)",
+    "io_control.set(bit26=0;bit27=0;bit28=0;bit29=0;bit30=0;bit31=0;bit32=0;bit33=0)",
+    "io_control.set(bit34=0;bit35=0;bit36=0;bit37=0;bit38=0;bit39=0;bit40=0;bit41=1)",
+    "io_control.set(bit42=0;bit43=0;bit44=0;bit45=0;bit47=0;bit48=0)",
+    "batt.volt_set(0)"
+  ],
+
+  "force_iboot_on" : [
+    "io_control.set(bit30=0;bit42=0;bit43=0;bit25=0)",    
+    "mcp47fe.output_volt_dc(4,2000)",
+    "mcp47fe.output_volt_dc(6,3000)",
+    "mcp47fe.output_volt_dc(3,4600)",
+    "mcp47fe.output_volt_dc(1,4000)",
+    "delay:0.1",
+    "io_control.set(bit24=1)",
+    "delay:0.5",
+    "io_control.set(bit24=0)",
+    "delay:0.3",
+    "batt.volt_set(4200)",
+    "io_control.set(bit40=1)",
+    "delay:0.1",
+    "io_control.set(bit104=0)",
+    "delay:0.1",
+    "io_control.set(bit102=1)",     
+    "delay:0.2",
+    "io_control.set(bit39=0;bit34=1;bit26=1;bit22=1)",
+    "delay:0.5",
+    "io_control.set(bit105=0)",
+    "delay:1",
+    "io_control.set(bit25=1)",
+    "delay:0.5",    
+  ],
+
+   "force_iboot_off" : [
+    "io_control.set(bit7=0;bit8=0;bit9=0;bit25=0)",
+    "delay:0.1",
+    "io_control.set(bit26=0;bit22=0;bit2=1;bit42=1)",
+    "delay:2",
+    "io_control.set(bit1=1;bit30=1;bit42=1;bit43=1)",
+    "batt.volt_set(0)",
+    "io_control.set(bit40=0;bit102=0)", 
+    "delay:0.1",
+    "io_control.set(bit1=0;bit104=1;bit105=1)",
+    "delay:2",
+    "reset_all.reset()"
+  ],
+
+  "force_dfu_on" : [
+    "batt.volt_set(0)",
+    "io_control.set(bit104=1;bit40=0;bit102=0)", 
+    "mcp47fe.output_volt_dc(4,2000)",
+    "mcp47fe.output_volt_dc(6,3000)",
+    "mcp47fe.output_volt_dc(3,4600)",
+    "mcp47fe.output_volt_dc(1,4000)",
+    "delay:0.1",
+    "io_control.set(bit24=1)",
+    "reset_all.reset()",
+    "io_control.set(bit24=0)",
+    "delay:0.3",
+    "io_control.set(bit30=1;bit42=1;bit43=1)",
+    "delay:2",
+    "io_control.set(bit30=0;bit42=0;bit43=0)",
+    "batt.volt_set(4200)",
+    "io_control.set(bit34=1;bit39=1;bit40=1;bit32=1;bit35=1;bit26=1;bit22=1)",
+    "delay:0.1",
+    "io_control.set(bit104=0;bit102=1)",
+    "delay:0.5",
+    "io_control.set(bit105=0)",
+    "delay:0.3",
+    "io_control.set(bit46=1;bit27=1)",
+    "delay:0.3"
+  ],
+
+  "force_dfu_off" : [
+    "io_control.set(bit7=0;bit8=0;bit9=0)",
+    "delay:0.1",
+    "io_control.set(bit26=0;bit22=0;bit2=1;bit42=1)",
+    "delay:2",
+    "io_control.set(bit1=1;bit30=1;bit42=1;bit43=1)",
+    "io_control.set(bit40=0)",
+    "batt.volt_set(0)",
+    "delay:0.5",
+    "io_control.set(bit1=0)",
+    "delay:2",
+    "reset_all.reset()"
+  ],
+
+  "force_diags_off" : [
+    "io_control.set(bit7=0;bit8=0;bit9=0)",
+    "delay:0.3",
+    "io_control.set(bit34=0;bit39=0;bit46=0;bit32=0;bit35=0)",
+    "io_control.set(bit26=0;bit22=0;bit2=1;bit42=1)",
+    "delay:2",
+    "io_control.set(bit40=0)",
+    "batt.volt_set(0)",
+    "io_control.set(bit30=1;bit40=0;bit1=1;bit43=1)",
+    "delay:2",
+    "reset_all.reset()"
+  ],
+
+  "force_diags_on" : [
+   "io_control.set(bit30=0;bit42=0;bit43=0)",
+    "io_control.set(bit40=0)",
+    "batt.volt_set(0)",
+    "mcp47fe.output_volt_dc(4,2000)",
+    "mcp47fe.output_volt_dc(6,3000)",
+    "mcp47fe.output_volt_dc(3,4600)",
+    "mcp47fe.output_volt_dc(1,4000)",
+    "delay:0.1",
+    "io_control.set(bit24=1)",
+    "reset_all.reset()",
+    "io_control.set(bit24=0)",
+    "delay:0.3",
+    "batt.volt_set(4200)",
+    "delay:0.2",
+    "io_control.set(bit40=1)",
+    "delay:0.1",
+    "io_control.set(bit104=0;bit102=1)",
+    "io_control.set(bit2=0;bit41=1;bit23=0;bit42=0;bit26=1;bit22=1)",
+    "delay:0.5",
+    "io_control.set(bit105=0)",
+    "delay:0.3",
+    "io_control.set(bit46=1)",
+    "io_control.set(bit27=1)",
+    "delay:0.3",
+    "io_control.set(bit34=0)",
+    "delay:0.3"
+  ],
+
+   "discharge_connect" : {
+     "on" : [
+          "io_control.set(bit30=1;bit43=1;bit42=1;bit44=1;bit34=0;bit39=0;bit46=0;bit27=0)"
+     ],
+     "off" : [
+          "delay:3",
+          "reset_all.reset()",
+          "io_control.set(bit30=0;bit43=0;bit42=0;bit44=0)"
+     ]
+  }
+
+}

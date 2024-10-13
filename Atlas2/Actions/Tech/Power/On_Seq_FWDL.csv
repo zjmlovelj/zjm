@@ -1,0 +1,26 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Parameters,,slotNum,,,,,,,
+Tech/Fixture>sendFixtureCommand,"{subsubtestname=""Set-VBAT-4V2""}",,,,,,,,"Set VBAT TO 4.2V"
+,"+{Commands=""relay_switch""}",,,,,,,,
+,"+{args=""vbatt;on""}",,,,,,,,
+,"+{slotNum=slotNum}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Fixture>sendFixtureCommand,"{subsubtestname=""Set-PDVBUS_5V""}",,,,,,,,"Set PDVBUS TO 5V"
+,"+{Commands=""relay_switch""}",,,,,,,,
+,"+{args=""pdvbus;on""}",,,,,,,,
+,"+{slotNum=slotNum}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>delay,"{subsubtestname=""Delay-1000ms""}",,,,,,,,"delay 1000ms"
+,"+{delay=""1000""}",,,,,,,,
+,"+{unit=""ms""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Fixture>sendFixtureCommand,"{subsubtestname=""Enable-VBATT_UVP""}",,,,,,,,"Enable VBAT UVP control"
+,"+{Commands=""relay_switch""}",,,,,,,,
+,"+{args=""VBATT_UVP_CTRL;ON""}",,,,,,,,
+,"+{slotNum=slotNum}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Fixture>sendFixtureCommand,"{subsubtestname=""Enable-PPVCC_MAIN_UVP""}",,,,,,,,"Enable PPVCC MAIN UVP Control"
+,"+{Commands=""relay_switch""}",,,,,,,,
+,"+{args=""VCCMAIN_UVP_CTRL;ON""}",,,,,,,,
+,"+{slotNum=slotNum}",,,,,,,,
+,"+{record=""false""}",,,,,,,,

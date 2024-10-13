@@ -1,0 +1,264 @@
+
+-   technology: RF
+    coverage: Wifi_AEMToolsWifi3nm
+    testParameters: '*'
+    sequence:
+        actions:
+            - RunWifi_AEMToolsWifi3nm:
+                filename: Tech/RF/Wifi_AEMToolsWifi3nm.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+
+
+
+-   technology: RF
+    coverage: Baseband_AEMToolsBaseband3nm
+    testParameters: '*'
+    sequence:
+        actions:
+            - RunBaseband_AEMToolsBaseband3nm:
+                filename: Tech/RF/Baseband_AEMToolsBaseband3nm.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+
+
+
+-   technology: RF
+    coverage: Wifi_AEMToolsProxima
+    testParameters: '*'
+    sequence:
+        actions:
+            - RunWifi_AEMToolsProxima:
+                filename: Tech/RF/Wifi_AEMToolsProxima.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+
+
+-   technology: RF
+    coverage: Baseband_AEMToolsSinopeGen4
+    testParameters: '*'
+    sequence:
+        actions:
+            - RunBaseband_AEMToolsSinopeGen4:
+                filename: Tech/RF/Baseband_AEMToolsSinopeGen4.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+
+
+-   technology: RF
+    coverage: SmokeyTest
+    testParameters: WDFU
+    outputs:
+        smokey_WDFU_resp:
+            lookup: [RunSmokeyTest_WDFU, 1]
+    sequence:
+        actions:
+            - RunSmokeyTest_WDFU:
+                filename: Tech/RF/SmokeyTest_WDFU.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - DCSD
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+
+
+-   technology: RF
+    coverage: Wifi
+    testParameters: '*'
+    outputs:
+        WIFI_Properties_resp:
+            lookup: [RunWifi, 1]
+        WIFI_Module_Version:
+            lookup: [RunWifi, 2]
+        WIFI_FIRMWARE:
+            lookup: [RunWifi, 3]
+        WIFI_NVRAM:
+            lookup: [RunWifi, 4]
+    sequence:
+        actions:
+            - RunWifi:
+                filename: Tech/RF/Wifi.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - DCSD
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+
+
+-   technology: RF
+    coverage: Bluetooth
+    testParameters: '*'
+    inputs:
+        WIFI_Module_Version: 'find.output("RF","Wifi","","WIFI_Module_Version")'
+    outputs:
+        BT_Properties_resp:
+            lookup: [RunBluetooth, 1]
+        BT_FIRMWARE:
+            lookup: [RunBluetooth, 2]
+    sequence:
+        actions:
+            - RunBluetooth:
+                filename: Tech/RF/Bluetooth.csv
+                args:
+                    - lookup: [inputs, WIFI_Module_Version]
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - DCSD
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+
+
+-   technology: RF
+    coverage: NFC
+    testParameters: '*'
+    outputs:
+        SH_Properties_resp:
+            lookup: [RunNFC, 1]
+        SH_FIRMWARE:
+            lookup: [RunNFC, 2]
+    sequence:
+        actions:
+            - RunNFC:
+                filename: Tech/RF/NFC.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - DCSD
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+
+
+-   technology: RF
+    coverage: Baseband
+    testParameters: '*'
+    outputs:
+        Load_Status:
+            lookup: [RunBaseband, 1]
+        BB_Load_Firmware_resp:
+            lookup: [RunBaseband, 2]
+        BB_Properties_resp:
+            lookup: [RunBaseband, 3]
+        BB_FIRMWARE:
+            lookup: [RunBaseband, 4]
+        BB_SNUM:
+            lookup: [RunBaseband, 5]
+    sequence:
+        actions:
+            - RunBaseband:
+                filename: Tech/RF/Baseband.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - DCSD
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+
+-   technology: RF
+    coverage: WIFI_BT
+    testParameters: '*'
+    sequence:
+        actions:
+            - RunWIFI_BT:
+                filename: Tech/RF/WIFI_BT.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - Regex
+                    - Utilities
+                    - DCSD
+                    - PListSerializationPlugin
+                    - SMTCommonPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - FixturePlugin
+                    - InteractiveView
+                    - RunShellCommand
+

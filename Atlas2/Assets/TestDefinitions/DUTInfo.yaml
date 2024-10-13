@@ -1,0 +1,377 @@
+-   technology: DUTInfo
+    coverage: Syscfg
+    testParameters: RFEM
+    inputs:
+        smokey_WDFU_resp: 'find.output("RF","SmokeyTest","WDFU","smokey_WDFU_resp")'
+    outputs:
+        RFEM_target:
+            lookup: [RunSyscfg_RFEM, 1]
+        RFEM_HAS_ADDED:
+            lookup: [RunSyscfg_RFEM, 2]
+        RFEM_print_resp:
+            lookup: [RunSyscfg_RFEM, 3]
+        RFEM_print_value:
+            lookup: [RunSyscfg_RFEM, 4]
+    sequence:
+        actions:
+            - RunSyscfg_RFEM:
+                filename: Tech/DUTInfo/Syscfg_RFEM.csv
+                args:
+                    - lookup: [inputs, smokey_WDFU_resp]
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+                    - RunShellCommand    
+
+-   technology: DUTInfo
+    coverage: Syscfg
+    testParameters: WSKU
+    inputs:
+        MLB_Num: 'find.output("Fixture","Initialize","","MLB_Num")'
+        smokey_WDFU_resp: 'find.output("RF","SmokeyTest","WDFU","smokey_WDFU_resp")'
+    outputs:
+        WSKU_target:
+            lookup: [RunSyscfg_WSKU, 1]
+        WSKU_HAS_ADDED:
+            lookup: [RunSyscfg_WSKU, 2]
+        WSKU_print_resp:
+            lookup: [RunSyscfg_WSKU, 3]
+        WSKU_print_value:
+            lookup: [RunSyscfg_WSKU, 4]
+    sequence:
+        actions:
+            - RunSyscfg_WSKU:
+                filename: Tech/DUTInfo/Syscfg_WSKU.csv
+                args:
+                    - lookup: [inputs, MLB_Num]
+                    - lookup: [inputs, smokey_WDFU_resp]
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - FixturePlugin
+                    - InteractiveView
+                    - Regex
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+                    - RunShellCommand       
+                    
+                    
+-   technology: DUTInfo
+    coverage: Syscfg_List_1
+    testParameters: '*'
+    sequence:
+        actions:
+            - RunSyscfg_List_1:
+                filename: Tech/DUTInfo/Syscfg_List_1.csv
+                plugins:
+                    - Dut
+                    - ChannelPlugin
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - FixturePlugin
+                    - Regex
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+
+-   technology: DUTInfo
+    coverage: DiagsFW_Version
+    testParameters: '*'
+    outputs:
+        Diags_version:
+            lookup: [RunDiagsFW_Version, 1]
+        Version_Info:
+            lookup: [RunDiagsFW_Version, 2]
+    sequence:
+        actions:
+            - RunDiagsFW_Version:
+                filename: Tech/DUTInfo/DiagsFW_Version.csv
+                plugins:
+                    - Dut
+                    - ChannelPlugin
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - FixturePlugin
+                    - Regex
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+                    - RunShellCommand
+
+
+-   technology: DUTInfo
+    coverage: RTOSFW
+    testParameters: '*'
+    outputs:
+        RTOS_Version:
+            lookup: [RunRTOSFW, 1]
+    sequence:
+        actions:
+            - RunRTOSFW:
+                filename: Tech/DUTInfo/RTOSFW.csv
+                plugins:
+                    - Dut
+                    - ChannelPlugin
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - FixturePlugin
+                    - Regex
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+                    - RunShellCommand
+                    - Runtest
+
+-   technology: DUTInfo
+    coverage: RBMFW
+    testParameters: '*'
+    outputs:
+        RBM_Version:
+            lookup: [RunRBMFW, 1]
+    sequence:
+        actions:
+            - RunRBMFW:
+                filename: Tech/DUTInfo/RBMFW.csv
+                plugins:
+                    - Dut
+                    - ChannelPlugin
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - FixturePlugin
+                    - Regex
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+                    - RunShellCommand
+                    - Runtest
+
+
+-   technology: DUTInfo
+    coverage: Syscfg
+    testParameters: '*'
+    sequence:
+        actions:
+            - RunSyscfg:
+                filename: Tech/DUTInfo/Syscfg.csv
+                plugins:
+                    - Dut
+                    - ChannelPlugin
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - FixturePlugin
+                    - Regex
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+
+
+-   technology: DUTInfo
+    coverage: Syscfg_Mac
+    testParameters: '*'
+    sequence:
+        actions:
+            - RunSyscfg_Mac:
+                filename: Tech/DUTInfo/Syscfg_Mac.csv
+                plugins:
+                    - Dut
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - ChannelPlugin
+                    - FixturePlugin
+                    - InteractiveView
+                    - SFC
+                    - Regex
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+
+
+-   technology: DUTInfo
+    coverage: Syscfg
+    testParameters: MLBSN
+    inputs:
+        MLB_Num: 'find.output("Fixture","Initialize","","MLB_Num")'
+    sequence:
+        actions:
+            - RunSyscfg_MLBSN:
+                filename: Tech/DUTInfo/Syscfg_MLBSN.csv
+                args:
+                    - lookup: [inputs, MLB_Num]
+                plugins:
+                    - Dut
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - ChannelPlugin
+                    - FixturePlugin
+                    - InteractiveView
+                    - SFC
+                    - Regex
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+
+
+-   technology: DUTInfo
+    coverage: Syscfg
+    testParameters: MLBCFG
+    inputs:
+        MLB_Num: 'find.output("Fixture","Initialize","","MLB_Num")'
+    sequence:
+        actions:
+            - RunSyscfg_MLBCFG:
+                filename: Tech/DUTInfo/Syscfg_MLBCFG.csv
+                args:
+                    - lookup: [inputs, MLB_Num]
+                plugins:
+                    - Dut
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - ChannelPlugin
+                    - FixturePlugin
+                    - InteractiveView
+                    - SFC
+                    - Regex
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+
+
+-   technology: DUTInfo
+    coverage: Syscfg_List_2
+    testParameters: '*'
+    sequence:
+        actions:
+            - RunSyscfg_List_2:
+                filename: Tech/DUTInfo/Syscfg_List_2.csv
+                plugins:
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - FixturePlugin
+                    - InteractiveView
+                    - Regex
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin 
+
+
+-   technology: DUTInfo
+    coverage: BoardRevision
+    testParameters: '*'
+    inputs:
+        boardRev: 'find.output("USBC","OTPProgram","","boardRev")'
+    outputs:
+        Board_REV_Compare:
+            lookup: [RunBoardRevision, 1]
+    sequence:
+        actions:
+            - RunBoardRevision:
+                filename: Tech/DUTInfo/BoardRevision.csv
+                args:
+                    - lookup: [inputs, boardRev]
+                plugins:
+                    - Dut
+                    - ChannelPlugin
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - FixturePlugin
+                    - Regex
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+
+-   technology: DUTInfo
+    coverage: DiagsFW_CRC_Check
+    testParameters: '*'
+    inputs:
+        Ace3_CRC1_I2C: 'find.output("USBC","OTPProgram","","Ace3_CRC1_I2C")'
+        Ace3_CRC2_I2C: 'find.output("USBC","OTPProgram","","Ace3_CRC2_I2C")'
+        Ace3_CRC3_I2C: 'find.output("USBC","OTPProgram","","Ace3_CRC3_I2C")'
+    sequence:
+        actions:
+            - RunDiagsFW_CRC_Check:
+                filename: Tech/DUTInfo/DiagsFW_CRC_Check.csv
+                args:
+                    - lookup: [inputs, Ace3_CRC1_I2C]
+                    - lookup: [inputs, Ace3_CRC2_I2C]
+                    - lookup: [inputs, Ace3_CRC3_I2C]
+                plugins:
+                    - Dut
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - ChannelPlugin
+                    - FixturePlugin
+                    - InteractiveView
+                    - SFC
+                    - Regex
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin
+
+-   technology: DUTInfo
+    coverage: Presencecheck_Mogul
+    testParameters: '*'
+    sequence:
+        actions:
+            - RunPresencecheck_Mogul:
+                filename: Tech/DUTInfo/Presencecheck_Mogul.csv
+                plugins:
+                    - Dut
+                    - ChannelPlugin
+                    - Kis_dut
+                    - Kis_channelPlugin
+                    - FixturePlugin
+                    - InteractiveView
+                    - Regex
+                    - StationInfo
+                    - FileOperation
+                    - VariableTable
+                    - RunShellCommand
+                    - TimeUtility
+                    - SMTCommonPlugin
+                    - PListSerializationPlugin 
+                    
+
+

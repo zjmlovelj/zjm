@@ -1,0 +1,30 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Parameters,,accel_gyro_test_resp,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-accel_normal_average_x""}",,,,,,,,"get accel only average x"
+,"+{pattern=""average: X = ([+-]?[0-9.]+), Y = [+-]?[0-9.]+, Z = [+-]?[0-9.]+, T = [+-]?[0-9.]+""}",,,,,,,,
+,"+{Input=accel_gyro_test_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-accel_normal_average_y""}",,,,,,,,"get accel only average y"
+,"+{pattern=""average: X = [+-]?[0-9.]+, Y = ([+-]?[0-9.]+), Z = [+-]?[0-9.]+, T = [+-]?[0-9.]+""}",,,,,,,,
+,"+{Input=accel_gyro_test_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-accel_normal_average_z""}",,,,,,,,"get accel only average z"
+,"+{pattern=""average: X = [+-]?[0-9.]+, Y = [+-]?[0-9.]+, Z = ([+-]?[0-9.]+), T = [+-]?[0-9.]+""}",,,,,,,,
+,"+{Input=accel_gyro_test_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-accel_normal_std_x""}",,,,,,,,"get accel only std x"
+,"+{pattern=""std%-dev: X = ([+-]?[0-9.]+), Y = [+-]?[0-9.]+, Z = [+-]?[0-9.]+, T = [+-]?[0-9.]+""}",,,,,,,,
+,"+{Input=accel_gyro_test_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-accel_normal_std_y""}",,,,,,,,"get accel only std y"
+,"+{pattern=""std%-dev: X = [+-]?[0-9.]+, Y = ([+-]?[0-9.]+), Z = [+-]?[0-9.]+, T = [+-]?[0-9.]+""}",,,,,,,,
+,"+{Input=accel_gyro_test_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-accel_normal_std_z""}",,,,,,,,"get accel only std z"
+,"+{pattern=""std%-dev: X = [+-]?[0-9.]+, Y = [+-]?[0-9.]+, Z = ([+-]?[0-9.]+), T = [+-]?[0-9.]+""}",,,,,,,,
+,"+{Input=accel_gyro_test_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-accel_normal_odr""}",,,,,,,,"get accel only odr"
+,"+{pattern=""calculated odr: ([+-]?[0-9.]+)Hz""}",,,,,,,,
+,"+{Input=accel_gyro_test_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,

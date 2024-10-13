@@ -1,0 +1,138 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Parameters,,HAS_TWO_STORAGE_DEVICE,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-AEMToolsANS4_CMD""}",,,,,,,,'Run PCIeEyeScan ANS4'
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{hangTimeout=""600""}",,,,,,,,
+,"+{Timeout=""600""}",,,,,,,,
+,"+{Commands=""smokey --run --clean AEMToolsANS4 DisplayBehavior=NoDisplay ""SerialNumberSource='MLB#'""""}",,,,,,,,
+,"+{expect=""Set Pass""}",,,,,,,,
+,"+{NotDiagsTriage=""YES""}",,,,,,,,
+,"+{errorCheck=""NO""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTCmd>copyToHost,"{subsubtestname=""Get-AEMToolsANS4_File""}",,,,,,,,
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{filePath=""nandfs:\\AppleInternal\\Diags\\Logs\\Smokey\\AEMToolsANS4\\""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Cat_Lane0_Test_Result_CMD""}",,,,,,,,'catch ANS4 lane0 test result'
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{Timeout=""10""}",,,,,,,,
+,"+{Commands=""cat nandfs:\\AppleInternal\\Diags\\Logs\\Smokey\\AEMToolsANS4\\eyemargin_ber_9_atc_0_ans4_lane0.csv""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Cat_Lane1_Test_Result_CMD""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,'catch ANS4 lane1 test result'
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{Timeout=""10""}",,,,,,,,
+,"+{Commands=""cat nandfs:\\AppleInternal\\Diags\\Logs\\Smokey\\AEMToolsANS4\\eyemargin_ber_9_atc_0_ans4_lane1.txt""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Cat_Test_Result_CMD""}",AEMToolsANS4_resp,,,,,,,'catch ANS4 lane1 test result'
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{Timeout=""30""}",,,,,,,,
+,"+{Commands=""cat nandfs:\\AppleInternal\\Diags\\Logs\\Smokey\\AEMToolsANS4\\results.txt""}",,,,,,,,
+,"+{expect=""ans4_resultcode""}",,,,,,,,
+,"+{NotDiagsTriage=""YES""}",,,,,,,,
+,"+{errorCheck=""NO""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-ans4_lane_0_north_ticks""}",,,,,,,,'get ans4_lane_0_north_ticks'
+,"+{pattern=""ans4_lane_0_north_ticks%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsANS4_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-ans4_lane_0_south_ticks""}",,,,,,,,'get ans4_lane_0_south_ticks'
+,"+{pattern=""ans4_lane_0_south_ticks%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsANS4_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-ans4_lane_0_east_ticks""}",,,,,,,,'get ans4_lane_0_east_ticks'
+,"+{pattern=""ans4_lane_0_east_ticks%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsANS4_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-ans4_lane_0_west_ticks""}",,,,,,,,'get ans4_lane_0_west_ticks'
+,"+{pattern=""ans4_lane_0_west_ticks%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsANS4_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-ans4_lane_0_eh_mv""}",,,,,,,,'get ans4_lane_0_eh_mv'
+,"+{pattern=""ans4_lane_0_eh_mv%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsANS4_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-ans4_lane_0_ew_ps""}",,,,,,,,'get ans4_lane_0_ew_ps'
+,"+{pattern=""ans4_lane_0_ew_ps%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsANS4_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-ans4_lane_0_eh_ticks""}",,,,,,,,'get ans4_lane_0_eh_ticks'
+,"+{pattern=""ans4_lane_0_eh_ticks%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsANS4_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-ans4_lane_0_ew_ticks""}",,,,,,,,'get ans4_lane_0_ew_ticks'
+,"+{pattern=""ans4_lane_0_ew_ticks%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsANS4_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-ans4_lane_0_leftright_2min_ew_ps""}",,,,,,,,'get ans4_lane_0_leftright_2min_ew_ps'
+,"+{pattern=""ans4_lane_0_leftright_2min_ew_ps%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsANS4_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-ans4_lane_0_pma_rxa_ctle1_cs_ctrl_gray_adapted_rate5""}",,,,,,,,'get ans4_lane_0_pma_rxa_ctle1_cs_ctrl_gray_adapted_rate5'
+,"+{pattern=""ans4_lane_0_pma_rxa_ctle1_cs_ctrl_gray_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsANS4_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-ans4_lane_0_pma_rxa_ctle2_cs_ctrl_gray_adapted_rate5""}",,,,,,,,'get ans4_lane_0_pma_rxa_ctle2_cs_ctrl_gray_adapted_rate5'
+,"+{pattern=""ans4_lane_0_pma_rxa_ctle2_cs_ctrl_gray_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsANS4_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-ans4_lane_0_pma_rxa_ctle2_rs_ctrl_gray_adapted_rate5""}",,,,,,,,'get ans4_lane_0_pma_rxa_ctle2_rs_ctrl_gray_adapted_rate5'
+,"+{pattern=""ans4_lane_0_pma_rxa_ctle2_rs_ctrl_gray_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsANS4_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-ans4_lane_0_pma_rxa_ctle1_rs_ctrl_gray_adapted_rate5""}",,,,,,,,'get ans4_lane_0_pma_rxa_ctle1_rs_ctrl_gray_adapted_rate5'
+,"+{pattern=""ans4_lane_0_pma_rxa_ctle1_rs_ctrl_gray_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsANS4_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-ans4_lane_0_pma_rxa_vga_rl_ctrl_adapted_rate5""}",,,,,,,,'get ans4_lane_0_pma_rxa_vga_rl_ctrl_adapted_rate5'
+,"+{pattern=""ans4_lane_0_pma_rxa_vga_rl_ctrl_adapted_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsANS4_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-ans4_lane_1_north_ticks""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,'get ans4_lane_1_north_ticks'
+,"+{pattern=""ans4_lane_1_north_ticks%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsANS4_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-ans4_lane_1_south_ticks""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,'get ans4_lane_1_south_ticks'
+,"+{pattern=""ans4_lane_1_south_ticks%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsANS4_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-ans4_lane_1_east_ticks""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,'get ans4_lane_1_east_ticks'
+,"+{pattern=""ans4_lane_1_east_ticks%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsANS4_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-ans4_lane_1_west_ticks""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,'get ans4_lane_1_west_ticks'
+,"+{pattern=""ans4_lane_1_west_ticks%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsANS4_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-ans4_lane_1_eh_mv""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,'get ans4_lane_1_eh_mv'
+,"+{pattern=""ans4_lane_1_eh_mv%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsANS4_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-ans4_lane_1_ew_ps""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,'get ans4_lane_1_ew_ps'
+,"+{pattern=""ans4_lane_1_ew_ps%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsANS4_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-ans4_lane_1_eh_ticks""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,'get ans4_lane_1_eh_ticks'
+,"+{pattern=""ans4_lane_1_eh_ticks%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsANS4_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-ans4_lane_1_ew_ticks""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,'get ans4_lane_1_ew_ticks'
+,"+{pattern=""ans4_lane_1_ew_ticks%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsANS4_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-ans4_lane_1_leftright_2min_ew_ps""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,'get ans4_lane_1_leftright_2min_ew_ps'
+,"+{pattern=""ans4_lane_1_leftright_2min_ew_ps%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsANS4_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-ans4_lane_1_cfg_pctrl_pma_rxa_ctle2_gm_bias_ctrl_rate5""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,'get ans4_lane_1_cfg_pctrl_pma_rxa_ctle2_gm_bias_ctrl_rate5'
+,"+{pattern=""ans4_lane_1_cfg_pctrl_pma_rxa_ctle2_gm_bias_ctrl_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsANS4_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,
+Tech/Common>parseWithRegexString,"{subsubtestname=""Read-ans4_lane_1_cfg_pctrl_pma_rxa_ctle1_gm_bias_ctrl_rate5""}",,,,,,HAS_TWO_STORAGE_DEVICE == 'number of storage devices 2',,'get ans4_lane_1_cfg_pctrl_pma_rxa_ctle1_gm_bias_ctrl_rate5'
+,"+{pattern=""ans4_lane_1_cfg_pctrl_pma_rxa_ctle1_gm_bias_ctrl_rate5%s+->%s+([+-]?[0-9.]+)""}",,,,,,,,
+,"+{Input=AEMToolsANS4_resp}",,,,,,,,
+,"+{record=""true""}",,,,,,,,

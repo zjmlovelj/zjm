@@ -1,0 +1,23 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Parameters,,MLB_Num,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-RTC_Set_CMD""}",,,,,,,,"Set RTC"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{Commands=""rtc --set""}",,,,,,,,
+,"+{Date=""%Y%m%d%H%M%S""}",,,,,,,,
+,"+{Timeout=""3""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-RTC_Get_CMD""}",,,,,,,,"get RTC"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{expect=""RTC_Time""}",,,,,,,,
+,"+{Commands=""rtc --get""}",,,,,,,,
+,"+{Timeout=""3""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Compare>writeAndCompareInfo,"{subsubtestname=""Send-SN_Write_CMD""}",,,,,,,,"compare write and read SN"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{attribute=""MLBSN""}",,,,,,,,
+,"+{Input=MLB_Num}",,,,,,,,
+,"+{type=""MLB""}",,,,,,,,
+,"+{expect=""Finish!""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,

@@ -1,0 +1,22 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Touch_On_CMD""}",,,,,,,,"send touch on"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{expect=""OK""}",,,,,,,,
+,"+{Timeout=""10""}",,,,,,,,
+,"+{Commands=""touch --on""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-GPIO_Test_CMD""}",,,,,,,,"run smokey TouchGpio test script"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{expect=""Passed""}",,,,,,,,
+,"+{Timeout=""10""}",,,,,,,,
+,"+{Commands=""smokey Wildfire --run DisplayBehavior=NoDisplay ControlBitAccess=ReadOnly BrickRequired=None ResultsBehavior=NoFile LogBehavior=ConsoleOnly --test TouchGpio""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-Touch_Off_CMD""}",,,,,,,,"send touch off"
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{expect=""OK""}",,,,,,,,
+,"+{Timeout=""10""}",,,,,,,,
+,"+{Commands=""touch --off""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,

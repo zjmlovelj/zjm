@@ -1,0 +1,20 @@
+Function,Inputs,Outputs,Retry,RetryHandler,OnError,SubSubTest,Conditions,ReturnOnFail,Notes
+Parameters,,MLB_Num,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Send-CB_SKIP_SMT_CMD""}",,,,,,,,cbskip smt
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{expect=""OK""}",,,,,,,,
+,"+{Timeout=""5""}",,,,,,,,
+,"+{Commands=""cbskip smt""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/Process>writeICTCB,"{subsubtestname=""Send-ICT_CB_Write_CMD""}",,,,,,,,ICT_CB write
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{MLB_Num=MLB_Num}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
+Tech/DUTCmd>sendCmdAndParse,"{subsubtestname=""Read-ICT_CB""}",,,,,,,,ICT_CB read
+,"+{dutPluginName=""Kis_dut""}",,,,,,,,
+,"+{channelPluginName=""Kis_channelPlugin""}",,,,,,,,
+,"+{expect=""Passed""}",,,,,,,,
+,"+{Timeout=""5""}",,,,,,,,
+,"+{Commands=""cbread 0x0a""}",,,,,,,,
+,"+{record=""false""}",,,,,,,,
