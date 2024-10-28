@@ -2,7 +2,7 @@ Current_Version: 1.0.28_DOE
 *****************************************************************
 build stage P1
 script Ver: 1.0.28_DOE
-change date: 20240725
+change date: 20240725. ..
 SW engineer: Mundo Guo
 
 1. Update version compare file for main build
